@@ -612,7 +612,7 @@
 		while ($row = mysqli_fetch_array($resultado)) {
 
 			$data = array('iva' => $row[9],
-						'igtf' => $row[12]
+						  'igtf' => $row[12]
 		
 						);
 		}
@@ -620,10 +620,10 @@
 	}
 	//fin
 
-			//cargar precio del dolar
+			//Cargar Factor
 			if (isset($_POST['factor'])) {
 
-				$resultado =  mysqli_query($con,"SELECT * FROM cotizacion ");
+				$resultado =  mysqli_query($con,"SELECT * FROM cotizacion");
 				while ($row = mysqli_fetch_array($resultado)) {
 		
 					$data = array('factor' => $row[1]);

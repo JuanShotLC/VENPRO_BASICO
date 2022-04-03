@@ -163,7 +163,7 @@ class PDF extends PDF_Rotate {
     $pdf->SetFont('Arial','',9);
 
   
-    $resultado = mysqli_query($con,"SELECT C.nombres_completos, C.identificacion, C.direccion, C.telefono2, C.ciudad,c.direccion, F.fecha_actual, F.forma_pago,F.subtotal, F.tarifa0, F.tarifa, F.iva_venta, F.descuento_venta, F.total_venta, F.serie,F.precinto_nro,F.iva_igtf,F.divisas,F.factor from nota_venta F, clientes C WHERE F.id_cliente = C.id AND F.id = '$_GET[id]'");    
+    $resultado = mysqli_query($con,"SELECT C.nombres_completos, C.identificacion, C.direccion, C.telefono2, C.ciudad,c.direccion, F.fecha_actual, F.forma_pago,F.subtotal, F.tarifa0, F.tarifa, F.iva_venta, F.descuento_venta, F.total_venta, F.serie, F.precinto_nro from nota_venta F, clientes C WHERE F.id_cliente = C.id AND F.id = '$_GET[id]'");    
 
     while ($row = mysqli_fetch_array($resultado)) {        
         $pdf->SetX(5);
@@ -181,19 +181,13 @@ class PDF extends PDF_Rotate {
         //$pdf->Cell(60, 6, utf8_decode('' . strtoupper($row[0])),1,0, 'L',true); ////CLIENTE (X,Y)    
     
 
-        $IGTF = $row[17] * $row[18];
-        $TOTAL_DIVISAS = $row[16] * $row[18];
+        $pdf->Text(150, 240, utf8_decode('Sub-Total: ' . number_format(($row[8]),2,',','.') ), 0, 'C', 0); ////SUBTOTAL (X,Y)  
 
-        $TOLTAL_CON_IGTF = $row[13] + $IGTF;
+        $pdf->Text(150, 245, utf8_decode('IVA(16%): ' . number_format(($row[11]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
 
-    $pdf->Text(150, 240, utf8_decode('Sub-Total Bs: ' . number_format(($row[8]),2,',','.') ), 0, 'C', 0); ////SUBTOTAL (X,Y)  
-    $pdf->Text(150, 245, utf8_decode('IVA(16%) Bs: ' . number_format(($row[11]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
-
-    $pdf->Text(150, 250, utf8_decode('Divisas: ' . number_format(($row[16]),2,',','.')  ), 0, 'C', 0); ///Total (X,Y)  
-    $pdf->Text(150, 255, utf8_decode('IGTF(3%) Bs: ' . number_format(($IGTF),2,',','.')  ), 0, 'C', 0); ///Total (X,Y) 
-    $pdf->Text(150, 260, utf8_decode('Total Bs: ' . number_format(($TOLTAL_CON_IGTF ),2,',','.')  ), 0, 'C', 0); ///Total (X,Y)    
-    
-         
+        $pdf->Text(150, 250, utf8_decode('Total: ' . number_format(($row[13]),2,',','.')  ), 0, 'C', 0); ///Total (X,Y)  
+        
+                 
         $pdf->Ln(1);
     }
     $pdf->SetY(55);///PARA LOS DETALLES

@@ -279,12 +279,18 @@
 
                                                 <div class="col-sm-1">
 
-                                                    <input type="hidden" name="id_producto" id="id_producto" class="form-control" />
-                                                    <input type="hidden" name="precio_costo" id="precio_costo" class="form-control" />
-                                                    <input type="hidden" name="cotizaci" id="cotizaci" class="form-control" />
-                                                    <input type="hidden" name="iva_producto" id="iva_producto" class="form-control" value="" />
-                                                    <input type="hidden" name="igtf" id="igtf" class="form-control" value="" />
-                                                    <input type="hidden" name="incluye" id="incluye" class="form-control" value="SI" />
+                                                    <input type="text" name="id_producto" id="id_producto" class="form-control" />
+                                                    <input type="text" name="precio_costo" id="precio_costo" class="form-control" />
+                                                    <input type="text" name="factor" id="factor" class="form-control" />
+                                                    <input type="text" name="iva_producto" id="iva_producto" class="form-control" value="" />
+                                                    <input type="text" name="igtf" id="igtf" class="form-control" value="" />
+                                                    <input type="text" name="incluye" id="incluye" class="form-control" value="SI" />
+                                                    <input type="text" name="otros" id="otros" class="form-control" value="0.000" readonly />
+                                                    <input type="text" name="tarifa" id="tarifa" class="form-control" value="0.000" readonly />
+                                                    <input type="text" name="tarifa_0" id="tarifa_0" class="form-control" value="0.000" readonly />
+                                                    <input type="text" name="subtotal_bs" id="subtotal_bs" class="form-control" value="0.000" />
+                                                    <input type="text" name="iva_bs" id="iva_bs" class="form-control" value="0.000" />
+                                                    <input type="text" name="total_pagar_bs" id="total_pagar_bs" class="form-control" value="0.000" />
                                                 </div>
 
                                             </div>
@@ -321,13 +327,6 @@
 																</span>
                                                         </div>
                                                     </div>
-
-
-                                                    <input type="hidden" name="tarifa" id="tarifa" class="form-control" value="0.000" readonly />
-
-                                                    <input type="hidden" name="tarifa_0" id="tarifa_0" class="form-control" value="0.000" readonly />
-
-
                                                     <div class="form-group">
                                                         <label class="col-md-5">IVA Bs.:</label>
                                                         <div class="col-md-7">
@@ -337,26 +336,18 @@
 																</span>
                                                         </div>
                                                     </div>
-
-
-                                                    <input type="hidden" name="otros" id="otros" class="form-control" value="0.000" readonly />
-
-
                                                     <div class="form-group">
                                                         <label class="col-md-5">TOTAL Bs.:</label>
 
                                                         <div class="col-md-7">
-                                                            <span class="input-icon">
-																	
-
+                                                            <span class="input-icon">														
 																	<input type="text" name="total_pagar" id="total_pagar" class="form-control" value="0.000" readonly />
-																	
 																</span>
                                                         </div>
                                                     </div>
                                                     <br>
                                                     <div class="form-group">
-                                                        <label class="col-md-5">SUBTOTAL :</label>
+                                                        <label class="col-md-5">SUBTOTAL:</label>
                                                         <div class="col-md-7">
                                                             <span class="input-icon">
 																	<input type="text" name="subtotal_dolar" id="subtotal_dolar" class="form-control" value="0.000" readonly />
@@ -383,11 +374,6 @@
 																	<i class="ace-icon fa fa fa-usd orange"></i>
 																</span>
                                                         </div>
-
-                                                        <input type="hidden" name="subtotal_bs" id="subtotal_bs" class="form-control" value="0.000" />
-                                                        <input type="hidden" name="iva_bs" id="iva_bs" class="form-control" value="0.000" />
-                                                        <input type="hidden" name="total_pagar_bs" id="total_pagar_bs" class="form-control" value="0.000" />
-
                                                     </div>
 
 
@@ -395,7 +381,7 @@
                                                         <label class="col-md-5">IGTF 3% :</label>
                                                         <div class="col-md-7">
                                                             <span class="input-icon">
-																	<input type="text" name="total_impuesto_divi" id="total_impuesto_divi" class="form-control" value="0.000" readonly />
+																	<input type="text" name="iva_igtf" id="iva_igtf" class="form-control" value="0.000" readonly />
 																	<i class="ace-icon fa fa fa-usd orange"></i>
 																</span>
                                                         </div>
@@ -405,54 +391,11 @@
                                                         <label class="col-md-5">Total:</label>
                                                         <div class="col-md-7">
                                                             <span class="input-icon">
-																	<input type="text" name="total_a_divi" id="total_a_divi" class="form-control" value="0.000" readonly />
+																	<input type="text" name="total_con_igtf" id="total_con_igtf" class="form-control" value="0.000" readonly />
 																	<i class="ace-icon fa fa fa-usd orange"></i>
 																</span>
                                                         </div>
                                                     </div>
-
-                                                    <!-- 
-							                            <div class="form-group">
-							                                <label class="col-md-5">EFECTIVO:</label>
-							                                <div class="col-md-7">
-							                                	<span class="input-icon">
-																	<input type="text" name="efectivo" id="efectivo" class="form-control" value="0.000" />
-																	<i class="ace-icon fa fa fa-usd orange"></i>
-																</span>                               
-							                                </div> 
-							                            </div>
-
-							                            <div class="form-group">
-							                                <label class="col-md-5">CAMBIO:</label>
-							                                <div class="col-md-7">
-							                                	<span class="input-icon">
-																	<input type="text" name="cambio" id="cambio" class="form-control" value="0.000" readonly/>
-																	<i class="ace-icon fa fa fa-usd orange"></i>
-																</span>                               
-							                                </div> 
-							                            </div>
-
-
-							                             <div class="form-group">
-							                                <label class="col-md-5">EFECTIVO Bs.:</label>
-							                                <div class="col-md-7">
-							                                	<span class="input-icon">
-																	<input type="text" name="efectivo_bs" id="efectivo_bs" class="form-control" value="0.000" />
-																	
-																</span>                               
-							                                </div> 
-							                            </div>
-													<div class="form-group">
-							                                <label class="col-md-5">CAMBIO Bs.:</label>
-							                                <div class="col-md-7">
-							                                	<span class="input-icon">
-																	<input type="text" name="cambio_bs" id="cambio_bs" class="form-control" value="0.000" readonly/>
-																	
-																</span>                               
-							                                </div> 
-							                            </div> -->
-
-
                                                 </div>
                                             </div>
 
@@ -496,11 +439,6 @@
 									<i class="ace-icon fa fa-save bigger-110"></i>
 									Guardar
 								</button>
-                            <!-- 
-								<button type="button" name="btn_1" id="btn_1" class="btn btn-primary" data-toggle='tooltip' title='Modificar Factura'>
-									<i class="ace-icon fa fa-edit bigger-110"></i>
-									Modificar
-								</button> -->
 
                             <button type="button" class="btn btn-primary" data-toggle="modal" href="#myModal">
 									<i class="ace-icon fa fa-search bigger-110"></i>
@@ -511,11 +449,6 @@
 									<i class="ace-icon fa fa-search bigger-110"></i>
 									Notas Venta
 								</button>
-
-                            <!-- 								<button type="button" class="btn btn-primary" data-toggle="modal" href="#myModal3">
-									<i class="ace-icon fa fa-search bigger-110"></i>
-									Proformas
-								</button> -->
 
                             <button type="button" name="btn_2" id="btn_2" class="btn btn-primary" data-toggle='tooltip' title='Anular Factura'>
 									<i class="ace-icon fa fa-close bigger-110"></i>

@@ -31,15 +31,15 @@
         $start = 0;
     
     if ($search == 'false') {
-        $SQL = "SELECT F.id, C.identificacion, C.nombres_completos, F.serie, F.fecha_actual,F.total_venta FROM facturas F, clientes C WHERE F.id_cliente = C.id ORDER BY $sidx $sord limit $limit offset $start";
+        $SQL = "SELECT F.id, C.identificacion, C.nombres_completos, F.serie, F.fecha_actual, F.total_venta FROM facturas F, clientes C WHERE F.id_cliente = C.id ORDER BY $sidx $sord limit $limit offset $start";
     } else {
         $campo = $_GET['searchField'];
       
         if ($_GET['searchOper'] == 'eq') {
-            $SQL = "SELECT F.id, C.identificacion, C.nombres_completos, F.serie, F.fecha_actual,F.total_venta FROM facturas F, clientes C WHERE F.id_cliente = C.id AND $campo = '$_GET[searchString]' ORDER BY $sidx $sord limit $limit offset $start";
+            $SQL = "SELECT F.id, C.identificacion, C.nombres_completos, F.serie, F.fecha_actual, F.total_venta FROM facturas F, clientes C WHERE F.id_cliente = C.id AND $campo = '$_GET[searchString]' ORDER BY $sidx $sord limit $limit offset $start";
         }         
         if ($_GET['searchOper'] == 'cn') {
-            $SQL = "SELECT F.id, C.identificacion, C.nombres_completos, F.serie, F.fecha_actual,F.total_venta FROM facturas F, clientes C WHERE F.id_cliente = C.id AND $campo like '%$_GET[searchString]%' ORDER BY $sidx $sord  limit $limit offset $start";
+            $SQL = "SELECT F.id, C.identificacion, C.nombres_completos, F.serie, F.fecha_actual, F.total_venta FROM facturas F, clientes C WHERE F.id_cliente = C.id AND $campo like '%$_GET[searchString]%' ORDER BY $sidx $sord  limit $limit offset $start";
         }
     }  
 
