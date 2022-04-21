@@ -15,7 +15,7 @@
   $active_reportes="active";
   $active_clientes="";
   $active_usuarios="";  
-  $title="Reportes | SIFONELC";
+  $title="Reportes | VENPRO";
 ?>
 
 <?php if($_SESSION['user_name'] == 'baraka') { ?>

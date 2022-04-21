@@ -1,0 +1,93 @@
+
+<ion-content padding class="fondoblanco">
+ <!-- <ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()">
+        <ion-buttons   start>
+          <ion-icon class="atrasbutton-2" color="danger" ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-10>
+      <ion-title style="color: #9E9E9E">MEDIO DE PAGO</ion-title>
+    </ion-col>
+  </ion-row>-->
+
+  <ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()" >
+        <ion-buttons     start>
+          <ion-icon class="atrasbutton-2" color="danger" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8>
+      <ion-title class="center">MEDIO DE PAGO</ion-title>
+    </ion-col>
+    <ion-col  col-2>
+    </ion-col>
+  </ion-row>
+
+
+
+  <ion-row style="margin-top: 10%">
+    <ion-col col-12 class="saltoabajo">
+      <ion-item>
+        <ion-label class="textotitle magen10"  stacked>CARD NUMBER</ion-label>
+        <ion-input style="font-size: 22px;" type="number"  placeholder="123  5678  3456  2356"></ion-input>
+      </ion-item>
+
+    </ion-col>
+    <ion-col col-5>
+      <ion-item>
+        <ion-label class="textotitle magen10"  stacked>FECHA DE EXPIRACIÓN</ion-label>
+        <ion-input style="font-size: 22px;" type="number" placeholder="05 / 21"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-2>
+      <ion-item>
+
+      </ion-item>
+    </ion-col>
+    <ion-col col-5 class="saltoabajo">
+      <ion-item>
+        <ion-label class="textotitle magen10"  stacked>CVV</ion-label>
+        <ion-input style="font-size: 22px;" type="number" placeholder="123"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-12 class="saltoabajo">
+      <ion-item>
+        <ion-label class="textotitle magen10"  stacked>NOMBRE QUE APARECE EN LA TARJETA</ion-label>
+        <ion-input style="font-size: 18px;" type="text" placeholder="ARGEMIRO DE LA FUENTE"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-2>
+      <ion-item>
+        <ion-checkbox color="dark" checked="true"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col col-10>
+      <ion-item>
+        <p>GUARDAR TARJETA</p>
+      </ion-item>
+    </ion-col>
+      <ion-col col-12>
+        <img style="width: 20%; margin-top: 5%" class="img-center" src="assets/logo.png">
+      </ion-col>
+  </ion-row>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+
+      <ion-col col-12>
+        <div>
+          <button (tap)="openModalWithParams()" class="botongrande" ion-button color="light" >AGREGA MÉTODO DE PAGO</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

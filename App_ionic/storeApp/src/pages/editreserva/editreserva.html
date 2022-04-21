@@ -1,0 +1,120 @@
+
+<ion-content padding class="fondooscuro">
+  <ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()">
+        <ion-buttons   start>
+          <ion-icon class="atrasbutton-2" color="danger" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8>
+      <div class="margetitleoscuro">MODIFICAR SERVICIO</div>
+    </ion-col>
+    <ion-col col-2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="center" col-12>
+      <h1 class="margenreserva coloroscuro">{{titulo}}</h1>
+      <P class="text-13px">{{description}}</P>
+    </ion-col>
+
+
+    <ion-col class="center" col-3>
+    </ion-col>
+    <ion-col class="center" col-6>
+      <div class="raya3"></div>
+    </ion-col>
+    <ion-col class="center" col-3>
+    </ion-col>
+
+    <ion-col class="center" col-2>
+    </ion-col>
+    <ion-col class="center" col-3>
+      <div class="letradia">DIA</div>
+      <ion-datetime class="letrasreserva" [(ngModel)]="dia" displayFormat="D"  min="2010" max="2030"></ion-datetime>
+    </ion-col>
+    <ion-col  class="center" col-1>
+      <div class="flechasnumber">
+        <div><ion-icon ios="ios-arrow-up" md="ios-arrow-up"></ion-icon></div>
+        <div><ion-icon  ios="ios-arrow-down" md="ios-arrow-down" name="arrow-down"></ion-icon></div>
+      </div>
+    </ion-col>
+    <ion-col class="center" col-4>
+      <div class="letradivpeque">MES</div>
+      <ion-datetime style="padding: 13px 8px 13px 0px!important;" class="letrasreserva" displayFormat="MMM" placeholder="mes" min="2010" max="2030" [(ngModel)]="mes"></ion-datetime>
+    </ion-col>
+    <ion-col  class="center" col-1>
+      <div class="flechasmes">
+        <div><ion-icon ios="ios-arrow-up" md="ios-arrow-up"></ion-icon></div>
+        <div><ion-icon  ios="ios-arrow-down" md="ios-arrow-down" name="arrow-down"></ion-icon></div>
+      </div>
+    </ion-col>
+    <ion-col class="center" col-1>
+    </ion-col>
+
+
+
+    <ion-col class="center" col-3>
+    </ion-col>
+    <ion-col class="center" col-6>
+      <div class="raya3"></div>
+    </ion-col>
+    <ion-col class="center" col-3>
+    </ion-col>
+
+
+    <ion-col class="center" col-3>
+    </ion-col>
+    <ion-col class="center" col-5>
+      <div class="letradivpeque">HORA</div>
+      <ion-datetime class="letrasreserva" [(ngModel)]="hora" displayFormat="HH:mm"  min="2010" max="2030"></ion-datetime>
+    </ion-col>
+    <ion-col  class="center" col-1>
+      <div class="flechasnumber">
+        <div><ion-icon ios="ios-arrow-up" md="ios-arrow-up"></ion-icon></div>
+        <div><ion-icon  ios="ios-arrow-down" md="ios-arrow-down" name="arrow-down"></ion-icon></div>
+      </div>
+    </ion-col>
+    <ion-col class="center" col-3>
+    </ion-col>
+
+    <ion-col class="center" col-3>
+    </ion-col>
+    <ion-col class="center" col-6>
+      <div class="raya3"></div>
+    </ion-col>
+    <ion-col class="center" col-3>
+    </ion-col>
+
+  </ion-row>
+  <ion-row>
+    <ion-col class="center" col-3>
+    </ion-col>
+    <ion-col class="center" col-6>
+      <div class="letradivpequevalor">VALOR</div>
+      <div class="letrasreserva2" > ${{valor}}</div>
+    </ion-col>
+    <ion-col class="center" col-3>
+    </ion-col>
+  </ion-row>
+
+
+
+
+
+</ion-content>
+<ion-footer class="black">
+  <ion-toolbar>
+    <ion-row>
+
+      <ion-col col-12>
+        <div>
+          <button (tap)="openModalWithParams()" class="botongrande" ion-button color="light" >CONFIRMAR</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
+

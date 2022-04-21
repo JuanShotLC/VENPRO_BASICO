@@ -17,7 +17,7 @@
 	$active_cotizacion="";
 	$active_clientes="";
 	$active_usuarios="";	
-	$title="Precios | SIFONELC";
+	$title="Precios | VENPRO";
 
 
 $produ="SELECT * FROM products,cotizacion";

@@ -1,0 +1,65 @@
+page-referido {
+  .bg-fondo-s{
+    background-image: url(../assets/fondo/fondo2.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .card-title-md {
+    display: block;
+    font-size: 2.4rem;
+    line-height: 1.2;
+    color: #222;
+    margin: 2px 0;
+    padding: 8px 0;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .header-card{
+    font-size: 1.6rem;
+    color: #5e5d5d;
+    padding: 0px;
+    border-bottom: solid 0px rgba(221, 221, 225, 0.95);
+  }
+  .titlecontent{
+    color: #818181 !important;
+    font-size: 12px!important;
+    margin-top: 5%!important;
+    margin-bottom: 2%!important;
+    font-weight: bold!important;
+  }
+  .textocon{
+    color: #cbcbcb !important;
+    margin-bottom: 5% !important;
+  }
+  .inputborde {
+    border: solid 2px #d7d7d7;
+    border-radius: 5px;
+  }
+  .text-input-md {
+    margin: 9px 8px;
+    padding: 0;
+    width: calc(100% - 8px - 8px);
+  }
+  .card-ios p {
+    margin: 0 0 2px;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  .xbutton{
+    color: #9E9E9E;
+    background-color: #d9d9d9;
+    width: 25px;
+    height: 25px;
+    margin-top: 0vh;
+  }
+  .botonpeque {
+    color: #ffff;
+    background-color: #7b7b7b;
+    font-size: 12px;
+    height: 3rem;
+    border-radius: 5px;
+    width: 9rem!important;
+
+  }
+}

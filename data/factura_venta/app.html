@@ -279,18 +279,15 @@
 
                                                 <div class="col-sm-1">
 
-                                                    <input type="text" name="id_producto" id="id_producto" class="form-control" />
-                                                    <input type="text" name="precio_costo" id="precio_costo" class="form-control" />
-                                                    <input type="text" name="factor" id="factor" class="form-control" />
-                                                    <input type="text" name="iva_producto" id="iva_producto" class="form-control" value="" />
-                                                    <input type="text" name="igtf" id="igtf" class="form-control" value="" />
-                                                    <input type="text" name="incluye" id="incluye" class="form-control" value="SI" />
-                                                    <input type="text" name="otros" id="otros" class="form-control" value="0.000" readonly />
-                                                    <input type="text" name="tarifa" id="tarifa" class="form-control" value="0.000" readonly />
-                                                    <input type="text" name="tarifa_0" id="tarifa_0" class="form-control" value="0.000" readonly />
-                                                    <input type="text" name="subtotal_bs" id="subtotal_bs" class="form-control" value="0.000" />
-                                                    <input type="text" name="iva_bs" id="iva_bs" class="form-control" value="0.000" />
-                                                    <input type="text" name="total_pagar_bs" id="total_pagar_bs" class="form-control" value="0.000" />
+                                                    <input type="hidden" name="id_producto" id="id_producto" class="form-control" />
+                                                    <input type="hidden" name="precio_costo" id="precio_costo" class="form-control" />
+                                                    <input type="hidden" name="factor" id="factor" class="form-control" />
+                                                    <input type="hidden" name="iva_producto" id="iva_producto" class="form-control" />
+                                                    <input type="hidden" name="igtf" id="igtf" class="form-control" value="" />
+                                                    <input type="hidden" name="incluye" id="incluye" class="form-control" value="SI" />
+                                                    <input type="hidden" name="otros" id="otros" class="form-control" value="0.000" readonly />
+                                                    <input type="hidden" name="tarifa" id="tarifa" class="form-control" value="0.000" readonly />
+                                                    <input type="hidden" name="tarifa_0" id="tarifa_0" class="form-control" value="0.000" readonly />
                                                 </div>
 
                                             </div>
@@ -308,7 +305,7 @@
 
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
-                                                        <label class="col-md-5">DIVISAS:</label>
+                                                        <label class="col-md-5">DIVISA:</label>
                                                         <div class="col-md-7">
                                                             <span class="input-icon">
 																	<input type="text" name="divisas" id="divisas" class="form-control" value="0.000"/>
@@ -318,7 +315,7 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-md-5">SUBTOTAL Bs.:</label>
+                                                        <label class="col-md-5">Base Impo.</label>
                                                         <div class="col-md-7">
                                                             <span class="input-icon">
 																	<input type="text" name="subtotal" id="subtotal" class="form-control" value="0.000" readonly />
@@ -328,7 +325,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="col-md-5">IVA Bs.:</label>
+                                                        <label class="col-md-5">IVA G 16.00% </label>
                                                         <div class="col-md-7">
                                                             <span class="input-icon">
 																	<input type="text" name="iva" id="iva" class="form-control" value="0.000" readonly />
@@ -336,67 +333,39 @@
 																</span>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label class="col-md-5">TOTAL Bs.:</label>
-
-                                                        <div class="col-md-7">
-                                                            <span class="input-icon">														
-																	<input type="text" name="total_pagar" id="total_pagar" class="form-control" value="0.000" readonly />
-																</span>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                    <div class="form-group">
-                                                        <label class="col-md-5">SUBTOTAL:</label>
-                                                        <div class="col-md-7">
-                                                            <span class="input-icon">
-																	<input type="text" name="subtotal_dolar" id="subtotal_dolar" class="form-control" value="0.000" readonly />
-																	<i class="ace-icon fa fa fa-usd orange"></i>
-																</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="col-md-5">IVA :</label>
-                                                        <div class="col-md-7">
-                                                            <span class="input-icon">
-																	<input type="text" name="iva_dolar" id="iva_dolar" class="form-control" value="0.000" readonly />
-																	<i class="ace-icon fa fa fa-usd orange"></i>
-																</span>
-                                                        </div>
-                                                    </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-md-5">TOTAL:</label>
-                                                        <div class="col-md-7">
-                                                            <span class="input-icon">
-																	<input type="text" name="total_pagar_dolar" id="total_pagar_dolar" class="form-control" value="0.000" readonly />
-
-																	<i class="ace-icon fa fa fa-usd orange"></i>
-																</span>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="form-group">
-                                                        <label class="col-md-5">IGTF 3% :</label>
+                                                        <label class="col-md-5">IGTF 3% </label>
                                                         <div class="col-md-7">
                                                             <span class="input-icon">
 																	<input type="text" name="iva_igtf" id="iva_igtf" class="form-control" value="0.000" readonly />
-																	<i class="ace-icon fa fa fa-usd orange"></i>
+																	
 																</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-md-5">Total:</label>
+                                                        <label class="col-md-5">TOTAL Bs.</label>
+
+                                                        <div class="col-md-7">
+                                                            <span class="input-icon">														
+                                                                    <input type="text" name="total_pagar" id="total_pagar" class="form-control" value="0.000" readonly />
+                                                                </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-5">TOTAL</label>
                                                         <div class="col-md-7">
                                                             <span class="input-icon">
-																	<input type="text" name="total_con_igtf" id="total_con_igtf" class="form-control" value="0.000" readonly />
-																	<i class="ace-icon fa fa fa-usd orange"></i>
-																</span>
+                                                                    <input type="text" name="total_pagar_dolar" id="total_pagar_dolar" class="form-control" value="0.000" readonly />
+    
+                                                                    <i class="ace-icon fa fa fa-usd orange"></i>
+                                                                </span>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
 
                                             <div class="col-sm-12">

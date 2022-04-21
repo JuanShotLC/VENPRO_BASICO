@@ -1,0 +1,111 @@
+<ion-header>
+
+  <ion-row padding>
+    <ion-col (tap)="goperfil()" class="center" col-2>
+      <img style="width: 15px;" src="assets/icon/usuario.png">
+    </ion-col>
+    <ion-col col-8>
+          <img style="width: 20%; color: #777777; margin-top: -2%" class="img-center" src="assets/logo.png">
+    </ion-col>
+    <ion-col  class="center" col-2>
+      <ion-icon *ngIf="contador2 > 0" (tap)="gomyservice()"  style="font-size: 24px" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+
+<ion-content   class="fondoclaro">
+  <p style="text-align: center; margin-bottom: 10px">{{contador}} Productos Cerca de ti </p>
+
+  <div style=" margin-top: -20px;">
+    <div *ngIf="contador <= 0">
+      <h5 style="margin: 20% 10% 0%; text-align: center;">Actualmente no hay productos cerca de ti.
+        Se el primero en anunciar para ser el primero en vender o si lo prefieres vuelve más tarde
+      </h5>
+      <div class="center">
+        <img style="text-align: center; width: 70%" src="assets/envio.png">
+      </div>
+
+    </div>
+    <div *ngIf="contador > 0">
+      <div *ngFor="let item of eventoslist.resp ">
+        <ion-row   *ngIf="item.publicacion.vendido=='no' && item.publicacion.area=='yes'" class="saltomenor" style="margin-right: 5%;">
+          <ion-col  (tap)="godetail(item.publicacion.id)" col-4>
+            <ion-card style=" width: 100%; height: 75%; border-radius: 10px">
+              <ion-card-content style="padding: 0 0; height: 60px;">
+                <img *ngIf="item.images[0]" style="height: auto" src="{{url+item.images[0].ruta}}">
+                <img *ngIf="!item.images[0]" style="height: auto;" src="assets/nofoto.jpg">
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col (tap)="godetail(item.publicacion.id)" style="padding-left: 0px;" col-8>
+            <ion-card  style="width: 100%; height: 75%; border-radius: 10px">
+              <ion-card-content>
+                <ion-card-title>
+                  <h5 class="titleoscuro" style=" overflow:hidden; height: 30px;
+                                      white-space:nowrap;
+                                      text-overflow: ellipsis; width: 85%">
+                    {{item.publicacion.titulo}}
+                  </h5>
+                  <ion-icon *ngIf="item.publicacion.destacado=='1'" style="font-size: 0.9em; float: right; margin-top: -40px;" ios="ios-star-outline" md="ios-star-outline"></ion-icon>
+                </ion-card-title>
+                <ion-row no-padding>
+                  <ion-col style="max-height: 45px;" text-left col-8>
+                    <b style="width: 100%;  overflow:hidden; height: 20px;  white-space:nowrap; text-overflow: ellipsis;" class="text-11px">
+                      {{item.publicacion.descripcion}}
+                    </b>
+                    <p style="font-size: 10px; float: right">
+                      {{item.publicacion.horario}}
+
+                    </p>
+                  </ion-col>
+                  <ion-col  text-left col-4>
+                    <b style="width: 100%;  overflow:hidden; height: 30px;" class="text-12px">
+
+                      <div style="float: right;" *ngIf="item.publicacion.tipo_moneda=='1'">{{item.publicacion.precio}} USD</div>
+                      <div style="float: right;" *ngIf="item.publicacion.tipo_moneda=='2'">{{item.publicacion.precio}} EUR</div>
+                    </b>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+
+  </div>
+  <ion-fab right>
+    <button (tap)="actualizarcoor()" style="background-color: #a3352f;" ion-fab mini><ion-icon name="locate"></ion-icon></button>
+  </ion-fab>
+  <ion-fab left bottom>
+    <button ion-fab color="light"><ion-icon name="reorder"></ion-icon></button>
+    <ion-select  title="categorias" [(ngModel)]="categoriaselect" multiple="false" cancelText="Cancel" (ngModelChange)="buscarcate(categoriaselect)" okText="Buscar">
+      <div *ngFor="let item of categoriaslist">
+        <ion-option  value="{{item.id}}" >{{item.nombre}}</ion-option>
+      </div>
+    </ion-select>
+  </ion-fab>
+  <ion-fab right bottom>
+    <button ion-fab color="light"><ion-icon name="search"></ion-icon></button>
+    <ion-fab-list side="left">
+      <input style="height: 30px; border-radius: 10px; height: 30px;
+         border-radius: 10px;
+           border: solid 1px #000;" [(ngModel)]="inputseract"  placeholder="Que necesitas?" name="buscar">
+      <button style="position: absolute;float: right;  background-color: #000; color: #fff;" (tap)="buscarseart(inputseract)" ion-fab><ion-icon name="send"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+
+</ion-content>
+<!--<ion-footer>
+  <ion-toolbar>
+
+    <div>
+      <ion-icon name="search"></ion-icon>
+    </div>
+
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer>-->
+

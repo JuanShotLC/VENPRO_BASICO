@@ -1,0 +1,57 @@
+
+<ion-content padding class="fondoclaro">
+  <ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()">
+        <ion-buttons   start>
+          <ion-icon class="atrasbutton-2" color="danger" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8>
+      <div class="margentitle">EDITAR RESERVACIÓN</div>
+    </ion-col>
+    <ion-col col-2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12>
+      <div>
+        <ion-card style="border-radius: 10px;">
+
+          <ion-card-content>
+            <div style="height: 100%; width: 100%">
+              <form style="width: 100%!important;" #myForm="ngForm" novalidate>
+                <my-date-range-picker name="mydaterange" [options]="myDateRangePickerOptions" [(ngModel)]="model" required></my-date-range-picker>
+              </form>
+            </div>
+
+            {{entra}}
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-col>
+    <ion-col  col-12>
+      <h1 class="center">{{titulo}}</h1>
+      <P class="text-13px">{{description}}</P>
+    </ion-col>
+
+    <ion-col class="center" col-12>
+      <button class="button-md2" ion-button color="dark" outline>Tipo: {{tipos}}</button>
+    </ion-col>
+
+  </ion-row>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+
+      <ion-col col-12>
+        <div>
+          <button (tap)="openModalWithParams()" class="botongrande" ion-button color="light" >EDITAR</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

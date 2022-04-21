@@ -1,0 +1,100 @@
+page-login {
+
+  .item-md.item-input.item-input-has-focus .item-inner,
+  .item-md.item-input.input-has-focus .item-inner {
+    border-bottom-color: #ffffff;
+    -webkit-box-shadow: inset 0 -1px 0 0 #ffffff;
+    box-shadow: inset 0 -1px 0 0 #ffffff;
+  }
+
+  .list-md .item-input.item-input-has-focus:last-child,
+  .list-md .item-input.input-has-focus:last-child {
+    border-bottom-color: #ffffff;
+    -webkit-box-shadow: inset 0 -1px 0 0 #ffffff;
+    box-shadow: inset 0 -1px 0 0 #ffffff;
+  }
+
+
+  .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+  .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+    border-bottom-color: #ffffff;
+    -webkit-box-shadow: inset 0 -1px 0 0 #ffffff;
+    box-shadow: inset 0 -1px 0 0 #ffffff;
+  }
+
+  .list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
+  .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
+    border-bottom-color: #ffffff;
+    -webkit-box-shadow: inset 0 -1px 0 0 #ffffff;
+    box-shadow: inset 0 -1px 0 0 #ffffff;
+  }
+  .list-ios[inset] .item {
+    border-bottom: 1px solid #ffffff;
+  }
+
+
+}
+//iputs ios
+.text-input-ios {
+  margin: 11px 8px 11px 0;
+  padding: 0;
+  width: calc(100% - 8px);
+  margin-left: 10px;
+}
+
+.item-ios.item-block .item-inner {
+  padding-right: 0px;
+  border-bottom: 0.55px solid #c8c7cc;
+}
+.item-md.item-block .item-inner {
+  padding-right: 0px;
+  border-bottom: 1px solid #dedede;
+}
+.item-ios {
+  padding-left: 0px;
+  border-radius: 0;
+}
+.item-wp.item-block .item-inner{
+  padding-right: 0px;
+}
+
+
+
+//iputs windows
+.text-input-wp {
+  margin: 8px 8px;
+  padding: 0 8px;
+  width: calc(100% - 8px - 8px);
+  border: 2px solid rgba(0, 0, 0, 0);
+  line-height: 2rem;
+}
+
+  .item-wp.item-input.item-input-has-focus .text-input,
+  .item-wp.item-input.input-has-focus .text-input {
+    border-color: rgba(0, 0, 0, 0);
+  }
+
+
+.center{
+  text-align: center;
+}
+.font-11{
+  font-size: 11px;
+}
+.colortext{
+  color: #a0a0a0;
+}
+.radio5{
+  border-radius: 5px!important;
+}
+.inputborde{
+  border: solid 1px #696868;
+  border-radius: 5px;
+}
+.button-15{
+  margin-bottom: 15px!important;
+}
+.button-5{
+  margin-bottom: 5px!important;
+}
+

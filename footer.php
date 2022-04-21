@@ -1,8 +1,8 @@
 <div class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
-      <p class="navbar-text pull-left"><a href="#" target="_blank" style="color: #ecf0f1">SIFONELC</a> &copy <?php echo date('Y');?>
+      <p class="navbar-text pull-left"><a href="#" target="_blank" style="color: #ecf0f1">SISTEMAS VENPRO</a> &copy <?php echo date('Y');?>
             -       
-           Diseñado Por <a href="https://www.instagram.com/juanshotlc/" target="_blank" style="color: #ecf0f1">Juan Gil</a>
+           Diseñado Por <a href="https://www.instagram.com/sistemasvenpro/" target="_blank" style="color: #ecf0f1">SISTEMAS VENPRO</a>
       </p>
    </div>
 </div>

@@ -14,7 +14,7 @@
 	$active_productos="";
 	$active_clientes="active";
 	$active_usuarios="";	
-	$title="Clientes | SIFONELC";
+	$title="Clientes | VENPRO";
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -108,22 +108,27 @@ $pdf->Ln(2);
     }
 
 
-$consl2 = mysqli_query($con,"SELECT C.nombres_completos, C.identificacion, C.direccion, C.telefono2, C.ciudad,c.direccion, F.fecha_actual, F.forma_pago,F.subtotal, F.tarifa0, F.tarifa, F.iva_venta, F.descuento_venta, F.total_venta, F.serie from facturas F, clientes C WHERE F.id_cliente = C.id AND F.id = '$_GET[id]'");    
+$consl2 = mysqli_query($con,"SELECT C.nombres_completos, C.identificacion, C.direccion, C.telefono2, C.ciudad,c.direccion, F.fecha_actual, F.forma_pago,F.subtotal, F.tarifa0, F.tarifa, F.iva_venta, F.descuento_venta, F.total_venta, F.serie,F.precinto_nro,F.iva_igtf,F.divisas,F.factor from facturas F, clientes C WHERE F.id_cliente = C.id AND F.id = '$_GET[id]'");    
 
     while ($row = mysqli_fetch_array($consl2)) {  
 $pdf->Ln(1);
 $pdf->Cell(70,0,'','T');
-$pdf->Ln(2);   
-$pdf->Cell(17,0,utf8_decode('CANT.ART: ' . $total_items ),0,1,'C');  
-$pdf->Ln(2);  
-$pdf->SetFont('Helvetica','B',7);
-$pdf->Cell(35, 10, 'SUB-TOTAL:', 0);    
+$pdf->Ln(2);    
+$pdf->Cell(35, 10, 'Base Impo.', 0);    
 $pdf->Cell(20, 10, '', 0);
 $pdf->Cell(15, 10, number_format(($row[8]),2,',','.'),0,0,'R');
-$pdf->Ln(3);
-$pdf->Cell(35, 10, utf8_decode('IVA('.get_row('perfil','impuesto', 'id_perfil', 1).'%):' ) ,0);    
+$pdf->Ln(3);    
+$pdf->Cell(35, 10, utf8_decode('IVA G '.get_row('perfil','impuesto', 'id_perfil', 1).'%:' ) ,0);    
 $pdf->Cell(20, 10, '', 0);
 $pdf->Cell(15, 10, number_format(($row[11]),2,',','.'),0,0,'R');
+$pdf->Ln(3);  
+$pdf->Cell(35, 10, utf8_decode('IGTF '.get_row('perfil','igtf', 'id_perfil', 1).'%:' ) ,0);    
+$pdf->Cell(20, 10, '', 0);
+$pdf->Cell(15, 10, number_format(($row[16]),2,',','.'),0,0,'R');
+$pdf->Ln(3);  
+$pdf->Cell(35, 10, utf8_decode('DIVISA ' ) ,0);    
+$pdf->Cell(20, 10, '', 0);
+$pdf->Cell(15, 10, number_format(($row[17]),2,',','.'),0,0,'R');
 $pdf->Ln(3);  
 $pdf->Cell(35, 10, 'TOTAL:', 0);    
 $pdf->Cell(20, 10, '', 0);

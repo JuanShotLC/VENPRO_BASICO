@@ -1,0 +1,71 @@
+
+<ion-content padding class="fondoblanco">
+  <ion-row>
+    <ion-col (click)="atras()" col-2>
+      <ion-buttons start>
+        <!-- <button (click)="atras()"  class="xbutton" ion-fab color="danger"><ion-icon  class="xicon" ios="ios-close" md="md-close"></ion-icon></button>-->
+        <ion-icon  class="atrasbutton-2" color="danger" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-8>
+      <div class="margentitle">Registro </div>
+    </ion-col>
+    <ion-col col-2>
+    </ion-col>
+  </ion-row>
+  <form (ngSubmit)="register()"  #registerForm="ngForm">
+    <ion-row class="margenalto15">
+      <ion-col col-12>
+        <ion-list inset>
+          <ion-item class="button-15 ">
+            <ion-input class="inputborde" [(ngModel)]="registerdato.nombre" type="text" placeholder="Nombre" name="nombre" required></ion-input>
+          </ion-item>
+          <ion-item class="button-15 ">
+            <ion-input class="inputborde" [(ngModel)]="registerdato.apellido" type="text" placeholder="Apellido" name="apellido" required></ion-input>
+          </ion-item>
+          <ion-item class="button-15">
+            <ion-input class="inputborde" [(ngModel)]="registerdato.email" type="email" placeholder="Email" name="email"  required></ion-input>
+          </ion-item>
+          <ion-item class="button-10">
+
+              <ion-input class="inputborde" [(ngModel)]="registerdato.telefono" type="text" name="phone" placeholder="Phone" [brmasker]="{phone: true}"></ion-input>
+            <!--<ion-input class="inputborde" [brmasker]="{mask:'(00) 0000-0000', len:14}" [(ngModel)]="registerdato.telefono"  type="text" placeholder="Teléfono" name="telefono"  required></ion-input>-->
+          </ion-item>
+          <ion-item class="button-10">
+            <ion-input class="inputborde" [(ngModel)]="registerdato.password"  type="password" placeholder="Nueva contraseña" name="password"  required></ion-input>
+          </ion-item>
+          <ion-item class="button-10">
+            <ion-input class="inputborde" [(ngModel)]="registerdato.password2"  type="password" placeholder="Repetir contraseña" name="password2"  required></ion-input>
+          </ion-item>
+          <ion-item class="button-10">
+            <ion-input class="inputborde" [(ngModel)]="registerdato.direccion"   type="text" placeholder="Dirección" name="dirección"  required></ion-input>
+          </ion-item>
+          <ion-item class="button-10">
+            <ion-input class="inputborde" [(ngModel)]="registerdato.direccion2"   type="text" placeholder="N° Casa o apartamento" name="dirección2"  required></ion-input>
+          </ion-item>
+          <!-- <ion-item class="button-15">
+              <h3>Coordenadas</h3>
+          </ion-item>
+          <ion-item class="button-15">
+              <ion-input class="inputborde"  disabled [(ngModel)]="registerdato.latitude"  type="text" placeholder="Latitude" name="latitude"  required></ion-input>
+            </ion-item>
+            <ion-item class="button-15">
+              <ion-input class="inputborde"  disabled [(ngModel)]="registerdato.longitude"  type="text" placeholder="Longitude" name="longitude"  required></ion-input>
+            </ion-item> -->
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+      </ion-col>
+      <ion-col col-4>
+        <ion-col class="signup-col center">
+          <button ion-button class="submit-btn radio5 grisoscuro"   [disabled]="!registerForm.form.valid" color="grisoscuro" full type="submit">GUARDAR</button>
+        </ion-col>
+      </ion-col>
+      <ion-col col-4>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

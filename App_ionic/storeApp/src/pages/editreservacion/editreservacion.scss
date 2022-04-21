@@ -1,0 +1,156 @@
+page-editreservacion {
+  .margentitle {
+    margin-top: 0vh;
+    text-align: center;
+    color: #9e9e9e;
+    font-weight: 500;
+  }
+  .mydrp .selector {
+    border: 0px solid #CCC;
+    width: 100%!important;
+  }
+  .mydrp .range {
+    background-color: #9E9E9E;
+    border-radius: 0px;
+    color: #fff!important;
+  }
+
+  .mydrp .selecteddaybegin, .mydrp .selecteddayend, .mydrp .selectedmonth .monthvalue, .mydrp .selectedyear .yearvalue {
+    border: none;
+    background-color: #9e9e9e;
+    border-radius: 2px;
+  }
+  .mydrp .sunday {
+    color: #000;
+  }
+  .mydrp .weekdaytitle {
+    background-color: #fff;
+    font-size: 11px;
+    font-weight: 400;
+    vertical-align: middle;
+    max-width: 36px;
+  }
+  .mydrp .selecteddaybegin, page-reservaservice .mydrp .selecteddayend, page-reservaservice .mydrp .selectedmonth .monthvalue, page-reservaservice .mydrp .selectedyear .yearvalue {
+    border: none;
+    background-color: #9e9e9e;
+    border-radius: 2px;
+    color: #fff;
+  }
+  .mydrp .daycell:hover, .mydrp .monthcell:hover, .mydrp .yearcell:hover {
+    background-color: #9e9e9e;
+    border-radius: 10px;
+  }
+  .mydrp .disabled {
+    cursor: default!important;
+    color: #9e9e9e!important;
+    background: #fff!important;
+  }
+  .mydrp .nextmonth, .mydrp .prevmonth {
+    color: #9E9E9E;
+  }
+  .mydrp .caltable, .mydrp .daycell, .mydrp .monthcell, .mydrp .monthtable, .mydrp .weekdaytitle, .mydrp .yearcell, .mydrp .yeartable {
+    border-collapse: collapse;
+    color: #737272;
+    line-height: 1.1;
+  }
+  .mydrp .sunday {
+    color: #737272;
+  }
+  .mydrp .daycell:hover, page-reservaservice .mydrp .monthcell:hover, page-reservaservice .mydrp .yearcell:hover {
+    background-color: #9e9e9e;
+    border-radius: 0px;
+  }
+  .mydrp .selecteddaybegin, page-reservaservice page-reservaservice .mydrp .selecteddayend, page-reservaservice page-reservaservice .mydrp .selectedmonth .monthvalue, page-reservaservice page-reservaservice .mydrp .selectedyear .yearvalue {
+    border: none;
+    background-color: #9e9e9e;
+    border-radius: 2px;
+    color: #fff!important;
+  }
+  //desde aqui edicion de calendario
+  .card-md {
+    margin: 10px;
+    border-radius: 2px;
+    width: calc(100% - 20px);
+    font-size: 1.4rem;
+    background: transparent;
+    -webkit-box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0px rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0px rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0);
+  }
+  .mydrp .titlearea {
+    text-align: center;
+    background-color: transparent;
+  }
+  .mydrp .header {
+    width: 100%;
+    height: 30px;
+    background-color: transparent;
+  }
+  .mydrp .headerbtncell {
+    background-color: transparent;
+    cursor: pointer;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .mydrp .headerbtn, .mydrp .headerlabelbtn, .mydrp .yearchangebtn {
+    background: transparent;
+    border: none;
+    height: 22px;
+  }
+  .mydrp .caltable, .mydrp .monthtable, .mydrp .yeartable {
+    table-layout: fixed;
+    width: 100%;
+    background-color: transparent;
+    font-size: 14px;
+  }
+  .mydrp .weekdaytitle {
+    background-color: transparent;
+    font-size: 11px;
+    font-weight: 400;
+    vertical-align: middle;
+    max-width: 36px;
+  }
+  .mydrp .monthcell {
+    background-color: transparent;
+  }
+  .mydrp .selectedmonth .monthvalue, page-calendar .mydrp .selectedyear .yearvalue {
+    border: none;
+    background-color: #9e9e9e;
+    color: #fff;
+    border-radius: 2px;
+  }
+  .mydrp .yearchangebtncell {
+    text-align: center;
+    background-color: transparent;
+  }
+  .mydrp .yearcell {
+    background-color: transparent;
+    width: 20%;
+  }
+  .mydrp .selectedyear .yearvalue {
+    border: none;
+    background-color: #9e9e9e;
+    border-radius: 2px;
+    color: #fff;
+    text-decoration: none;
+  }
+  .mydrp .daycell, .mydrp .monthcell, .mydrp .weekdaytitle, .mydrp .yearcell {
+    padding: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+  }
+  .card-content-md {
+    padding: 0px 0px;
+    font-size: 1.4rem;
+    line-height: 1.5;
+  }
+
+  .mydrp {
+    line-height: 1;
+    display: inline-block;
+    position: relative;
+    width: 100% !important;
+  }
+  //hasta aqui calendario
+
+}

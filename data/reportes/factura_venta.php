@@ -161,7 +161,7 @@ class PDF extends PDF_Rotate {
     $pdf->SetFont('Arial','',9);
 
   
-    $resultado = mysqli_query($con,"SELECT C.nombres_completos, C.identificacion, C.direccion, C.telefono2, C.ciudad,c.direccion, F.fecha_actual, F.forma_pago,F.subtotal, F.tarifa0, F.tarifa, F.iva_venta, F.descuento_venta, F.total_venta, F.serie,F.precinto_nro from facturas F, clientes C WHERE F.id_cliente = C.id AND F.id = '$_GET[id]'");    
+    $resultado = mysqli_query($con,"SELECT C.nombres_completos, C.identificacion, C.direccion, C.telefono2, C.ciudad,c.direccion, F.fecha_actual, F.forma_pago,F.subtotal, F.tarifa0, F.tarifa, F.iva_venta, F.descuento_venta, F.total_venta, F.serie,F.precinto_nro,F.iva_igtf,F.divisas,F.factor from facturas F, clientes C WHERE F.id_cliente = C.id AND F.id = '$_GET[id]'");    
 
     while ($row = mysqli_fetch_array($resultado)) {        
         $pdf->SetX(5);
@@ -170,7 +170,7 @@ class PDF extends PDF_Rotate {
         $pdf->Cell(80, 6, utf8_decode('Factura N° ' . strtoupper($row[14])),1,0, 'L',true); //Numero de factura
 
         $pdf->Cell(40, 6, utf8_decode('N° Precinto: ' . strtoupper($row[15])),1,0, 'L',true); //Numero de factura  
-        $pdf->Cell(85, 6, utf8_decode('Forma de pago: ' . strtoupper($row[7])),1,0, 'L',true); ///RIF/CI(X,Y)
+        $pdf->Cell(45, 6, utf8_decode('Forma de pago: ' . strtoupper($row[7])),1,0, 'L',true); ///RIF/CI(X,Y)
        // $pdf->Cell(60, 6, utf8_decode('CLIENTE: ' . strtoupper($row[0])),1,0, 'L',true); ////CLIENTE (X,Y)  
         $pdf->ln();
         $pdf->SetX(5);
@@ -180,11 +180,11 @@ class PDF extends PDF_Rotate {
         //$pdf->Cell(60, 6, utf8_decode('' . strtoupper($row[0])),1,0, 'L',true); ////CLIENTE (X,Y)    
     
 
-        $pdf->Text(150, 240, utf8_decode('Sub-Total: ' . number_format(($row[8]),2,',','.') ), 0, 'C', 0); ////SUBTOTAL (X,Y)  
-
-        $pdf->Text(150, 245, utf8_decode('IVA(16%): ' . number_format(($row[11]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
-
-        $pdf->Text(150, 250, utf8_decode('Total: ' . number_format(($row[13]),2,',','.')  ), 0, 'C', 0); ///Total (X,Y)  
+        $pdf->Text(150, 230, utf8_decode('Base Imp. ' . number_format(($row[8]),2,',','.') ), 0, 'C', 0); ////SUBTOTAL (X,Y) 
+        $pdf->Text(150, 235, utf8_decode('IVA G 16.00% ' . number_format(($row[11]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
+        $pdf->Text(150, 240, utf8_decode('IGTF 3% ' . number_format(($row[16]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
+        $pdf->Text(150, 245, utf8_decode('DIVISA ' . number_format(($row[17]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
+        $pdf->Text(150, 250, utf8_decode('TOTAL: ' . number_format(($row[13]),2,',','.')  ), 0, 'C', 0); ///Total (X,Y) 
         
                  
         $pdf->Ln(2);

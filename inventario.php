@@ -11,7 +11,7 @@
 	require_once ("config/conexion.php");//Contiene funcion que conecta a la base de datos
 	
 	$active_productos="active";
-	$title="Inventario | SIFONELC";
+	$title="Inventario | VENPRO";
 ?>
 <!DOCTYPE html>
 <html lang="en">

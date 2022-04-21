@@ -85,12 +85,12 @@
 																				'',
 																				'',
 																				'',
-																				'$_POST[subtotal_bs]',
+																				'$_POST[subtotal]',
 																				'$_POST[tarifa_0]',
 																				'$_POST[tarifa]',
-																				'$_POST[iva_bs]',
+																				'$_POST[iva]',
 																				'$_POST[otros]',
-																				'$_POST[total_pagar_bs]',
+																				'$_POST[total_pagar]',
 																				'$_POST[efectivo]',
 																				'$_POST[cambio]',
 																				'',
@@ -98,13 +98,10 @@
 																				'1', 
 																				'$fecha',
 																				'$_POST[precinto_nro]',
-																				'$_POST[cotizaci]',
+																				'$_POST[factor]',
 																				'$_POST[divisas]',
-																				'$_POST[subtotal_dolar]',
-																				'$_POST[iva_dolar]',
-																				'$_POST[total_pagar_dolar]',
-																				'$_POST[total_impuesto_divi]',
-																				'$_POST[total_a_divi]')");
+																				'$_POST[iva_igtf]',																				
+																				'$_POST[total_pagar_dolar]')");
 
 			} else {
 				// guardar factura
@@ -122,12 +119,12 @@
 																				'',
 																				'',
 																				'',
-																				'$_POST[subtotal_bs]',
+																				'$_POST[subtotal]',
 																				'$_POST[tarifa_0]',
 																				'$_POST[tarifa]',
-																				'$_POST[iva_bs]',
+																				'$_POST[iva]',
 																				'$_POST[otros]',
-																				'$_POST[total_pagar_bs]',
+																				'$_POST[total_pagar]',
 																				'$_POST[efectivo]',
 																				'$_POST[cambio]',
 																				'',
@@ -135,13 +132,10 @@
 																				'1', 
 																				'$fecha',
 																				'$_POST[precinto_nro]',
-																				'$_POST[cotizaci]',
+																				'$_POST[factor]',
 																				'$_POST[divisas]',
-																				'$_POST[subtotal_dolar]',
-																				'$_POST[iva_dolar]',
-																				'$_POST[total_pagar_dolar]',
-																				'$_POST[total_impuesto_divi]',
-																				'$_POST[total_a_divi]')");
+																				'$_POST[iva_igtf]',																				
+																				'$_POST[total_pagar_dolar]')");
 			}
 			// fin
 
@@ -367,12 +361,12 @@
 																				'',
 																				'',
 																				'',
-																				'$_POST[subtotal_bs]',
+																				'$_POST[subtotal]',
 																				'$_POST[tarifa_0]',
 																				'$_POST[tarifa]',
-																				'$_POST[iva_bs]',
+																				'$_POST[iva]',
 																				'$_POST[otros]',
-																				'$_POST[total_pagar_bs]',
+																				'$_POST[total_pagar]',
 																				'$_POST[efectivo]',
 																				'$_POST[cambio]',
 																				'',
@@ -380,13 +374,10 @@
 																				'1', 
 																				'$fecha',
 																				'$_POST[precinto_nro]',
-																				'$_POST[cotizaci]',
+																				'$_POST[factor]',
 																				'$_POST[divisas]',
-																				'$_POST[subtotal_dolar]',
-																				'$_POST[iva_dolar]',
-																				'$_POST[total_pagar_dolar]',
-																				'$_POST[total_impuesto_divi]',
-																				'$_POST[total_a_divi])");
+																				'$_POST[iva_igtf]',																				
+																				'$_POST[total_pagar_dolar])");
 				// fin
 
 			} else {
@@ -405,12 +396,12 @@
 																				'',
 																				'',
 																				'',
-																				'$_POST[subtotal_bs]',
+																				'$_POST[subtotal]',
 																				'$_POST[tarifa_0]',
 																				'$_POST[tarifa]',
-																				'$_POST[iva_bs]',
+																				'$_POST[iva]',
 																				'$_POST[otros]',
-																				'$_POST[total_pagar_bs]',
+																				'$_POST[total_pagar]',
 																				'$_POST[efectivo]',
 																				'$_POST[cambio]',
 																				'',
@@ -418,13 +409,10 @@
 																				'1', 
 																				'$fecha',
 																				'$_POST[precinto_nro]',
-																				'$_POST[cotizaci]',
+																				'$_POST[factor]',
 																				'$_POST[divisas]',
-																				'$_POST[subtotal_dolar]',
-																				'$_POST[iva_dolar]',
-																				'$_POST[total_pagar_dolar]',
-																				'$_POST[total_impuesto_divi]',
-																				'$_POST[total_a_divi]')");
+																				'$_POST[iva_igtf]',																				
+																				'$_POST[total_pagar_dolar]')");
 				// fin	
 			}
 
@@ -621,7 +609,7 @@
 	//fin
 
 			//Cargar Factor
-			if (isset($_POST['factor'])) {
+			if (isset($_POST['consultar_factor'])) {
 
 				$resultado =  mysqli_query($con,"SELECT * FROM cotizacion");
 				while ($row = mysqli_fetch_array($resultado)) {

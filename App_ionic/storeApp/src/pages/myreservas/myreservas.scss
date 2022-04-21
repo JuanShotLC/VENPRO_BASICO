@@ -1,0 +1,147 @@
+page-myreservas {
+  .accionedit{
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    width: 20px;
+    text-align: center;
+    float: right;
+    color: rgb(94, 93, 93);
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  .botonoccion{
+    float: right;
+    color: rgb(94, 93, 93);
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    BACKGROUND-COLOR: #d9d9d9;
+    border-radius: 10px;
+    width: 20px;
+    /* margin-left: -12px; */
+    text-align: center;
+  }
+  ion-title {
+    text-align: center;
+    color: #afafaf!important;
+  }
+  .toolbar-title-md {
+    padding: 0 12px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #a3352f
+  }
+  .fab-ios-primary {
+    color: #000;
+    background-color: #bdbdbd;
+    float: right;
+    width: 30px;
+    height: 30px;
+  }
+  .card-ios {
+    margin: 12px;
+    border-radius: 15px;
+    width: calc(100% - 24px);
+    font-size: 1.4rem;
+    background: #fff;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 8px 1px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-md {
+    margin: 10px;
+    border-radius: 15px;
+    width: calc(100% - 20px);
+    font-size: 1.4rem;
+    background: #fff;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  .raya{
+    border: solid 1px;
+    color: #dedede;
+    width: 15%;
+    margin-bottom: 3%;
+  }
+
+  .card-md h1 {
+    font-weight: bold;
+    color: #808080;
+  }
+  .textop{
+    color: #bebebe;
+  }
+  .card-md p {
+    margin: 0 0 2px;
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #9E9E9E;
+  }
+  .text-8px{
+    font-size: 8px;
+  }
+  .text-11px{
+    font-size: 11px;
+    color: #c9c9c9;
+    margin-top: 1%!important;
+    float: left;
+
+  }
+  .alert-md .alert-wrapper {
+    border-radius: 15px!important;
+    max-width: 280px;
+    background-color: #fafafa;
+    -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  }
+
+}
+
+.alert-md .alert-wrapper {
+  border-radius: 15px!important;
+  text-align: center;
+  max-width: 280px;
+  background-color: #fafafa;
+  -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+}
+
+.alert-md .alert-head {
+  text-align: left;
+  text-align: start;
+  padding: 24px 24px 20px;
+  text-align: center;
+}
+
+.alert-md .alert-button-group {
+  -webkit-flex-wrap: wrap-reverse;
+  -ms-flex-wrap: wrap-reverse;
+  flex-wrap: wrap-reverse;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: end;
+  padding: 8px 8px 8px 24px;
+}
+.alert-md .alert-button {
+  text-align: right;
+  text-align: end;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #bdbdbd;
+  background-color: transparent;
+  margin: 0 8px 0 0;
+  padding: 10px;
+  float: right;
+  margin-left: 18px;
+}
+.text-6px{
+  font-size: 6px;
+}

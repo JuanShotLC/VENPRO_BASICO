@@ -1,0 +1,67 @@
+
+<ion-content padding class="fondoclaro">
+  <!--<ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()" >
+        <ion-buttons     start>
+          <ion-icon class="atrasbutton-2" color="danger"  ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8>
+      <ion-title class="center">CONFIRMACIÓN DE COMPRA</ion-title>
+    </ion-col>
+    <ion-col  col-2>
+    </ion-col>
+  </ion-row>-->
+
+  <ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()">
+        <ion-buttons   start>
+          <ion-icon class="atrasbutton-2" color="danger"  ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8>
+      <ion-title>CONFIRMACIÓN DE COMPRA</ion-title>
+    </ion-col>
+    <ion-col  col-2>
+    </ion-col>
+  </ion-row>
+
+
+
+  <ion-card style="height: 42vh; border-radius: 20px; margin-top: 10vh">
+    <ion-card-header class="header-card">
+      <ion-card-title>
+        <img class="headlogo"  src="assets/logo.png"> <b class="title-header">¡CONFIRMACIÓN DE COMPRA!</b> <b (tap)="atras()"  class="xheader">x</b>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <h5 class="titlecontent">¿Estás seguro de que no te olvidas algo mas?</h5>
+      <p class="textocon"> Verifica que no se te escape algo, si estas seguro de tu compra presiona en el botón confirmar.
+      </p>
+      <ion-row>
+        <ion-col style="margin-bottom: 5px"  class="center" col-12>
+          <button   ion-button color="dark"  outline>TOTAL: ${{total}}</button>
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+  </ion-card>
+  <img style="width: 25%; margin-top: 10%" class="img-center" src="assets/logo2.png">
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+
+      <ion-col col-12>
+        <div>
+          <button (tap)="openModalWithParams()" class="botongrande" ion-button color="light" >CONFIRMAR</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

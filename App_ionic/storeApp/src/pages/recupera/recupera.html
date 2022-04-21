@@ -1,0 +1,39 @@
+
+<ion-content class="login-content bg-fondo">
+
+  <ion-row>
+    <ion-col col-2>
+      <ion-buttons start>
+        <button (click)="atras()"  class="xbutton" ion-fab color="danger"><ion-icon  class="xicon" ios="ios-close" md="md-close"></ion-icon></button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-8>
+      <div class="margentitle">RECUPERAR CONTRASEÑA</div>
+    </ion-col>
+    <ion-col col-2>
+    </ion-col>
+  </ion-row>
+  <div >
+    <form (ngSubmit)="recupera()" #registerForm="ngForm">
+      <ion-row class="login-box">
+        <ion-col>
+          <ion-list inset>
+
+            <ion-item class="button-5">
+              <ion-input class="inputborde"   [(ngModel)]="recuperadatos.email" type="email"  placeholder="email" name="email"  required></ion-input>
+            </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="login-box-2" >
+        <ion-col class="signup-col center margenbutonbajo">
+          <b class="font-11 colortext" color="primary" block clear >Te enviaremos un email con tu contraseña nueva</b>
+          <button ion-button class="submit-btn radio5 btnalto nomayus letrabuton" color="primary" full type="submit" [disabled]="!registerForm.form.valid">Recuperar contraseña</button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+  </div>
+</ion-content>

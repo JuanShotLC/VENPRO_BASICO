@@ -1,0 +1,33 @@
+
+<ion-content class="login-content bg-main">
+
+ <!-- <div class="margentitle">Bienvenidos</div>-->
+  <div >
+    <form (ngSubmit)="login()" #registerForm="ngForm">
+      <ion-row class="login-box">
+        <ion-col>
+          <ion-list inset>
+
+            <ion-item class="button-15">
+              <ion-input class="inputborde" type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input class="inputborde"  type="password" placeholder="Password" name="pass" [(ngModel)]="registerCredentials.pass" required></ion-input>
+            </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="login-box-2" >
+        <ion-col class="signup-col center margenbutonbajo">
+          <b class="font-11 colortext" color="primary" block clear (tap)="forgotPass()">¿Olvidaste tu Contraseña?</b>
+          <div ion-button class="submit-btn radio5 nomayus btnalto letrabuton botongrande" (tap)="Registerp()"  color="primary" full  >Registrate</div>
+          <button ion-button class="submit-btn radio5 nomayus btnalto letrabuton botongrande" color="primary" full type="submit" [disabled]="!registerForm.form.valid">Ingresar</button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+  </div>
+</ion-content>

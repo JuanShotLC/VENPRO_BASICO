@@ -1,0 +1,80 @@
+
+<ion-content padding class="fondoblanco">
+  <ion-row>
+    <ion-col (click)="atras()" col-2>
+      <ion-buttons start>
+       <!-- <button (click)="atras()"  class="xbutton" ion-fab color="danger"><ion-icon  class="xicon" ios="ios-close" md="md-close"></ion-icon></button>-->
+        <ion-icon  class="atrasbutton-2" color="danger" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-8>
+      <div class="margentitle">MI PERFIL</div>
+    </ion-col>
+    <ion-col col-2>
+    </ion-col>
+  </ion-row>
+  <ion-row style="margin-top: 5%">
+      <ion-col class="center img-center" col-12>
+          <!-- <div (tap)="getMedia()" > -->
+              <div  >
+              <img *ngIf="imgP" class="circular" [src]="imgP" alt="">
+              <img *ngIf="!imgP" class="circular" [src]="" alt="">
+          </div>
+      </ion-col>
+  </ion-row>
+  <form (ngSubmit)="perfil()" #registerForm="ngForm">
+  <ion-row class="margenalto15">
+    <ion-col col-12>
+        <ion-list inset>
+
+          <ion-item class="button-15 ">
+
+            <ion-input [(ngModel)]="datosuser.nombre" class="inputborde" type="text" placeholder="Nombre" name="nombre" required></ion-input>
+          </ion-item>
+          <ion-item class="button-15 ">
+            <ion-input [(ngModel)]="datosuser.apellido" class="inputborde" type="text" placeholder="Apellido" name="Apellido" required></ion-input>
+          </ion-item>
+          <ion-item class="button-15">
+            <ion-input class="inputborde"  disabled [(ngModel)]="datosuser.email"  type="email" placeholder="Email" name="email"  required></ion-input>
+          </ion-item>
+          <ion-item class="button-10">
+            <ion-input class="inputborde" [(ngModel)]="datosuser.telefono"  type="number" placeholder="Teléfono" name="telefono"  required></ion-input>
+          </ion-item>
+          <ion-item class="button-15 ">
+            <ion-input [(ngModel)]="datosuser.direccion" class="inputborde" type="text" placeholder="Direccion" name="Direccion" required></ion-input>
+          </ion-item>
+          <ion-item class="button-15 ">
+            <ion-input [(ngModel)]="datosuser.direccion2" class="inputborde" type="text" placeholder="N° de casa o apartamento" name="Direccion2" required></ion-input>
+          </ion-item>
+
+
+          <div class="center" style="margin-bottom: 15px;">
+            <div ion-button class="submit-btn radio5"  (tap)="actualizarcoor()"> Actualizar Coordenadas </div>
+          </div>
+
+          <ion-item class="button-15">
+            <ion-input class="inputborde"  disabled [(ngModel)]="datosuser.latitude"  type="email" placeholder="Latitude" name="latitude"  required></ion-input>
+          </ion-item>
+          <ion-item class="button-15">
+            <ion-input class="inputborde"  disabled [(ngModel)]="datosuser.longitude"  type="email" placeholder="Longitude" name="longitude"  required></ion-input>
+          </ion-item>
+         <!-- <ion-item class="button-10">
+            <ion-input class="inputborde" [(ngModel)]="datosuser.password"  type="password" placeholder="Nueva contraseña" name="password"  required></ion-input>
+          </ion-item>-->
+        </ion-list>
+      </ion-col>
+  </ion-row>
+  <ion-row>
+      <ion-col col-4>
+      </ion-col>
+      <ion-col col-4>
+        <ion-col class="signup-col center">
+          <button ion-button class="submit-btn radio5 grisoscuro"  color="grisoscuro" full type="submit">GUARDAR</button>
+        </ion-col>
+      </ion-col>
+      <ion-col col-4>
+      </ion-col>
+  </ion-row>
+  </form>
+
+</ion-content>

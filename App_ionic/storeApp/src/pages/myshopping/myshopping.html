@@ -1,0 +1,76 @@
+<ion-content padding  class="fondoclaro">
+  <ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()" >
+        <ion-buttons     start>
+          <ion-icon class="atrasbutton-2" color="danger" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8>
+      <ion-title class="center">{{titulo}}</ion-title>
+    </ion-col>
+    <ion-col  col-2>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="tipo == 'vendedor'">
+    <ion-col col-12 class="center">
+      <div>
+        Vendedor: {{user}}
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12>
+      <div>
+        <button  class="botongrande margenalto" ion-button color="light" >Cantidad de Productos: {{total}}</button>
+      </div>
+    </ion-col>
+  </ion-row>
+  <div *ngIf="vacio==false">
+    <ion-card   *ngFor="let item of lista ">
+      <ion-card-content (tap)="godetail(item.publicacion.id)" >
+        <ion-row  no-padding>
+          <ion-col style="padding: 0px;"  *ngIf="tipo == 'vendedor'"  col-9>
+            <b class="text-8px" left > {{item.publicacion.horario}}</b> <b class="text-11px2" left color="primary"></b>
+          </ion-col>
+          <ion-col style="padding: 0px;"  *ngIf="tipo != 'vendedor'" col-5>
+            <b class="text-8px" left > {{item.publicacion.fecha}}</b> <b class="text-11px2" left color="primary"></b>
+          </ion-col>
+          <ion-col style="padding: 0px;"  *ngIf="tipo != 'vendedor'" col-4>
+            <b class="text-8px" left color="primary" > Vendedor </b> <b class="text-11px2" left color="primary"></b>
+          </ion-col>
+          <ion-col style="padding: 0px" left col-3>
+            <b class="text-11px" left color="primary">valor</b>
+          </ion-col>
+          <ion-col style="padding: 0px" left col-9 *ngIf="tipo == 'vendedor'">
+            <h5 class="text-5px" left>{{item.publicacion.titulo}}</h5>
+          </ion-col>
+          <ion-col style="padding: 0px" left col-5 *ngIf="tipo != 'vendedor'">
+            <h5 class="text-5px" left>{{item.publicacion.titulo}}</h5>
+          </ion-col>
+          <ion-col style="padding: 0px" left col-4 *ngIf="tipo != 'vendedor'">
+            <h5 class="text-5px" left>{{item.publicacion.name}}</h5>
+          </ion-col>
+          <ion-col style="padding: 0px" left t col-3>
+            <h5 *ngIf="item.publicacion.tipo_moneda=='1'"class="text-5px">{{item.publicacion.precio}} USD </h5>
+            <h5 *ngIf="item.publicacion.tipo_moneda=='2'" class="text-5px">{{item.publicacion.precio}} EUR </h5>
+            <h5 *ngIf="item.publicacion.tipo_moneda==''" class="text-5px">{{item.publicacion.precio}} EUR </h5>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="textfooter center margentitle">
+      <img width="80wv" src="assets/logo.png">
+    </div>
+  </div>
+
+  <div *ngIf="vacio==true">
+    <div  class="center margenalto15" >
+      <img class="center" src="assets/icon/miscomprasv.png">
+    </div>
+    <h2 class="center letralabel">No tienes cuentas abiertas</h2>
+  </div>
+
+</ion-content>

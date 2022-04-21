@@ -1,0 +1,102 @@
+
+<ion-content  class="fondoclaro">
+  <ion-row>
+    <ion-col col-2>
+      <ion-buttons start>
+        <button (click)="atras_()"  class="xbutton" ion-fab color="danger"><ion-icon  class="xicon" ios="ios-close" md="md-close"></ion-icon></button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-8>
+      <div class="margentitle">SERVICIOS</div>
+    </ion-col>
+    <ion-col col-2>
+    </ion-col>
+  </ion-row>
+ <!-- <ion-row style="margin-top: 2%">
+    <ion-col  col-2>
+      <div (tap)="atras()">
+        <ion-buttons   class="botonx" ion-fab color="primary"  start>
+          x
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8>
+      <ion-title  style="color: #9E9E9E; ">SERVICIOS</ion-title>
+    </ion-col>
+    <ion-col col-2>
+    </ion-col>
+  </ion-row>-->
+
+  <ion-row *ngFor="let item of servicelist.data" class="saltomenor" style="margin-right: 5%;">
+    <ion-col  col-4>
+      <ion-card style="width: 100%; height: 75%; border-radius: 10px">
+        <ion-card-content>
+          <img style="height: 60px;" src="{{item.image}}">
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col style="padding-left: 0px;" col-8>
+      <ion-card  style="width: 100%; height: 75%; border-radius: 10px">
+        <ion-card-content>
+          <ion-card-title>
+            <h2 class="titleoscuro">{{item.title}}</h2>
+          </ion-card-title>
+          <ion-row no-padding>
+            <ion-col style="max-height: 45px;" text-left col-11>
+              <b style="width: 100%;  overflow:hidden;    height: 30px;  white-space:nowrap; text-overflow: ellipsis;" class="text-11px">
+                {{item.info}}
+              </b>
+            </ion-col>
+            <ion-col style="width: 100%" class="boton2" right text-right col-1>
+              <button (tap)="goresevaservice(item.ID)" class="botonplus" ion-fab color="primary" >
+                <ion-icon name='add'></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+
+ <!-- <div class="divgrisbajo">
+    <ion-row style="margin: 10px">
+      <ion-col class="divcar" col-4>
+        <div class="divgrande">
+          <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col  col-8>
+        <div class="divgrande2">
+          <h2>ADQUIRIR SERVICIO(S)</h2>
+          <p>-lavaderia<p>
+          <p>-jardineria</p>
+          <p>-Baby Care</p>
+          <p>-Prensa internacional</p>
+           <p> más...</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>-->
+
+
+
+
+  <!--<ion-row>
+    <ion-col col-12>
+      <img style="width: 20%; color: #777777; margin-top: 5%" class="img-center" src="assets/logo.png">
+    </ion-col>
+  </ion-row>-->
+</ion-content>
+<!--<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+
+      <ion-col col-12>
+        <div>
+          <button (tap)="gooperantion()" class="botongrande" ion-button color="light" >RESERVAR</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>-->

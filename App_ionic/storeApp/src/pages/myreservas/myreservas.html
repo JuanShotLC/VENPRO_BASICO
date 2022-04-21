@@ -1,0 +1,66 @@
+<ion-content padding  class="fondoclaro">
+  <ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()" >
+        <ion-buttons     start>
+          <ion-icon class="atrasbutton-2" color="danger" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8>
+      <ion-title class="center">MIS PRODUCTOS</ion-title>
+    </ion-col>
+    <ion-col  col-2>
+    </ion-col>
+  </ion-row>
+  <div *ngFor="let item of servicelist ">
+    <ion-card >
+        <ion-card-content >
+          <ion-row  no-padding>
+
+            <ion-col style="padding: 0px; color: #818181"  col-8>
+              <b class="text-8px" left >Nombre:</b>
+            </ion-col>
+            <ion-col style="padding: 0px; margin-top: 3px;" left col-3>
+              <b class="text-11px" left color="primary">Valor</b>
+            </ion-col>
+
+            <ion-col style="padding: 0px" left col-8>
+              <h5 style="font-weight: 500; color: #818181" class="text-5px" left>{{item.publicacion.titulo}}</h5>
+            </ion-col>
+            <ion-col style="padding: 0px; margin-top: 7px;" left  col-3>
+              <h5 style="float: left; font-weight: 500; color: #818181" *ngIf="item.publicacion.tipo_moneda=='1'"class="text-5px center">{{item.publicacion.precio}} USD </h5>
+              <h5 style="float: left; font-weight: 500; color: #818181" *ngIf="item.publicacion.tipo_moneda=='2'" class="text-5px center">{{item.publicacion.precio}} EUR </h5>
+              <h5 style="float: left; font-weight: 500; color: #818181" *ngIf="item.publicacion.tipo_moneda==''" class="text-5px center">{{item.publicacion.precio}} EUR </h5>
+            </ion-col>
+            <ion-col style="padding: 0px;     margin-top: -20px;" left col-1>
+              <div (tap)="goresevaservice(item.publicacion.id)" ><img class="iconedit" src="assets/icon/modificar.png"></div>
+              <div (tap)="delete(idservice=item.publicacion.id)" ><img class="icondelete" src="assets/icon/eliminar.png"></div>
+            </ion-col>
+            <ion-col style="padding: 0px; color: #818181; margin-top: -15px;" left col-9>
+            </ion-col>
+            <ion-col style="padding: 0px; color: #818181; margin-top: -0px;" left col-3>
+            </ion-col>
+
+           <!-- <ion-col style="padding: 0px; margin-top: -10px" left col-1>
+              <div class="accionedit" (tap)="goresevaservice(idservice=item.value.ID,codigo=item2.value.code,init=item2.value.init,end=item2.value.end,title=item.value.title,tipo=item.value.type)" style="float: right; color: #5e5d5d"><ion-icon ios="ios-create" md="md-create"></ion-icon></div>
+            </ion-col>
+            <ion-col style="padding: 0px;  margin-top: -10px" left col-1>
+              <div class="accionedit" (tap)="delete(idservice=item.value.ID,codigo=item2.value.code)" style="float: right; color: #5e5d5d"><ion-icon ios="ios-trash" md="md-trash"></ion-icon></div>
+            </ion-col>-->
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+  </div>
+  <div *ngIf="valuenull==true">
+    <div  class="center margenalto15" >
+      <img class="center" src="assets/icon/miscomprasv.png">
+    </div>
+    <h2 class="center letralabel">Aún no publicas nada :(</h2>
+  </div>
+
+  <div  *ngIf="valuenull==false" class="textfooter center margentitle">
+    <img width="80wv" src="assets/logo.png">
+  </div>
+
+</ion-content>

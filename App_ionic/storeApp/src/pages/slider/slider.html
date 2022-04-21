@@ -1,0 +1,85 @@
+<!--
+  Generated template for the SliderPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+
+<ion-content  padding class="bg-fondo-s">
+  <div class="margentitle">Información para vendedores</div>
+  <ion-slides  class="sliderwith">
+
+
+
+    <ion-slide >
+      <ion-card class="cardwith"  >
+        <ion-card-header class="button-10">
+          <label> Bienvenidos! </label>
+        </ion-card-header>
+        <ion-card-content >
+          <img class="img-intro"  src="https://apatxee.com/img/apatxee1.png">
+        </ion-card-content>
+        <ion-card-content class="textcontent2"  style="width: 100%" >
+          <div class="textoslider2">Publica tus dias, semanas y horarios de entrega.
+            en ese tiempo los compradores podrán comprar tus productos. puedes repetir horarios si publicas más anuncios.
+          </div>
+        </ion-card-content>
+        <ion-card-content>
+          <img  class="img2" style="margin-top: 10%;"  src="assets/logo.png">
+        </ion-card-content>
+
+      </ion-card>
+    </ion-slide>
+    <ion-slide >
+      <ion-card class="cardwith"  >
+        <ion-card-content >
+          <img class="img-grande" style="margin-top: 10%;" src="https://apatxee.com/img/apatxee2.png">
+        </ion-card-content>
+        <ion-card-content class="textcontent2" style="width: 100%" >
+          <div class="textoslider2" style="width: 100%">
+            Cuando el cliente confirme la compra, tú recibirás una notificación push y un email en tu
+            smartphone confirmándote los datos del comprador. Este será el
+            momento en el que debes llevar el producto al domicilio del comprador.
+          </div>
+        </ion-card-content>
+        <ion-card-content>
+          <img  class="img2"  src="assets/logo.png">
+        </ion-card-content>
+
+      </ion-card>
+    </ion-slide>
+    <ion-slide >
+      <ion-card class="cardwith"  >
+        <ion-card-content >
+          <img class="img1" style="margin-top: 10%;"  src="https://apatxee.com/img/apatxee3.png">
+        </ion-card-content>
+        <ion-card-content class="textcontent2" style="width: 100%" >
+          <div class="textoslider" style="width: 100%">
+            Puedes utilizar Stuart para enviar tu productos.
+            Es conveniente que te registres antes para ver si tienes el servicio disponible en tu ciudad..
+          </div>
+          <div style="margin-top: 25px;" (click)="irweb()">
+            <button  style="margin-top: 25px;" ion-button class="submit-btn radio5 grisoscuro"  color="grisoscuro" full type="submit">Visitar Stuart</button>
+          </div>
+        </ion-card-content>
+        <ion-card-content>
+          <img  class="img2"  src="assets/logo.png">
+        </ion-card-content>
+
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+
+  <ion-fab *ngIf="alante!=null" right middle (tap)="goToSlide()" >
+    <ion-icon name="md-arrow-round-forward"></ion-icon>
+  </ion-fab>
+  <ion-fab  left middle (tap)="preSlide()" >
+    <ion-icon name="md-arrow-round-back"></ion-icon>
+  </ion-fab>
+
+<p (tap)="goeventos()" class="textfooter"> OMITIR</p>
+
+
+</ion-content>

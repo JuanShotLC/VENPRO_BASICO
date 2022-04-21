@@ -1,0 +1,187 @@
+<ion-content padding class="fondoclaro">
+  <ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()">
+        <ion-buttons   start>
+          <ion-icon class="atrasbutton-2" color="danger" name="md-close"></ion-icon>
+          <!--<ion-icon class="atrasbutton-2" color="danger"  ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>-->
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8 class="center">
+      <ion-title styl8e="color: #9E9E9E">PUBLICA TU ARTICULO</ion-title>
+    </ion-col>
+    <ion-col  col-2>
+    </ion-col>
+  </ion-row>
+  <ion-row  *ngIf="suiche==1"  style="margin-top: 10%">
+    <ion-col col-12>
+      1. Datos Basicos del producto.
+    </ion-col>
+
+    <ion-col  class="center" col-12>
+
+      <ion-list>
+
+        <ion-item>
+          <ion-label color="primary" stacked>Name:</ion-label>
+          <ion-input [(ngModel)]="titulo" type="text" placeholder="Nombre del producto"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Precio:</ion-label>
+          <ion-input [(ngModel)]="precio" type="number" placeholder="0.00 "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Divisa</ion-label>
+          <ion-select [(ngModel)]="divisa">
+            <ion-option value="2">Euros</ion-option>
+            <ion-option value="1">Dolares</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Categoria</ion-label>
+          <ion-select  [(ngModel)]="categoria" multiple="true">
+              <ion-option [value]="item"  *ngFor="let item of categoriaslist; let i = index">{{item.datosextra}}</ion-option>
+          </ion-select>
+
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label color="primary" stacked>Descripcion:</ion-label>
+          <ion-textarea [(ngModel)]="descripcion" placeholder="Description"></ion-textarea>
+        </ion-item>
+
+
+      </ion-list>
+
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="suiche==1">
+    <ion-col col-12>
+      2.-Horario del producto
+    </ion-col>
+    <ion-col col-12>
+      <div>
+        <ion-card>
+              <form style="width: 100%!important;" #myForm="ngForm" novalidate>
+                <my-date-range-picker name="mydaterange" [options]="myDateRangePickerOptions" [(ngModel)]="model" required></my-date-range-picker>
+              </form>
+
+        </ion-card>
+      </div>
+     <ion-list>
+       <ion-item>
+         <ion-label>Hora de inicio</ion-label>
+         <ion-datetime displayFormat="hh:mm A" pickerFormat="hh mm A" [(ngModel)]="hour_init"></ion-datetime>
+       </ion-item>
+       <ion-item>
+         <ion-label>Hora Final</ion-label>
+         <ion-datetime displayFormat="hh:mm A" pickerFormat="hh mm A" [(ngModel)]="hour_finish"></ion-datetime>
+       </ion-item>
+     </ion-list>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label>Lunes</ion-label>
+            <ion-checkbox placeholder="lunes" [(ngModel)]="dias[0].status"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label>Martes</ion-label>
+            <ion-checkbox placeholder="lunes" [(ngModel)]="dias[1].status"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label>Miercoles</ion-label>
+            <ion-checkbox placeholder="lunes" [(ngModel)]="dias[2].status"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label>Jueves</ion-label>
+            <ion-checkbox placeholder="lunes" [(ngModel)]="dias[3].status"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label>Viernes</ion-label>
+            <ion-checkbox placeholder="lunes" [(ngModel)]="dias[4].status"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label>Sabado</ion-label>
+            <ion-checkbox placeholder="lunes" [(ngModel)]="dias[5].status"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>Domingo</ion-label>
+            <ion-checkbox placeholder="lunes" [(ngModel)]="dias[6].status"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="suiche==2">
+    <ion-col col-12>
+      3.-Cargar Imagen
+    </ion-col>
+    <ion-col col-3 *ngFor="let item of imagess; let i = index">
+      <ion-icon (tap)="borrari(item.id)" style="float: right; font-size: 30px" name="close-circle"></ion-icon>
+      <img   src="{{empoint+item.ruta}}">
+    </ion-col>
+    <ion-col col-12>
+      <div>
+        <ion-card>
+          <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"></dropzone>
+        </ion-card>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="suiche==3">
+
+    <ion-col col-12>
+      <div>
+        <ion-card>
+          <h1 style="text-align: center">Producto agregado Correctamente</h1>
+          <p style="text-align: center!important; margin-bottom: 10%">tu producto ya fue registrado exitosamente, desde este momento los clientes podran verlo.</p>
+
+          <div *ngIf="pay==1">
+            <p style="text-align: center!important;">¿Deseas destacar este producto?</p>
+            <p style="text-align: center!important;">Tiene un costo de 3 Euros</p>
+            <button (click)="pagarpaypal()" class="botongrande" ion-button color="light" >Destacar con Paypal</button>
+          </div>
+          <div *ngIf="pay==2">
+            <h2 style="text-align: center;"><ion-icon ios="ios-star-outline" md="ios-star-outline"></ion-icon></h2>
+            <H3 style="text-align: center!important;">Felicidades Tu Producto ahora sera mas visible para tus clientes </H3>
+            <p style="text-align: center!important;">Producto destacado correctamente</p>
+          </div>
+          <button *ngIf="suiche==3" style="text-align: center" (click)="verpro()" class="botongrande" ion-button color="light" >Ver Producto</button>
+
+        </ion-card>
+      </div>
+    </ion-col>
+  </ion-row>
+
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+
+      <ion-col col-12>
+        <div>
+          <button *ngIf="suiche==1"(tap)="openModalWithParams(this.suiche)" class="botongrande" ion-button color="light" >Siguiente</button>
+          <button *ngIf="suiche==2" (tap)="addattrs(this.suiche)" class="botongrande" ion-button color="light" >Siguiente</button>
+
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
+

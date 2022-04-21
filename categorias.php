@@ -10,7 +10,7 @@
 	require_once ("config/conexion.php");//Contiene funcion que conecta a la base de datos
 	
 	$active_categoria="active";
-	$title="Categorías | SIFONELC";
+	$title="Categorías | VENPRO";
 ?>
 <?php if($_SESSION['user_name'] == 'baraka') { ?>
 <!DOCTYPE html>

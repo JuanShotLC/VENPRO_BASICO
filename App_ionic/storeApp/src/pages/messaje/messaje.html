@@ -1,0 +1,53 @@
+
+<ion-content padding class="fondoblanco">
+  <ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()">
+        <ion-buttons   start>
+
+          <ion-icon class="atrasbutton-2" color="danger"ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8 class="center">
+      <ion-title >ESCRIBIR MENSAJE</ion-title>
+    </ion-col>
+    <ion-col  col-2>
+    </ion-col>
+  </ion-row>
+  <ion-row style="margin-top: 10%">
+    <ion-col col-12>
+      <div>
+        <ion-card style="border-radius: 10px;">
+          <ion-card-content>
+            <ion-input type="text" [(ngModel)]="data_msg.subject" name="Asunto" placeholder="Asunto"></ion-input>
+            <ion-textarea [(ngModel)]="data_msg.message" placeholder="Hola! escribenos..."></ion-textarea>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-col>
+  </ion-row>
+
+
+</ion-content>
+<ion-footer >
+  <ion-toolbar class="fondoblanco">
+    <ion-row>
+
+      <ion-col col-1>
+      </ion-col>
+      <ion-col col-12>
+        <div>
+          <button (tap)="sendMsg()" class="botongrande" ion-button color="light" >ENVIAR</button>
+        </div>
+      </ion-col>
+     <!-- <ion-col col-2>
+        <div>
+          <button  class="botongrande" ion-button color="light" ><ion-icon name="ios-link"></ion-icon></button>
+        </div>
+      </ion-col>-->
+      <ion-col col-1>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

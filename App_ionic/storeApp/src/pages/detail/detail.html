@@ -1,0 +1,126 @@
+<ion-content padding class="fondoclaro">
+  <div [ngStyle]="{'background-image': 'url(' +eventores.image + ') ' }"  class="fondocabecera">
+      <ion-row>
+        <ion-col col-2>
+          <ion-buttons  class="margenalto"  start>
+            <button  (tap)="godlist()" class="atrasbutton" ion-fab color="danger">
+              <ion-icon name="md-arrow-back"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col col-10>
+         <!-- <ion-title  class="margenalto"><h1 class="title-article">{{eventores.title}}</h1></ion-title>-->
+        </ion-col>
+
+        <!--<ion-col col-2>
+        </ion-col>
+        <ion-col col-10>
+          <div style="display: flex!important;     margin-top: -2vh;">
+            <button class="usericon" ion-fab color="danger">
+              <ion-icon  class="icopeque" name="md-person"></ion-icon>
+            </button>
+            <button class="usericon" ion-fab color="danger">
+              <ion-icon  class="icopeque" name="md-person"></ion-icon>
+            </button>
+            <button class="usericon" ion-fab color="danger">
+              <ion-icon  class="icopeque" name="md-person"></ion-icon>
+            </button>
+            <button class="usericon" ion-fab color="danger">
+              <ion-icon  class="icopeque" name="md-person"></ion-icon>
+            </button>
+            <button class="plusicon" ion-fab color="danger">
+              <ion-icon  class="icopeque" name="md-add"></ion-icon>
+            </button>
+          </div>
+        </ion-col>-->
+      </ion-row>
+
+      <ion-row>
+        <ion-col style="position: absolute;   bottom: 0;" >
+          <p *ngIf="type=='event'" class="texthora"><!-- Meses{{lastUpdated | amDifference: hoy: 'months'}}, -->{{lastUpdated | amDifference: hoy: 'days'}} dias<!--,{{lastUpdated | amDifference: hoy: 'hours'--> </p>
+        </ion-col>
+      </ion-row>
+  </div>
+    <ion-row>
+      <ion-col class="center" col-12>
+        <h5>{{eventores.title}}</h5>
+      </ion-col>
+
+        <ion-col *ngIf="type=='event'" col-3>
+        </ion-col>
+        <ion-col *ngIf="type=='event'" class="center" col-3>
+          <img src="assets/icon/horario.png">
+          <p  class="textpeque">{{eventores.hour}}</p>
+        </ion-col>
+        <ion-col *ngIf="type=='event'" class="center" col-3>
+          <img src="assets/icon/ubicacion.png">
+          <p  class="textpeque">{{eventores.place}}</p>
+        </ion-col>
+        <ion-col *ngIf="type=='event'" col-3>
+        </ion-col>
+
+      <ion-col col-12 >
+        <p class="center textcontent">{{eventores.info}}</p>
+      </ion-col>
+      <!--<ion-col class="center" col-12>
+
+        <button  ion-button color="dark" outline>$45.000</button>
+      </ion-col>-->
+
+
+        <ion-col *ngIf="existe==false && type=='event'"   class="center" col-3>
+        </ion-col>
+        <ion-col  *ngIf="existe==false && type=='event'"  class="center" col-6>
+          <p class="textpeque">
+            Cantidad de personas
+          </p>
+          <ion-row>
+            <ion-col  *ngIf="existe==false && type=='event'"  class="center" col-2>
+            </ion-col>
+            <ion-col  *ngIf="existe==false && type=='event'"  class="center" col-7>
+              <ion-input class="inputnumber" type="number" [(ngModel)]="cantidad" min="1"  placeholder="Number Input with no label"></ion-input>
+            </ion-col>
+            <ion-col  *ngIf="existe==false && type=='event'"  class="center" col-1>
+              <div class="flechasnumber">
+                <div><ion-icon (tap)="up(valor=true)" ios="ios-arrow-up" md="ios-arrow-up"></ion-icon></div>
+                <div><ion-icon (tap)="dow(valor=true)" ios="ios-arrow-down" md="ios-arrow-down" name="arrow-down"></ion-icon></div>
+              </div>
+            </ion-col>
+            <ion-col  *ngIf="existe==false && type=='event'"  class="center" col-2>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col  *ngIf="existe==false && type=='event'"  class="center" col-3>
+        </ion-col>
+        <ion-col  *ngIf="type=='event'" class="center " col-12>
+          <button  *ngIf="existe==false" (click)="asistir(valor=true)" class="button-md-light2 botonpeque" ion-button color="light" >ASISTIR</button>
+          <button  *ngIf="existe==true" (click)="noasitir(valor=true)" class="button-md-light2 botonpeque" ion-button color="light" >NO ASISTIR</button>
+        </ion-col>
+
+
+
+     <!-- <ion-col  class="center" col-6>
+        <button style="float: left;" class="button-md-light2" ion-button color="light" >NO ASISTIR</button>
+      </ion-col>-->
+      <!--<ion-col class="center" col-6>
+        <div style="float: right;     margin-right: 10px;">
+          <ion-icon class="icon-like"  name="thumbs-up"></ion-icon>
+          <p style="margin-top: 0px; font-size: 12px; color:#9E9E9E">16</p>
+        </div>
+      </ion-col>
+      <ion-col class="center" col-6>
+        <div style="float: left;     margin-left:10px;">
+          <ion-icon class="icon-like" name="thumbs-down"></ion-icon>
+          <p style="margin-top: 0px; font-size: 12px; color:#9E9E9E">5</p>
+        </div>
+      </ion-col>-->
+    </ion-row>
+
+
+  <div class="textfooter center margentitle">
+    <img width="80wv" src="assets/logo.png">
+  </div>
+
+
+
+</ion-content>

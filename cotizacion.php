@@ -15,7 +15,7 @@
 	$active_cotizacion="active";
 	$active_clientes="";
 	$active_usuarios="";	
-	$title="Cotizacion | SIFONELC";
+	$title="FACTOR | VENPRO";
 
 ?>
 
@@ -40,7 +40,7 @@
     <div class="panel panel-success">
     <div class="panel-heading">
 
-      <h4><i class='glyphicon glyphicon-search'></i> Cotización </h4>
+      <h4><i class='glyphicon glyphicon-search'></i> Factor Cambiario</h4>
     </div>      
       <div class="panel-body">
       <?php

@@ -1,0 +1,169 @@
+
+<ion-content  class="fondoblanco">
+  <ion-row>
+    <ion-col col-2>
+      <ion-buttons start>
+        <button (tap)="atras2()"  class="xbutton" ion-fab color="danger"><ion-icon  class="xicon" ios="ios-close" md="md-close"></ion-icon></button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-8>
+      <div class="margentitle">MI PERFIL</div>
+    </ion-col>
+    <ion-col col-2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col style="margin-top: 5%" class="center img-center" col-12>
+      <div>
+          <img *ngIf="imgP" class="circular" [src]="imgP" alt="">
+      </div>
+    </ion-col>
+    <ion-col class="center img-center star" col-12>
+      <ion-icon ios="ios-star" md="md-star"></ion-icon>
+      <ion-icon ios="ios-star" md="md-star"></ion-icon>
+      <ion-icon ios="ios-star" md="md-star"></ion-icon>
+      <ion-icon ios="ios-star" md="md-star"></ion-icon>
+      <ion-icon ios="ios-star" md="md-star"></ion-icon>
+      <h5>Cuenta Apatxee</h5>
+    </ion-col>
+
+  </ion-row>
+  <div class="divgris4">
+    <ion-row style="margin: 10px">
+        <ion-col col-12>
+          <div class="divgrande">
+            <p style="float: left; color: #fff">{{datosuser.email}} </p>
+            <p style="float: right; color: #fff">{{datosuser.name}}</p>
+          </div>
+        </ion-col>
+    </ion-row>
+  </div>
+  <div (tap)="goformperfil()" style="margin-top: 10%" class="divgris2">
+    <ion-row style="margin: 10px">
+      <ion-col col-3>
+      </ion-col>
+      <ion-col col-3>
+        <div class="divgrande icongrande">
+          <img class="imgicon" src="assets/icon/perfil.png">
+        </div>
+      </ion-col>
+      <ion-col  col-4>
+        <div class="divgrande4">
+          <p class="colorconten">Mi Perfil</p>
+        </div>
+      </ion-col>
+      <ion-col col-2>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div (tap)="gomishopping()" class="divgris3">
+    <ion-row style="margin: 10px; margin-top: -10px; margin-bottom: -10px;">
+      <ion-col col-3>
+      </ion-col>
+      <ion-col col-3>
+        <div class="divgrande icongrande">
+          <img class="imgicon2" src="assets/icon/cuenta_abierta.png">
+        </div>
+      </ion-col>
+      <ion-col  col-4>
+        <div class="divgrande3">
+          <p style="margin-top: 9px" class="colorconten">Cuenta Abierta</p>
+        </div>
+      </ion-col>
+      <ion-col col-2>
+      </ion-col>
+    </ion-row>
+  </div>
+  <!--<div (tap)="gomishopping()" style="margin-bottom: -10px!important;" class="divgris3">
+    <ion-row style="margin: 10px">
+      <ion-col col-3>
+      </ion-col>
+      <ion-col col-3>
+        <div class="divgrande icongrande">
+          <img class="imgicon" src="assets/icon/bolsa.png">
+        </div>
+      </ion-col>
+      <ion-col  col-4>
+        <div class="divgrande3">
+          <p class="colorconten">Mis Compras</p>
+        </div>
+      </ion-col>
+      <ion-col col-2>
+      </ion-col>
+    </ion-row>
+  </div>-->
+  <div (tap)="gomireserva()"  class="divgris2">
+    <ion-row style="margin: 10px">
+      <ion-col col-3>
+      </ion-col>
+      <ion-col col-3>
+        <div class="divgrande icongrande">
+
+          <img class="imgicon2" src="assets/icon/mis_reservas.png">
+        </div>
+      </ion-col>
+      <ion-col  col-4>
+        <div class="divgrande3">
+          <p class="colorconten">Mis Productos</p>
+        </div>
+      </ion-col>
+      <ion-col col-2>
+      </ion-col>
+    </ion-row>
+  </div>
+ <!-- <div (tap)="gomisreservas()" class="divgris3">
+    <ion-row style="margin: 10px; margin-top: -10px; margin-bottom: -10px;">
+      <ion-col col-3>
+      </ion-col>
+      <ion-col col-3>
+        <div style="margin-top: 9px;" class="divgrande icongrande">
+          <img class="imgicon2" src="assets/icon/mis_servicios.png">
+        </div>
+      </ion-col>
+      <ion-col  col-4>
+        <div class="divgrande4">
+          <p class="colorconten">Mis Servicios</p>
+        </div>
+      </ion-col>
+      <ion-col col-2>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div (tap)="goregistro()" class="divgris2 ">
+    <ion-row style="margin: 10px;">
+      <ion-col col-3>
+      </ion-col>
+      <ion-col col-3>
+        <div style="margin-top: 5px!important;" class="divgrande icongrande">
+          <img class="imgicon2" src="assets/icon/medio_de_pago.png">
+        </div>
+      </ion-col>
+      <ion-col  col-5>
+        <div class="divgrande3">
+          <p class="colorconten">Medios de pago</p>
+        </div>
+      </ion-col>
+      <ion-col col-1>
+      </ion-col>
+    </ion-row>
+  </div>-->
+
+  <ion-row class="margenalto15">
+    <ion-col  class="center" col-12>
+      <button  (tap)="gocalendar()"  style="text-align: center; width: 100%!important;"  class="button-md-light2 botonpeque" ion-button color="light" >REGISTRAR PRODUCTO</button>
+    </ion-col>
+    <!--<ion-col  class="center" col-6>
+      <button (tap)="gomessaje()" class="botonpeque" style="float: left; color: #888888; background-color: #d9d9d9" ion-button color="light" >ESCRÍBENOS</button>
+    </ion-col>-->
+  </ion-row>
+  <ion-row>
+      <ion-col col-12>
+        <img style="width: 20%; color: #777777; margin-top: 5%" class="img-center" src="assets/logo.png">
+      </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12>
+      <p (tap)="deletecount()" class="colorred">CERRAR CUENTA</p>
+    </ion-col>
+  </ion-row>
+</ion-content>

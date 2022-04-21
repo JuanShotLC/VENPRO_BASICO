@@ -1,0 +1,53 @@
+page-alert {
+  .tamanoimg{
+    width: 30%;
+  }
+  .fondoalert-1{
+    background-image: url(../assets/fondo/alert1.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .fondoalert-2{
+    background-image: url(../assets/fondo/alert2.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .fondoalert-3{
+    background-image: url(../assets/fondo/alert3.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .xbutton {
+    color: #9E9E9E;
+    background-color: #ffffff;
+    width: 22px;
+    height: 22px;
+    margin-left: 0px!important;
+    margin-top: 0vh!important;
+  }
+  .xbutton2 {
+    color: #7b7b7b;
+    background-color: #d9d9d9;
+    width: 22px;
+    height: 22px;
+    margin-left: 0px!important;
+    margin-top: 0vh!important;
+  }
+}
+.img-center{
+  display: block;
+  margin: auto;
+}
+
+.xbutton{
+  color: #9E9E9E;
+  background-color: #ffffff;
+  font-size: 11px;
+  width: 25px;
+  height: 25px;
+  margin-top: 0vh;
+}
+

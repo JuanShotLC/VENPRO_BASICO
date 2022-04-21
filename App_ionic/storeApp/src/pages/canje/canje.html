@@ -1,0 +1,68 @@
+<ion-content padding  class="fondoclaro">
+  <ion-row>
+    <ion-col  col-2>
+      <div (tap)="atras()" >
+        <ion-buttons     start>
+          <button  class="xbutton" ion-fab color="primary"><ion-icon  class="xicon" ios="ios-close" md="md-close"></ion-icon></button>
+        </ion-buttons>
+      </div>
+    </ion-col>
+    <ion-col col-8>
+      <div class="margentitle">MIS COMPRAS</div>
+      <!--<ion-title class="center">MIS COMPRAS</ion-title>-->
+    </ion-col>
+    <ion-col  col-2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12>
+      <div>
+        <button  class="botongrande margenalto" ion-button color="light" >SUBTOTAL: ${{total}}</button>
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <div class="center" *ngIf="products.length<1">
+    <img class="center" src="assets/icon/miscomprasv.png">
+  </div>
+
+  <ion-list *ngFor="let p of products" class="bordebajo">
+    <ion-row>
+      <ion-col col-4>
+        <img  class="img-center img-compras" src="{{p.image}}">
+      </ion-col>
+      <ion-col col-8>
+          <div>
+            <h1>{{p.title}}</h1>
+            <p class="textop" color="primary">{{p.value}}</p>
+          </div>
+          <div class="raya">
+          </div>
+            <p class="text-11px">
+              {{p.info | slice:0:80}}...
+            </p>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-row class="saltoabajo">
+    <ion-col col-4>
+      <ion-buttons     start>
+        <button (tap)="scanBarcode()" class="img-center boton1" ion-fab color="primary"><ion-icon ios="ios-add" md="md-add"></ion-icon></button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-4>
+        <img width="39" class="img-center" src="assets/logo.png">
+    </ion-col>
+    <ion-col col-4>
+      <ion-buttons     start>
+        <button *ngIf="total>0" (tap)="confir()" class="img-center boton2" ion-fab color="primary"><ion-icon ios="logo-usd" md="logo-usd"></ion-icon></button>
+        <button *ngIf="total<1"  class="img-center boton2" ion-fab color="primary"><ion-icon ios="logo-usd" md="logo-usd"></ion-icon></button>
+
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
+
+</ion-footer>
+

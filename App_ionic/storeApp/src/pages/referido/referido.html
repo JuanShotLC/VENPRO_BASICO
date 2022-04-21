@@ -1,0 +1,48 @@
+
+<ion-content padding class="bg-fondo-s">
+  <ion-row>
+    <ion-col col-2>
+      <ion-buttons >
+        <button (click)="close()"  class="xbutton" ion-fab color="danger"><ion-icon  class="xicon" ios="ios-close" md="md-close"></ion-icon></button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-8>
+    </ion-col>
+    <ion-col col-2>
+    </ion-col>
+  </ion-row>
+
+
+  <ion-card style="height: 60%; border-radius: 20px; margin-top: 12vh">
+    <ion-card-header class="header-card">
+      <ion-card-title>
+        <img class="headlogo"  src="assets/logo.png"> <b class="title-header">REFERENCIAR</b>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <h5 class="titlecontent">Elige a un amigo para que disfrute de JOINN</h5>
+      <p class="textocon">Envia los datos de tu amigo.
+      </p>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item class="button-10">
+            <ion-input class="inputborde" type="text" [(ngModel)]="referdata.first_name" placeholder="Nombre" name="nombre" required></ion-input>
+          </ion-item>
+          <ion-item class="button-10">
+            <ion-input class="inputborde" type="text" [(ngModel)]="referdata.email" placeholder="Email" name="nombre" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-3>
+        </ion-col>
+        <ion-col col-4>
+        </ion-col>
+        <ion-col col-4>
+          <button style="margin-top: -15px;" (tap)="sendRefer()" class="button-md-light2 botonpeque" ion-button color="light" >ENVIAR</button>
+        </ion-col>
+        <ion-col col-1>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <img style="width: 40%; margin-top: 10%" class="img-center" src="assets/logo2.png">
+</ion-content>

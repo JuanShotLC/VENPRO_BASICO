@@ -1,0 +1,105 @@
+
+<ion-content  class="fondoclaro">
+  <ion-row>
+    <ion-col col-2>
+      <ion-buttons start>
+        <button (click)="atras()"  class="xbutton" ion-fab color="danger"><ion-icon  class="xicon" ios="ios-close" md="md-close"></ion-icon></button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-8>
+      <div class="margentitle">DISPONIBILIDAD</div>
+    </ion-col>
+    <ion-col col-2>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngFor="let item of servicelist.data" class="saltomenor" style="margin-right: 5%;">
+    <ion-col style="padding-left: 0px;" col-8>
+      <ion-card  *ngIf="item.value>0" style="width: 100%; height: 88%; border-radius: 10px">
+        <ion-card-content>
+          <ion-card-title>
+            <h2 class="titleoscuro">{{item.title}}</h2>
+          </ion-card-title>
+          <ion-row no-padding>
+            <ion-col style="max-height: 100%;" text-left col-12>
+              <b class="text-11px">
+                Check-In: <label class="letralabel"> {{f1.fecha}}</label>
+              </b>
+              <b class="text-11px">
+                Check-Out: <label class="letralabel">{{f2.fecha}}</label>
+              </b>
+              <b class="text-11px">
+                Noches: <label class="letralabel">{{item.total_night}}</label>
+
+              </b>
+              <b  class="text-11px">
+                Precio: <label class="letralabel"> {{item.value}}</label>
+              </b>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-card   *ngIf="item.value<1" class="divoscuro" style="width: 100%; height: 88%; border-radius: 10px">
+        <ion-card-content>
+          <ion-card-title>
+            <h2 style="color: #d9d9d9!important;" class="titleoscuro">{{item.title}}</h2>
+          </ion-card-title>
+          <ion-row no-padding>
+            <ion-col style="max-height: 100%;" text-left col-12>
+              <b class="text-11px">
+                Check-In: <label class="letralabel"> {{f1.fecha}}</label>
+              </b>
+              <b class="text-11px">
+                Check-Out: <label class="letralabel">{{f2.fecha}}</label>
+              </b>
+              <b class="text-11px">
+                Noches: <label class="letralabel">{{item.total_night}}</label>
+
+              </b>
+              <b  class="text-11px">
+              <!--  Precio: <label class="letralabel"> {{item.value}}</label>-->
+              </b>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col  col-4>
+      <ion-card (tap)="goresevaservice(idmio=item.ID,value=item.value,init=f1.fecha,end=f2.fecha,noches=item.total_night,info=item.info,image=item.image,title=item.title)" class="reservar" >
+        <ion-card-content>
+          <h2 class="reservarstyle">Reservar</h2>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+
+  <!-- <div class="divgrisbajo">
+     <ion-row style="margin: 10px">
+       <ion-col class="divcar" col-4>
+         <div class="divgrande">
+           <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+         </div>
+       </ion-col>
+       <ion-col  col-8>
+         <div class="divgrande2">
+           <h2>ADQUIRIR SERVICIO(S)</h2>
+           <p>-lavaderia<p>
+           <p>-jardineria</p>
+           <p>-Baby Care</p>
+           <p>-Prensa internacional</p>
+            <p> más...</p>
+         </div>
+       </ion-col>
+     </ion-row>
+   </div>-->
+
+
+
+
+  <!--<ion-row>
+    <ion-col col-12>
+      <img style="width: 20%; color: #777777; margin-top: 5%" class="img-center" src="assets/logo.png">
+    </ion-col>
+  </ion-row>-->
+</ion-content>

@@ -173,7 +173,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://localhost/#/factura_venta" >SIFONELC</a>
+      <a class="navbar-brand" href="http://localhost/#/factura_venta" >SISTEMAS VENPRO</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -246,7 +246,7 @@
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							JuanShotLC - Sistema Facturación &copy; 2020 Todos los derechos reservados
+							<a href='https://www.instagram.com/sistemasvenpro/'>SISTEMAS VENPRO - Sistema Administrativo</a> &copy; 2020 Todos los derechos reservados
 
 						</span>
 					</div>

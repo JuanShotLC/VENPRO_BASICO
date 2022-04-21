@@ -1,0 +1,54 @@
+page-perfilform{
+  .margentitle{
+    margin-top: 0.3vh;
+    text-align: center;color: #a3352f;
+    font-weight: 500;
+  }
+  .xbutton {
+    color: #9E9E9E;
+    width: 22px;
+    height: 22px;
+    margin-left: 10px;
+    margin-top: 0vh;
+  }
+  ion-title {
+    text-align: center;
+    color: #afafaf!important;
+  }
+  .toolbar-title-md {
+     padding: 0 12px;
+     font-size: 2rem;
+     font-weight: 500;
+     color: #afafaf
+   }
+  .camara{
+    font-size: 19px;
+    color: currentColor;
+    margin-top: 80%;
+    color: #e0e0e0;
+  }
+  .inputborde {
+    border: solid 1px #b1b1b1;
+    border-radius: 5px;
+  }
+  .grisoscuro{
+    background-color: #a3352f !important;
+  }
+}
+
+.circular2 {
+  width: 180px;
+  height: 180px;
+  border-radius: 150px;
+  border: solid 1px;
+  -webkit-border-radius: 150px;
+  -moz-border-radius: 150px;
+  background: url(../assets/icon/perfil.jpg) no-repeat;
+  background-size: 100%;
+  color: #898a8c;
+  display: block;
+  margin: auto;
+}
+.button-10{
+  margin-bottom: 10px;
+}

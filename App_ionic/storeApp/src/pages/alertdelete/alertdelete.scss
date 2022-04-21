@@ -1,0 +1,78 @@
+page-alertdelete {
+
+  .fondogris{
+    background-color: #d9d9d9 !important
+  }
+  .card-title-md {
+    display: block;
+    font-size: 2.4rem;
+    line-height: 1.2;
+    color: #222;
+    margin: 2px 0;
+    padding: 8px 0;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .botonpeque {
+    color: #ffff;
+    background-color: #7b7b7b;
+    font-size: 12px;
+    height: 3rem;
+    border-radius: 5px;
+    width: 9.6rem!important;
+
+  }
+}
+.header-card{
+  font-size: 1.6rem;
+  color: #5e5d5d;
+  padding: 0px;
+  border-bottom: solid 1px rgba(221, 221, 225, 0.95);
+}
+.title-header{
+  color: #a5a5a5;
+  font-size: 11px;
+  margin-left: 10px;
+  margin-right: 10px;
+  position: absolute;
+  margin-top: 7px;
+
+}
+.headlogo{
+  width: 17px;
+  height: 17px;
+  display: inline;
+  margin-top: 4px;
+  margin-left: 0vw;
+}
+.xheader{
+  font-size: 20px;
+  color: #9c9c9c;
+  float: right;
+}
+.card-title-ios {
+  display: block;
+  font-size: 1.8rem;
+  line-height: 1.2;
+  color: #222;
+  margin: 2px 0;
+  padding: 5px 0;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+.titlecontent{
+  color: #111111!important;
+  margin-top: 5%!important;
+  margin-bottom: 2%!important;
+  font-weight: bold!important;
+}
+.textocon{
+  color: #7b7b7b!important;
+  margin-bottom: 5% !important;
+}
+.fondoalert-delete{
+  background-image: url(../assets/fondo/fondoopaco.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
