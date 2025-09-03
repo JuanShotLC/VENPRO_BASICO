@@ -51,8 +51,9 @@
 					// fin
 					// fin
 				} else {
-					if (strlen($_POST['ruc']) == 12) {
-					// guardar cliente ruc
+					if (strlen($_POST['ruc']) == 12) 
+					{
+					  // guardar cliente ruc
 						$resp = mysqli_query($con,"INSERT INTO clientes VALUES  (	'$id_cliente',
 																					'RIF',
 																					'$_POST[ruc]',
@@ -66,10 +67,9 @@
 																					'',
 																					'1', 
 																					'$fecha')");
-					// fin
+					  // fin
 					}	
 				}
-
 				// guardar factura con nuevo cliente
 				$resp =  mysqli_query($con,"INSERT INTO facturas VALUES  (	'$id_factura',
 																				'$id_cliente',
@@ -283,11 +283,12 @@
 		}
 
 		// fin
-	} else {
+	} elseif ($_POST["select_tipo_comprobante"] == 2 ) {
+
 		
-		if ($_POST["select_tipo_comprobante"] == 2) {
+			
 			// guardar notas venta
-			if (isset($_POST['btn_guardar']) == "btn_guardar") {
+		if (isset($_POST['btn_guardar']) == "btn_guardar") {
 				$fecha = date('Y-m-d H:i:s', time());
 				$fecha_corta = date('Y-m-d');
 
@@ -300,268 +301,546 @@
 				$id_nota++;
 				// fin
 
-			// comparar clientes
-			if ($_POST['id_cliente'] == "") {
-				// contador clientes
-				$id_cliente = 0;
-				$resultado = mysqli_query($con,"SELECT max(id) FROM clientes");
-				while ($row = mysqli_fetch_array($resultado)) {
-					$id_cliente = $row[0];
-				}
-				$id_cliente++;
-				// fin
-				if (strlen($_POST['ruc']) == 10) {
-					// guardar cliente cedula
-						$resp = mysqli_query($con,"INSERT INTO clientes VALUES  (	'$id_cliente',
-																					'CEDULA',
-																					'$_POST[ruc]',
-																					'$_POST[cliente]',
+			    // comparar clientes
+                if ($_POST['id_cliente'] == "") {
+                    // contador clientes
+                    $id_cliente = 0;
+                    $resultado = mysqli_query($con,"SELECT max(id) FROM clientes");
+						while ($row = mysqli_fetch_array($resultado)) {
+							$id_cliente = $row[0];
+						}
+                    $id_cliente++;
+                    // fin
+                    if (strlen($_POST['ruc']) == 10) {
+                        // guardar cliente cedula
+                        $resp = mysqli_query($con,"INSERT INTO clientes VALUES  (	    '$id_cliente',
+                                                                                        'CEDULA',
+                                                                                        '$_POST[ruc]',
+                                                                                        '$_POST[cliente]',
+                                                                                        '',
+                                                                                        '$_POST[telefono]',
+                                                                                        '',
+                                                                                        '$_POST[direccion]',
+                                                                                        '$_POST[correo]',
+                                                                                        '0.00',
+                                                                                        '',
+                                                                                        '1', 
+                                                                                        '$fecha')");
+                        // fin
+
+                    } elseif(strlen($_POST['ruc']) == 12) {
+                        	// guardar cliente ruc
+                            $resp = mysqli_query($con,"INSERT INTO clientes VALUES  (	'$id_cliente',
+                                                                                        'RIF',
+                                                                                        '$_POST[ruc]',
+                                                                                        '$_POST[cliente]',
+                                                                                        '',
+                                                                                        '$_POST[telefono]',
+                                                                                        '',
+                                                                                        '$_POST[direccion]',
+                                                                                        '$_POST[correo]',
+                                                                                        '0.00',
+                                                                                        '',
+                                                                                        '1', 
+                                                                                        '$fecha')");
+                        	// fin
+                  
+                    }
+
+                    // guardar nota con nuevo cliente
+					$resp = mysqli_query($con,"INSERT INTO nota_venta VALUES (		'$id_nota',
+																					'$id_cliente',
+																					'".$_SESSION['user_id']."',
+																					'$id_nota',
+																					'$id_nota',
+																					'$_POST[fecha_actual]',
+																					'$_POST[hora_actual]',
 																					'',
-																					'$_POST[telefono]',
+																					'$_POST[select_tipo_comprobante]',
+																					'$_POST[select_tipo_precio]',
+																					'$_POST[select_forma_pago]',
 																					'',
-																					'$_POST[direccion]',
-																					'$_POST[correo]',
-																					'0.00',
+																					'',
+																					'',
+																					'$_POST[subtotal]',
+																					'$_POST[tarifa_0]',
+																					'$_POST[tarifa]',
+																					'$_POST[iva]',
+																					'$_POST[otros]',
+																					'$_POST[total_pagar]',
+																					'$_POST[efectivo]',
+																					'$_POST[cambio]',
+																					'',
 																					'',
 																					'1', 
-																					'$fecha')");
-					// fin
-				} else {
-					if (strlen($_POST['ruc']) == 12) {
-					// guardar cliente ruc
-						$resp = mysqli_query($con,"INSERT INTO clientes VALUES  (	'$id_cliente',
-																					'RIF',
-																					'$_POST[ruc]',
-																					'$_POST[cliente]',
-																					'',
-																					'$_POST[telefono]',
-																					'',
-																					'$_POST[direccion]',
-																					'$_POST[correo]',
-																					'0.00',
-																					'',
-																					'1', 
-																					'$fecha')");
-					// fin
-					}	
-				}
+																					'$fecha',
+																					'$_POST[precinto_nro]',
+																					'$_POST[factor]',
+																					'$_POST[divisas]',
+																					'$_POST[iva_igtf]',																				
+																					'$_POST[total_pagar_dolar]')");
+                    // fin
+                        
+                } else {
+                    // guardar nota con cliente existente
+                    $resp = mysqli_query($con,"INSERT INTO nota_venta VALUES (		'$id_nota',
+                                                                                    '$_POST[id_cliente]',
+                                                                                    '".$_SESSION['user_id']."',
+                                                                                    '$id_nota',
+                                                                                    '$id_nota',
+                                                                                    '$_POST[fecha_actual]',
+                                                                                    '$_POST[hora_actual]',
+                                                                                    '',
+                                                                                    '$_POST[select_tipo_comprobante]',
+                                                                                    '$_POST[select_tipo_precio]',
+                                                                                    '$_POST[select_forma_pago]',
+                                                                                    '',
+                                                                                    '',
+                                                                                    '',
+                                                                                    '$_POST[subtotal]',
+                                                                                    '$_POST[tarifa_0]',
+                                                                                    '$_POST[tarifa]',
+                                                                                    '$_POST[iva]',
+                                                                                    '$_POST[otros]',
+                                                                                    '$_POST[total_pagar]',
+                                                                                    '$_POST[efectivo]',
+                                                                                    '$_POST[cambio]',
+                                                                                    '',
+                                                                                    '',
+                                                                                    '1', 
+                                                                                    '$fecha',
+                                                                                    '$_POST[precinto_nro]',
+                                                                                    '$_POST[factor]',
+                                                                                    '$_POST[divisas]',
+                                                                                    '$_POST[iva_igtf]',																				
+                                                                                    '$_POST[total_pagar_dolar]')");
+                    // fin	
+                }
+                	// modificar proformas
+                if ($_POST['id_proforma'] != "") {
+                    $class->consulta("UPDATE proforma SET estado = '2' WHERE id = '".$_POST['id_proforma']."'");
+                }
+                	// fin
 
-				// guardar factura con nuevo cliente
-		$resp = mysqli_query($con,"INSERT INTO nota_venta VALUES (				'$id_nota',
-																				'$id_cliente',
-																				'".$_SESSION['user_id']."',
-																				'$id_nota',
-																				'$id_nota',
-																				'$_POST[fecha_actual]',
-																				'$_POST[hora_actual]',
-																				'',
-																				'$_POST[select_tipo_comprobante]',
-																				'$_POST[select_tipo_precio]',
-																				'$_POST[select_forma_pago]',
-																				'',
-																				'',
-																				'',
-																				'$_POST[subtotal]',
-																				'$_POST[tarifa_0]',
-																				'$_POST[tarifa]',
-																				'$_POST[iva]',
-																				'$_POST[otros]',
-																				'$_POST[total_pagar]',
-																				'$_POST[efectivo]',
-																				'$_POST[cambio]',
-																				'',
-																				'',
-																				'1', 
-																				'$fecha',
-																				'$_POST[precinto_nro]',
-																				'$_POST[factor]',
-																				'$_POST[divisas]',
-																				'$_POST[iva_igtf]',																				
-																				'$_POST[total_pagar_dolar])");
-				// fin
+                    // datos detalle nota
+                    $campo1 = $_POST['campo1'];
+                    $campo2 = $_POST['campo2'];
+                    $campo3 = $_POST['campo3'];
+                    $campo4 = $_POST['campo4'];
+                    $campo5 = $_POST['campo5'];
+                    $campo6 = $_POST['campo6'];
+                    // Fin
 
-			} else {
-				// guardar factura
-				$resp = mysqli_query($con,"INSERT INTO nota_venta VALUES (		'$id_nota',
-																				'$_POST[id_cliente]',
-																				'".$_SESSION['user_id']."',
-																				'$id_nota',
-																				'$id_nota',
-																				'$_POST[fecha_actual]',
-																				'$_POST[hora_actual]',
-																				'',
-																				'$_POST[select_tipo_comprobante]',
-																				'$_POST[select_tipo_precio]',
-																				'$_POST[select_forma_pago]',
-																				'',
-																				'',
-																				'',
-																				'$_POST[subtotal]',
-																				'$_POST[tarifa_0]',
-																				'$_POST[tarifa]',
-																				'$_POST[iva]',
-																				'$_POST[otros]',
-																				'$_POST[total_pagar]',
-																				'$_POST[efectivo]',
-																				'$_POST[cambio]',
-																				'',
-																				'',
-																				'1', 
-																				'$fecha',
-																				'$_POST[precinto_nro]',
-																				'$_POST[factor]',
-																				'$_POST[divisas]',
-																				'$_POST[iva_igtf]',																				
-																				'$_POST[total_pagar_dolar]')");
-				// fin	
-			}
+                    // descomponer detalle nota
+                    $arreglo1 = explode('|', $campo1);
+                    $arreglo2 = explode('|', $campo2);
+                    $arreglo3 = explode('|', $campo3);
+                    $arreglo4 = explode('|', $campo4);
+                    $arreglo5 = explode('|', $campo5);
+                    $arreglo6 = explode('|', $campo6);
+                    $nelem = count($arreglo1);
+                    // fin
 
-						// modificar proformas
-	        if ($_POST['id_proforma'] != "") {
-	        	$class->consulta("UPDATE proforma SET estado = '2' WHERE id = '".$_POST['id_proforma']."'");
-	        }
-	        // fin
+                    for ($i = 1; $i < $nelem; $i++) {
+                                $id_detalle_proforma = uniqid();
 
-				
+                                // contador detalle factura
+                                $id_detalle_nota = 0;
+                                $resultado = mysqli_query($con,"SELECT max(id_detalle) FROM detalle_nota");
+                                while ($row = mysqli_fetch_array($resultado)) {
 
-				// datos detalle nota
-				$campo1 = $_POST['campo1'];
-			    $campo2 = $_POST['campo2'];
-			    $campo3 = $_POST['campo3'];
-			    $campo4 = $_POST['campo4'];
-			    $campo5 = $_POST['campo5'];
-			    $campo6 = $_POST['campo6'];
-			    // Fin
+                                    $id_detalle_nota = $row[0];
+                                }
 
-			    // descomponer detalle nota
-				$arreglo1 = explode('|', $campo1);
-			    $arreglo2 = explode('|', $campo2);
-			    $arreglo3 = explode('|', $campo3);
-			    $arreglo4 = explode('|', $campo4);
-			    $arreglo5 = explode('|', $campo5);
-			    $arreglo6 = explode('|', $campo6);
-			    $nelem = count($arreglo1);
-			    // fin
+                                $id_detalle_nota++;
+                                // fin
 
-   for ($i = 1; $i < $nelem; $i++) {
-		    	$id_detalle_proforma = uniqid();
+                                $resp =mysqli_query($con,"INSERT INTO detalle_nota VALUES ( 			'$id_detalle_nota',
+                                                                                                        '$id_nota',
+                                                                                                        '".$arreglo1[$i]."',
+                                                                                                        '".$arreglo2[$i]."',
+                                                                                                        '".$arreglo3[$i]."',
+                                                                                                        '".$arreglo4[$i]."',
+                                                                                                        '".$arreglo5[$i]."',
+                                                                                                        '".$arreglo6[$i]."',
+                                                                                                        '1', 
+                                                                                                        '$fecha')");
+                                    
+                                // modificar productos
+                                $consulta = mysqli_query($con,"SELECT * FROM products WHERE id_producto = '".$arreglo1[$i]."'");
+                                while ($row =mysqli_fetch_array($consulta)) {
+                                    $stock = $row[7];
+                                }
 
-		    	// contador detalle factura
-				$id_detalle_nota = 0;
-				$resultado = mysqli_query($con,"SELECT max(id_detalle) FROM detalle_nota");
-				while ($row = mysqli_fetch_array($resultado)) {
+                                $cal = $stock - $arreglo2[$i];
+                                $consulta2 =mysqli_query($con,"UPDATE products SET stock = '$cal' WHERE id_producto = '".$arreglo1[$i]."'");
+                                // fin
 
-					$id_detalle_nota = $row[0];
-				}
+                            
+                                // contador kardex
+                                $id_kardex = 0;
+                                $resultado =mysqli_query($con,"SELECT max(id_historial) FROM historial");
+                                while ($row = mysqli_fetch_array($resultado)) {
+                                    $id_kardex = $row[0];
+                                }
+                                $id_kardex++;
+                                // fin
 
-				$id_detalle_nota++;
-				// fin
-
-				 $resp =mysqli_query($con,"INSERT INTO detalle_nota VALUES ( 			'$id_detalle_nota',
-																						'$id_nota',
-																						'".$arreglo1[$i]."',
-																						'".$arreglo2[$i]."',
-																						'".$arreglo3[$i]."',
-																						'".$arreglo4[$i]."',
-																						'".$arreglo5[$i]."',
-																						'".$arreglo6[$i]."',
-																						'1', 
-																						'$fecha')");
-					
-				// modificar productos
-	           	$consulta = mysqli_query($con,"SELECT * FROM products WHERE id_producto = '".$arreglo1[$i]."'");
-	           	while ($row =mysqli_fetch_array($consulta)) {
-	                $stock = $row[7];
-	            }
-
-	            $cal = $stock - $arreglo2[$i];
-	            $consulta2 =mysqli_query($con,"UPDATE products SET stock = '$cal' WHERE id_producto = '".$arreglo1[$i]."'");
-	            // fin
-
-	           
-	            // contador kardex
-				$id_kardex = 0;
-				$resultado =mysqli_query($con,"SELECT max(id_historial) FROM historial");
-				while ($row = mysqli_fetch_array($resultado)) {
-					$id_kardex = $row[0];
-				}
-				$id_kardex++;
-				// fin
-
-				// guardar kardex
-				$consula3 = mysqli_query($con,"INSERT INTO historial VALUES ('$id_kardex',
-																		'".$arreglo1[$i]."',
-																		'".$_SESSION['user_id']."',
-																		'$fecha',
-																		'".'N.'.$id_nota."',
-																		'".$arreglo1[$i]."',
-																		'".$arreglo2[$i]."')");				
+                                // guardar kardex
+                                $consula3 = mysqli_query($con,"INSERT INTO historial VALUES ('$id_kardex',
+                                                                                        '".$arreglo1[$i]."',
+                                                                                        '".$_SESSION['user_id']."',
+                                                                                        '$fecha',
+                                                                                        '".'N.'.$id_nota."',
+                                                                                        '".$arreglo1[$i]."',
+                                                                                        '".$arreglo2[$i]."')");				
 
 
 
-			    }
+                    }
 
-			   
 
-				echo $id_nota;
-			}
-			// fin
-			if (isset($_POST['btn_anular_2']) == "btn_anular_2") {
-
-			$fecha = date('Y-m-d H:i:s', time());
-			$fecha_corta = date('Y-m-d');
-
-			$anular=mysqli_query($con,"UPDATE nota_venta SET fecha_anulacion = '$_POST[fecha_actual]', estado = '2'  WHERE id = '$_POST[id_nota]'");
-			$anular1=mysqli_query($con,"UPDATE detalle_nota SET  estado = '2'  WHERE id_nota = '$_POST[id_nota]'");
-
-			// datos detalle factura
-			$campo1 = $_POST['campo1'];
-		    $campo2 = $_POST['campo2'];
-		    // Fin
-
-		    // descomponer detalle factura
-			$arreglo1 = explode('|', $campo1);
-		    $arreglo2 = explode('|', $campo2);
-		    $nelem = count($arreglo1);
-		    // fin
-
-		    for ($i = 1; $i < $nelem; $i++) {
-		    	// modificar productos
-	           	$consulta = mysqli_query($con,"SELECT * FROM products WHERE id_producto = '".$arreglo1[$i]."'");
-	           	while ($row = mysqli_fetch_array($consulta)) {
-	                $stock = $row[7];
-	            }
-
-	            $cal = $stock + $arreglo2[$i];
-	            $anular=mysqli_query($con,"UPDATE products SET stock = '$cal' WHERE id_producto = '".$arreglo1[$i]."'");
-	            // fin
-
-	             // contador kardex
-				$id_kardex = 0;
-				$resultado =mysqli_query($con,"SELECT max(id_historial) FROM historial");
-				while ($row = mysqli_fetch_array($resultado)) {
-					$id_kardex = $row[0];
-				}
-				$id_kardex++;
-				// fin
-
-				// guardar kardex
-				$consula3 = mysqli_query($con,"INSERT INTO historial VALUES (	'$id_kardex',
-																				'".$arreglo1[$i]."',
-																				'".$_SESSION['user_id']."',
-																				'$fecha',
-																				'".'A.N:'.$_POST[serie]."',
-																				'$_POST[serie]',
-																				'".$arreglo2[$i]."')");
-	
-		    }
-
-		    $data = 1;
-			echo $data;
-		
-
-}	
+                echo $id_nota;
+                    
 		}
+			// fin
+		// anular nota
+		if (isset($_POST['btn_anular_2']) == "btn_anular_2") {
+
+            $fecha = date('Y-m-d H:i:s', time());
+            $fecha_corta = date('Y-m-d');
+
+            $anular=mysqli_query($con,"UPDATE nota_venta SET fecha_anulacion = '$_POST[fecha_actual]', estado = '2'  WHERE id = '$_POST[id_nota]'");
+            $anular1=mysqli_query($con,"UPDATE detalle_nota SET  estado = '2'  WHERE id_nota = '$_POST[id_nota]'");
+
+            // datos detalle factura
+            $campo1 = $_POST['campo1'];
+            $campo2 = $_POST['campo2'];
+            // Fin
+
+            // descomponer detalle factura
+            $arreglo1 = explode('|', $campo1);
+            $arreglo2 = explode('|', $campo2);
+            $nelem = count($arreglo1);
+            // fin
+
+            for ($i = 1; $i < $nelem; $i++) {
+                // modificar productos
+                $consulta = mysqli_query($con,"SELECT * FROM products WHERE id_producto = '".$arreglo1[$i]."'");
+                while ($row = mysqli_fetch_array($consulta)) {
+                    $stock = $row[7];
+                }
+
+                $cal = $stock + $arreglo2[$i];
+                $anular=mysqli_query($con,"UPDATE products SET stock = '$cal' WHERE id_producto = '".$arreglo1[$i]."'");
+                // fin
+
+                // contador kardex
+                $id_kardex = 0;
+                $resultado =mysqli_query($con,"SELECT max(id_historial) FROM historial");
+                while ($row = mysqli_fetch_array($resultado)) {
+                    $id_kardex = $row[0];
+                }
+                $id_kardex++;
+                // fin
+
+                // guardar kardex
+                $consula3 = mysqli_query($con,"INSERT INTO historial VALUES (	'$id_kardex',
+                                                                                '".$arreglo1[$i]."',
+                                                                                '".$_SESSION['user_id']."',
+                                                                                '$fecha',
+                                                                                '".'A.N:'.$_POST[serie]."',
+                                                                                '$_POST[serie]',
+                                                                                '".$arreglo2[$i]."')");
+    
+            }
+
+            $data = 1;
+            echo $data;
+        
+
+    	}
+
+		
+	} elseif ($_POST["select_tipo_comprobante"] == 3 ) {
+
+		
+			
+			// guardar notas venta
+		if (isset($_POST['btn_guardar']) == "btn_guardar") {
+				$fecha = date('Y-m-d H:i:s', time());
+				$fecha_corta = date('Y-m-d');
+
+				// contador nota venta
+				$id_nota = 0;
+				$resultado = mysqli_query($con,"SELECT max(id) FROM nota_venta");
+				while ($row = mysqli_fetch_array($resultado)) {
+					$id_nota = $row[0];
+				}
+				$id_nota++;
+				// fin
+
+			    // comparar clientes
+                if ($_POST['id_cliente'] == "") {
+                    // contador clientes
+                    $id_cliente = 0;
+                    $resultado = mysqli_query($con,"SELECT max(id) FROM clientes");
+						while ($row = mysqli_fetch_array($resultado)) {
+							$id_cliente = $row[0];
+						}
+                    $id_cliente++;
+                    // fin
+                    if (strlen($_POST['ruc']) == 10) {
+                        // guardar cliente cedula
+                        $resp = mysqli_query($con,"INSERT INTO clientes VALUES  (	    '$id_cliente',
+                                                                                        'CEDULA',
+                                                                                        '$_POST[ruc]',
+                                                                                        '$_POST[cliente]',
+                                                                                        '',
+                                                                                        '$_POST[telefono]',
+                                                                                        '',
+                                                                                        '$_POST[direccion]',
+                                                                                        '$_POST[correo]',
+                                                                                        '0.00',
+                                                                                        '',
+                                                                                        '1', 
+                                                                                        '$fecha')");
+                        // fin
+
+                    } elseif(strlen($_POST['ruc']) == 12) {
+                        	// guardar cliente ruc
+                            $resp = mysqli_query($con,"INSERT INTO clientes VALUES  (	'$id_cliente',
+                                                                                        'RIF',
+                                                                                        '$_POST[ruc]',
+                                                                                        '$_POST[cliente]',
+                                                                                        '',
+                                                                                        '$_POST[telefono]',
+                                                                                        '',
+                                                                                        '$_POST[direccion]',
+                                                                                        '$_POST[correo]',
+                                                                                        '0.00',
+                                                                                        '',
+                                                                                        '1', 
+                                                                                        '$fecha')");
+                        	// fin
+                  
+                    }
+
+                    // guardar nota con nuevo cliente
+					$resp = mysqli_query($con,"INSERT INTO nota_venta VALUES (		'$id_nota',
+																					'$id_cliente',
+																					'".$_SESSION['user_id']."',
+																					'$id_nota',
+																					'$id_nota',
+																					'$_POST[fecha_actual]',
+																					'$_POST[hora_actual]',
+																					'',
+																					'$_POST[select_tipo_comprobante]',
+																					'$_POST[select_tipo_precio]',
+																					'$_POST[select_forma_pago]',
+																					'',
+																					'',
+																					'',
+																					'$_POST[subtotal]',
+																					'$_POST[tarifa_0]',
+																					'$_POST[tarifa]',
+																					'$_POST[iva]',
+																					'$_POST[otros]',
+																					'$_POST[total_pagar]',
+																					'$_POST[efectivo]',
+																					'$_POST[cambio]',
+																					'',
+																					'',
+																					'1', 
+																					'$fecha',
+																					'$_POST[precinto_nro]',
+																					'$_POST[factor]',
+																					'$_POST[divisas]',
+																					'$_POST[iva_igtf]',																				
+																					'$_POST[total_pagar_dolar]')");
+                    // fin
+                        
+                } else {
+                    // guardar nota con cliente existente
+                    $resp = mysqli_query($con,"INSERT INTO nota_venta VALUES (		'$id_nota',
+                                                                                    '$_POST[id_cliente]',
+                                                                                    '".$_SESSION['user_id']."',
+                                                                                    '$id_nota',
+                                                                                    '$id_nota',
+                                                                                    '$_POST[fecha_actual]',
+                                                                                    '$_POST[hora_actual]',
+                                                                                    '',
+                                                                                    '$_POST[select_tipo_comprobante]',
+                                                                                    '$_POST[select_tipo_precio]',
+                                                                                    '$_POST[select_forma_pago]',
+                                                                                    '',
+                                                                                    '',
+                                                                                    '',
+                                                                                    '$_POST[subtotal]',
+                                                                                    '$_POST[tarifa_0]',
+                                                                                    '$_POST[tarifa]',
+                                                                                    '$_POST[iva]',
+                                                                                    '$_POST[otros]',
+                                                                                    '$_POST[total_pagar]',
+                                                                                    '$_POST[efectivo]',
+                                                                                    '$_POST[cambio]',
+                                                                                    '',
+                                                                                    '',
+                                                                                    '1', 
+                                                                                    '$fecha',
+                                                                                    '$_POST[precinto_nro]',
+                                                                                    '$_POST[factor]',
+                                                                                    '$_POST[divisas]',
+                                                                                    '$_POST[iva_igtf]',																				
+                                                                                    '$_POST[total_pagar_dolar]')");
+                    // fin	
+                }
+                	// modificar proformas
+                if ($_POST['id_proforma'] != "") {
+                    $class->consulta("UPDATE proforma SET estado = '2' WHERE id = '".$_POST['id_proforma']."'");
+                }
+                	// fin
+
+                    // datos detalle nota
+                    $campo1 = $_POST['campo1'];
+                    $campo2 = $_POST['campo2'];
+                    $campo3 = $_POST['campo3'];
+                    $campo4 = $_POST['campo4'];
+                    $campo5 = $_POST['campo5'];
+                    $campo6 = $_POST['campo6'];
+                    // Fin
+
+                    // descomponer detalle nota
+                    $arreglo1 = explode('|', $campo1);
+                    $arreglo2 = explode('|', $campo2);
+                    $arreglo3 = explode('|', $campo3);
+                    $arreglo4 = explode('|', $campo4);
+                    $arreglo5 = explode('|', $campo5);
+                    $arreglo6 = explode('|', $campo6);
+                    $nelem = count($arreglo1);
+                    // fin
+
+                    for ($i = 1; $i < $nelem; $i++) {
+                                $id_detalle_proforma = uniqid();
+
+                                // contador detalle factura
+                                $id_detalle_nota = 0;
+                                $resultado = mysqli_query($con,"SELECT max(id_detalle) FROM detalle_nota");
+                                while ($row = mysqli_fetch_array($resultado)) {
+
+                                    $id_detalle_nota = $row[0];
+                                }
+
+                                $id_detalle_nota++;
+                                // fin
+
+                                $resp =mysqli_query($con,"INSERT INTO detalle_nota VALUES ( 			'$id_detalle_nota',
+                                                                                                        '$id_nota',
+                                                                                                        '".$arreglo1[$i]."',
+                                                                                                        '".$arreglo2[$i]."',
+                                                                                                        '".$arreglo3[$i]."',
+                                                                                                        '".$arreglo4[$i]."',
+                                                                                                        '".$arreglo5[$i]."',
+                                                                                                        '".$arreglo6[$i]."',
+                                                                                                        '1', 
+                                                                                                        '$fecha')");
+                                    
+                                // modificar productos
+                                $consulta = mysqli_query($con,"SELECT * FROM products WHERE id_producto = '".$arreglo1[$i]."'");
+                                while ($row =mysqli_fetch_array($consulta)) {
+                                    $stock = $row[7];
+                                }
+
+                                $cal = $stock - $arreglo2[$i];
+                                $consulta2 =mysqli_query($con,"UPDATE products SET stock = '$cal' WHERE id_producto = '".$arreglo1[$i]."'");
+                                // fin
+
+                            
+                                // contador kardex
+                                $id_kardex = 0;
+                                $resultado =mysqli_query($con,"SELECT max(id_historial) FROM historial");
+                                while ($row = mysqli_fetch_array($resultado)) {
+                                    $id_kardex = $row[0];
+                                }
+                                $id_kardex++;
+                                // fin
+
+                                // guardar kardex
+                                $consula3 = mysqli_query($con,"INSERT INTO historial VALUES ('$id_kardex',
+                                                                                        '".$arreglo1[$i]."',
+                                                                                        '".$_SESSION['user_id']."',
+                                                                                        '$fecha',
+                                                                                        '".'N.'.$id_nota."',
+                                                                                        '".$arreglo1[$i]."',
+                                                                                        '".$arreglo2[$i]."')");				
+
+
+
+                    }
+
+
+                echo $id_nota;
+                    
+		}
+			// fin
+		// anular nota
+		if (isset($_POST['btn_anular_2']) == "btn_anular_2") {
+
+            $fecha = date('Y-m-d H:i:s', time());
+            $fecha_corta = date('Y-m-d');
+
+            $anular=mysqli_query($con,"UPDATE nota_venta SET fecha_anulacion = '$_POST[fecha_actual]', estado = '2'  WHERE id = '$_POST[id_nota]'");
+            $anular1=mysqli_query($con,"UPDATE detalle_nota SET  estado = '2'  WHERE id_nota = '$_POST[id_nota]'");
+
+            // datos detalle factura
+            $campo1 = $_POST['campo1'];
+            $campo2 = $_POST['campo2'];
+            // Fin
+
+            // descomponer detalle factura
+            $arreglo1 = explode('|', $campo1);
+            $arreglo2 = explode('|', $campo2);
+            $nelem = count($arreglo1);
+            // fin
+
+            for ($i = 1; $i < $nelem; $i++) {
+                // modificar productos
+                $consulta = mysqli_query($con,"SELECT * FROM products WHERE id_producto = '".$arreglo1[$i]."'");
+                while ($row = mysqli_fetch_array($consulta)) {
+                    $stock = $row[7];
+                }
+
+                $cal = $stock + $arreglo2[$i];
+                $anular=mysqli_query($con,"UPDATE products SET stock = '$cal' WHERE id_producto = '".$arreglo1[$i]."'");
+                // fin
+
+                // contador kardex
+                $id_kardex = 0;
+                $resultado =mysqli_query($con,"SELECT max(id_historial) FROM historial");
+                while ($row = mysqli_fetch_array($resultado)) {
+                    $id_kardex = $row[0];
+                }
+                $id_kardex++;
+                // fin
+
+                // guardar kardex
+                $consula3 = mysqli_query($con,"INSERT INTO historial VALUES (	'$id_kardex',
+                                                                                '".$arreglo1[$i]."',
+                                                                                '".$_SESSION['user_id']."',
+                                                                                '$fecha',
+                                                                                '".'A.N:'.$_POST[serie]."',
+                                                                                '$_POST[serie]',
+                                                                                '".$arreglo2[$i]."')");
+    
+            }
+
+            $data = 1;
+            echo $data;
+        
+
+    	}
+
+		
 	}
 
 	//cargar facturero
@@ -608,17 +887,16 @@
 	}
 	//fin
 
-			//Cargar Factor
-			if (isset($_POST['consultar_factor'])) {
+	//Cargar Factor
+	if (isset($_POST['consultar_factor'])) {
 
-				$resultado =  mysqli_query($con,"SELECT * FROM cotizacion");
-				while ($row = mysqli_fetch_array($resultado)) {
-		
-					$data = array('factor' => $row[1]);
-				}
-				print_r(json_encode($data));
-			}
-			//fin
+		$resultado =  mysqli_query($con,"SELECT * FROM cotizacion");
+			while ($row = mysqli_fetch_array($resultado)) {
+			$data = array('factor' => $row[1]);
+		}
+		print_r(json_encode($data));
+	}
+	//fin
 
 	// LLenar tipo comprobante
 	if (isset($_POST['llenar_tipo_comprobante'])) {
@@ -749,49 +1027,6 @@
 		}
 		echo json_encode($arr_data);
 	}
-	//fin
-
-	// llenar cabezera proforma
-	// if (isset($_POST['llenar_cabezera_proforma'])) {
-	// 	$resultado = $class->consulta("SELECT P.id, P.fecha_actual, P.hora_actual, P.id_cliente, C.identificacion, C.nombres_completos, C.direccion, C.telefono2, C.correo, P.tipo_precio, P.subtotal, P.tarifa0, P.tarifa, P.iva_proforma, P.descuento_proforma, P.total_proforma FROM proforma P, clientes C WHERE P.id_cliente = C.id AND P.id = '$_POST[id]'");
-	// 	while ($row = $class->fetch_array($resultado)) {
-	// 		$data = array(  'id_proforma' => $row[0],
-	// 						'fecha_actual' => $row[1],
-	// 						'hora_actual' => $row[2],
-	// 						'id_cliente' => $row[3],
-	// 						'identificacion' => $row[4],
-	// 						'nombres_completos' => $row[5],
-	// 						'direccion' => $row[6],
-	// 						'telefono2' => $row[7],
-	// 						'correo' => $row[8],
-	// 						'tipo_precio' => $row[9],
-	// 						'subtotal' => $row[10],
-	// 						'tarifa0' => $row[11],
-	// 						'tarifa' => $row[12],
-	// 						'iva' => $row[13],
-	// 						'descuento' => $row[14],
-	// 						'total_pagar' => $row[15]);
-	// 	}
-	// 	print_r(json_encode($data));
-	// }
-	// //fin
-
-	// llenar detalle proforma
-	// if (isset($_POST['llenar_detalle_proforma'])) {
-	// 	$resultado = $class->consulta("SELECT D.id_producto, U.codigo, U.descripcion, D.cantidad, D.precio, D.descuento, D.total, P.porcentaje, U.incluye_iva FROM detalle_proforma D, proforma N, productos U, porcentaje_iva P  WHERE D.id_producto = U.id AND D.id_proforma = N.id AND U.id_porcentaje = P.id AND N.id = '".$_POST['id']."' ORDER BY D.id asc");
-	// 	while ($row = $class->fetch_array($resultado)) {
-	// 		$arr_data[] = $row['0'];
-	// 	    $arr_data[] = $row['1'];
-	// 	    $arr_data[] = $row['2'];
-	// 	    $arr_data[] = $row['3'];
-	// 	    $arr_data[] = $row['4'];
-	// 	    $arr_data[] = $row['5'];
-	// 	    $arr_data[] = $row['6'];
-	// 	    $arr_data[] = $row['7'];
-	// 	    $arr_data[] = $row['8'];
-	// 	}
-	// 	echo json_encode($arr_data);
-	// }
 	//fin
 
 	// buscar clientes

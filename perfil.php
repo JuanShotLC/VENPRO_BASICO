@@ -35,7 +35,8 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 toppad" >
    
    
-    <a href="ajax/el_r.php" class="btn btn-sm btn-success" >1</a><a href="ajax/el_r2.php" class="btn btn-sm btn-success">2</a>
+    <!--a href="ajax/el_r.php" class="btn btn-sm btn-success" >1</a>
+    <a href="ajax/el_r2.php" class="btn btn-sm btn-success">2</a-->
           <div class="panel panel-success">
 
 

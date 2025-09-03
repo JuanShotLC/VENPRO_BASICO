@@ -1,4 +1,4 @@
-angular.module('scotchApp').controller('factura_ventaController', function($scope, $interval, loaddatosSRI) {
+angular.module('scotchApp').controller('factura_ventaController', function ($scope, $interval, loaddatosSRI) {
 
     var combo_clientes = '';
     var combo_productos = '';
@@ -6,36 +6,36 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
     // procesos tab
     $scope.tab = 1;
 
-    $scope.setTab = function(newTab) {
+    $scope.setTab = function (newTab) {
         $scope.tab = newTab;
     };
 
-    $scope.isSet = function(tabNum) {
+    $scope.isSet = function (tabNum) {
         return $scope.tab === tabNum;
     };
     // fin
 
     // formato totales
     var formatNumber = {
-            separador: ".", // separador para los miles
-            sepDecimal: '.', // separador para los decimales
-            formatear: function(num) {
-                num += '';
-                var splitStr = num.split('.');
-                var splitLeft = splitStr[0];
-                var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
-                var regx = /(\d+)(\d{3})/;
-                while (regx.test(splitLeft)) {
-                    splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
-                }
-                return this.simbol + splitLeft + splitRight;
-            },
-            new: function(num, simbol) {
-                this.simbol = simbol || '';
-                return this.formatear(num);
+        separador: ".", // separador para los miles
+        sepDecimal: '.', // separador para los decimales
+        formatear: function (num) {
+            num += '';
+            var splitStr = num.split('.');
+            var splitLeft = splitStr[0];
+            var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+            var regx = /(\d+)(\d{3})/;
+            while (regx.test(splitLeft)) {
+                splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
             }
+            return this.simbol + splitLeft + splitRight;
+        },
+        new: function (num, simbol) {
+            this.simbol = simbol || '';
+            return this.formatear(num);
         }
-        // fin
+    }
+    // fin
 
     // para horas 
     function show() {
@@ -70,12 +70,12 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
     //     if(keycode == 17) { $("#ruc_ci").select() }
     // });
 
-    $interval(function() {
+    $interval(function () {
         show();
     }, 1000);
     // fin
 
-    jQuery(function($) {
+    jQuery(function ($) {
         $('[data-toggle="tooltip"]').tooltip();
         $('#meses').ace_spinner({ value: 0, min: 0, max: 100, step: 1, on_sides: true, icon_up: 'ace-icon fa fa-plus bigger-110', icon_down: 'ace-icon fa fa-minus bigger-110', btn_up_class: 'btn-success', btn_down_class: 'btn-danger' });
 
@@ -144,7 +144,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 type: 'post',
                 data: { cargar_facturero: 'cargar_facturero' },
                 dataType: 'json',
-                success: function(data_facturero) {
+                success: function (data_facturero) {
                     if (data_facturero == null) {
                         swal({
                             title: "Lo sentimos Facturero no Creado",
@@ -156,7 +156,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                             type: 'post',
                             data: { cargar_series: 'cargar_series' },
                             dataType: 'json',
-                            success: function(data_series) {
+                            success: function (data_series) {
                                 if (data_series == null) {
                                     var res = parseInt(data_facturero.inicio_facturero);
 
@@ -200,7 +200,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 type: 'post',
                 data: { cargar_iva: 'cargar_iva' },
                 dataType: 'json',
-                success: function(data_series) {
+                success: function (data_series) {
                     $("#iva_producto").val(data_series.iva);
                     $("#igtf").val(data_series.igtf);
 
@@ -217,7 +217,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 type: 'post',
                 data: { consultar_factor: 'consultar_factor' },
                 dataType: 'json',
-                success: function(data_series) {
+                success: function (data_series) {
                     $("#factor").val(data_series.factor);
 
                 }
@@ -234,7 +234,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 url: 'data/factura_venta/app.php',
                 type: 'post',
                 data: { llenar_tipo_comprobante: 'llenar_tipo_comprobante' },
-                success: function(data) {
+                success: function (data) {
                     var principal = data;
                     $('#select_tipo_comprobante').html(data).trigger("change");
                 }
@@ -248,7 +248,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 url: 'data/factura_venta/app.php',
                 type: 'post',
                 data: { llenar_tipo_factura: 'llenar_tipo_factura' },
-                success: function(data) {
+                success: function (data) {
                     var principal = data;
                     $('#select_tipo_factura').html(data).trigger("change");
                 }
@@ -257,7 +257,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // select tipo precio 
-        $("#select_tipo_precio").change(function() {
+        $("#select_tipo_precio").change(function () {
             var valor = $(this).val();
 
             if (valor == "MINORISTA") {
@@ -273,7 +273,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // limpiar ruc
-        $("#ruc").keyup(function(e) {
+        $("#ruc").keyup(function (e) {
             if ($('#ruc').val() == '') {
                 $('#id_cliente').val('');
                 $('#cliente').val('');
@@ -285,7 +285,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // limpiar cliente
-        $("#cliente").keyup(function(e) {
+        $("#cliente").keyup(function (e) {
             if ($('#cliente').val() == '') {
                 $('#id_cliente').val('');
                 $('#ruc').val('');
@@ -302,7 +302,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 type: "POST",
                 url: "data/factura_venta/app.php",
                 data: { buscador_clientes: 'buscador_clientes', tipo_busqueda: tipo },
-                success: function(resp) {
+                success: function (resp) {
                     combo_clientes = JSON.parse(resp);
                 }
             });
@@ -311,17 +311,57 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // consular identificacion
-        $scope.cargadatos = function(estado) {
-                var identificacion = $('#ruc').val();
-                if ($('#ruc').val() == '') {
-                    $.gritter.add({
-                        title: 'Error... Ingrese una Identificación',
-                        class_name: 'gritter-error gritter-center',
-                        time: 1000,
+        $scope.cargadatos = function (estado) {
+            var identificacion = $('#ruc').val();
+            if ($('#ruc').val() == '') {
+                $.gritter.add({
+                    title: 'Error... Ingrese una Identificación',
+                    class_name: 'gritter-error gritter-center',
+                    time: 1000,
+                });
+                $('#ruc').focus();
+            } else {
+                if (identificacion.length == 8) {
+                    $.blockUI({
+                        css: {
+                            border: 'none',
+                            padding: '15px',
+                            backgroundColor: '#000',
+                            '-webkit-border-radius': '10px',
+                            '-moz-border-radius': '10px',
+                            opacity: .5,
+                            color: '#fff'
+                        },
+                        message: '<h3>Consultando, Por favor espere un momento    ' + '<i class="fa fa-spinner fa-spin"></i>' + '</h3>'
                     });
-                    $('#ruc').focus();
+                    $("#direccion").attr("readOnly", false);
+                    $("#telefono").attr("readOnly", false);
+                    $("#correo").attr("readOnly", false);
+                    loaddatosSRI.get({
+                        nrodocumento: identificacion,
+                        tipodocumento: 'CEDULA'
+                    }).$promise.then(function (data) {
+                        $.unblockUI();
+                        if (data.datosPersona.valid == false) {
+                            $.gritter.add({
+                                title: 'Error.... Cédula Erronea',
+                                class_name: 'gritter-error gritter-center',
+                                time: 1000,
+                            });
+
+                            $('#ruc').focus();
+                            $('#ruc').val("");
+                        } else {
+                            if (data.datosPersona.valid == true) {
+                                $('#cliente').val(data.datosPersona.name);
+                                $('#direccion').focus();
+                            }
+                        }
+                    }, function (err) {
+                        console.log(err.data.error);
+                    });
                 } else {
-                    if (identificacion.length == 8) {
+                    if (identificacion.length == 12) {
                         $.blockUI({
                             css: {
                                 border: 'none',
@@ -339,12 +379,12 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                         $("#correo").attr("readOnly", false);
                         loaddatosSRI.get({
                             nrodocumento: identificacion,
-                            tipodocumento: 'CEDULA'
-                        }).$promise.then(function(data) {
+                            tipodocumento: 'RUC'
+                        }).$promise.then(function (data) {
                             $.unblockUI();
-                            if (data.datosPersona.valid == false) {
+                            if (data.datosEmpresa.valid == 'false') {
                                 $.gritter.add({
-                                    title: 'Error.... Cédula Erronea',
+                                    title: 'Error.... RIF Erroneo',
                                     class_name: 'gritter-error gritter-center',
                                     time: 1000,
                                 });
@@ -352,69 +392,29 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                                 $('#ruc').focus();
                                 $('#ruc').val("");
                             } else {
-                                if (data.datosPersona.valid == true) {
-                                    $('#cliente').val(data.datosPersona.name);
+                                if (data.datosEmpresa.valid == 'true') {
+                                    $('#cliente').val(data.datosEmpresa.razon_social);
                                     $('#direccion').focus();
                                 }
                             }
-                        }, function(err) {
+                        }, function (err) {
                             console.log(err.data.error);
                         });
                     } else {
-                        if (identificacion.length == 12) {
-                            $.blockUI({
-                                css: {
-                                    border: 'none',
-                                    padding: '15px',
-                                    backgroundColor: '#000',
-                                    '-webkit-border-radius': '10px',
-                                    '-moz-border-radius': '10px',
-                                    opacity: .5,
-                                    color: '#fff'
-                                },
-                                message: '<h3>Consultando, Por favor espere un momento    ' + '<i class="fa fa-spinner fa-spin"></i>' + '</h3>'
-                            });
-                            $("#direccion").attr("readOnly", false);
-                            $("#telefono").attr("readOnly", false);
-                            $("#correo").attr("readOnly", false);
-                            loaddatosSRI.get({
-                                nrodocumento: identificacion,
-                                tipodocumento: 'RUC'
-                            }).$promise.then(function(data) {
-                                $.unblockUI();
-                                if (data.datosEmpresa.valid == 'false') {
-                                    $.gritter.add({
-                                        title: 'Error.... RIF Erroneo',
-                                        class_name: 'gritter-error gritter-center',
-                                        time: 1000,
-                                    });
-
-                                    $('#ruc').focus();
-                                    $('#ruc').val("");
-                                } else {
-                                    if (data.datosEmpresa.valid == 'true') {
-                                        $('#cliente').val(data.datosEmpresa.razon_social);
-                                        $('#direccion').focus();
-                                    }
-                                }
-                            }, function(err) {
-                                console.log(err.data.error);
-                            });
-                        } else {
-                            $.gritter.add({
-                                title: 'Error... Ingrese una Identificación Válida',
-                                class_name: 'gritter-error gritter-center',
-                                time: 1000,
-                            });
-                            $('#ruc').focus();
-                        }
+                        $.gritter.add({
+                            title: 'Error... Ingrese una Identificación Válida',
+                            class_name: 'gritter-error gritter-center',
+                            time: 1000,
+                        });
+                        $('#ruc').focus();
                     }
                 }
-
             }
-            // fin
 
-        $("#ruc").on("keypress", function(e) {
+        }
+        // fin
+
+        $("#ruc").on("keypress", function (e) {
             if (e.keyCode == 13) { //tecla del alt para el entrer poner 13
                 var identificacion = $('#ruc').val();
                 if ($('#ruc').val() == '') {
@@ -430,7 +430,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                             "success": {
                                 "label": "<i class='ace-icon fa fa-check'></i> Aceptar",
                                 "className": "btn-sm btn-success",
-                                "callback": function() {
+                                "callback": function () {
 
                                     if (identificacion.length == 10) {
                                         $("#direccion").attr("readOnly", false);
@@ -456,7 +456,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                             "danger": {
                                 "label": "<i class='ace-icon fa fa-times'></i> Cancelar",
                                 "className": "btn-sm btn-danger",
-                                "callback": function() {
+                                "callback": function () {
                                     $.gritter.add({
                                         title: 'Mensaje',
                                         text: 'Acción cancelada <i class="ace-icon fa fa-spinner fa-spin green bigger-125"></i>',
@@ -471,17 +471,17 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         });
 
         // busqueda cliente ruc
-        $("#ruc").keyup(function(e) {
+        $("#ruc").keyup(function (e) {
             var tipo = 'ruc';
             var res = combo1(tipo);
 
             $("#ruc").autocomplete({
-                source: function(req, response) {
+                source: function (req, response) {
                     var results = $.ui.autocomplete.filter(res, req.term);
                     response(results.slice(0, 20));
                 },
                 minLength: 1,
-                focus: function(event, ui) {
+                focus: function (event, ui) {
                     $("#id_cliente").val(ui.item.id);
                     $("#ruc").val(ui.item.value);
                     $("#cliente").val(ui.item.cliente);
@@ -491,7 +491,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
 
                     return false;
                 },
-                select: function(event, ui) {
+                select: function (event, ui) {
                     $("#id_cliente").val(ui.item.id);
                     $("#ruc").val(ui.item.value);
                     $("#cliente").val(ui.item.cliente);
@@ -502,7 +502,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                     return false;
                 }
 
-            }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
                 return $("<li>")
                     .append("<a>" + item.value + "</a>")
                     .appendTo(ul);
@@ -511,17 +511,17 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // busqueda cliente nombre
-        $("#cliente").keyup(function(e) {
+        $("#cliente").keyup(function (e) {
             var tipo = 'cliente';
             var res = combo1(tipo);
 
             $("#cliente").autocomplete({
-                source: function(req, response) {
+                source: function (req, response) {
                     var results = $.ui.autocomplete.filter(res, req.term);
                     response(results.slice(0, 20));
                 },
                 minLength: 1,
-                focus: function(event, ui) {
+                focus: function (event, ui) {
                     $("#id_cliente").val(ui.item.id);
                     $("#cliente").val(ui.item.value);
                     $("#ruc").val(ui.item.ruc);
@@ -531,7 +531,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
 
                     return false;
                 },
-                select: function(event, ui) {
+                select: function (event, ui) {
                     $("#id_cliente").val(ui.item.id);
                     $("#cliente").val(ui.item.value);
                     $("#ruc").val(ui.item.ruc);
@@ -542,7 +542,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                     return false;
                 }
 
-            }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
                 return $("<li>")
                     .append("<a>" + item.value + "</a>")
                     .appendTo(ul);
@@ -568,7 +568,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // limpiar codigo
-        $("#codigo").keyup(function(e) {
+        $("#codigo").keyup(function (e) {
             if ($('#codigo').val() == '') {
                 $('#id_producto').val('');
                 $('#codigo_barras').val('');
@@ -586,7 +586,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // limpiar descripcion
-        $("#producto").keyup(function(e) {
+        $("#producto").keyup(function (e) {
             if ($('#producto').val() == '') {
                 $('#id_producto').val('');
                 $('#codigo_barras').val('');
@@ -604,7 +604,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // buscar productos codigo barras
-        $("#codigo_barras").change(function(e) {
+        $("#codigo_barras").change(function (e) {
             barras();
 
 
@@ -614,7 +614,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             var codigo_barras = $("#codigo_barras").val();
             var precio = $("#select_tipo_precio").val();
 
-            $.getJSON('data/factura_venta/search.php?codigo_barras=' + codigo_barras + '&tipo_precio=' + precio, function(data) {
+            $.getJSON('data/factura_venta/search.php?codigo_barras=' + codigo_barras + '&tipo_precio=' + precio, function (data) {
                 if (data == null) {
                     swal({
                         title: "Lo sentimos Articulo no Creado",
@@ -647,7 +647,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 type: "POST",
                 url: "data/factura_venta/app.php",
                 data: { buscador_productos: 'buscador_productos', tipo_busqueda: tipo, tipo_precio: precio },
-                success: function(resp) {
+                success: function (resp) {
                     combo_productos = JSON.parse(resp);
                 }
             });
@@ -656,18 +656,18 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // buscar productos codigo
-        $("#codigo").keyup(function(e) {
+        $("#codigo").keyup(function (e) {
             var tipo = 'codigo';
             var precio = $("#select_tipo_precio").val();
             var res = combo2(tipo, precio);
 
             $("#codigo").autocomplete({
-                source: function(req, response) {
+                source: function (req, response) {
                     var results = $.ui.autocomplete.filter(res, req.term);
                     response(results.slice(0, 20));
                 },
                 minLength: 1,
-                focus: function(event, ui) {
+                focus: function (event, ui) {
                     $("#id_producto").val(ui.item.id);
                     $("#codigo_barras").val(ui.item.value);
                     $("#codigo").val(ui.item.value);
@@ -684,7 +684,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
 
                     return false;
                 },
-                select: function(event, ui) {
+                select: function (event, ui) {
                     $("#id_producto").val(ui.item.id);
                     $("#codigo_barras").val(ui.item.value);
                     $("#codigo").val(ui.item.value);
@@ -702,7 +702,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                     return false;
                 }
 
-            }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
                 return $("<li>")
                     .append("<a>" + item.value + "</a>")
                     .appendTo(ul);
@@ -711,18 +711,18 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // buscar productos descripcion
-        $("#producto").keyup(function(e) {
+        $("#producto").keyup(function (e) {
             var tipo = 'producto';
             var precio = $("#select_tipo_precio").val();
             var res = combo2(tipo, precio);
 
             $("#producto").autocomplete({
-                source: function(req, response) {
+                source: function (req, response) {
                     var results = $.ui.autocomplete.filter(res, req.term);
                     response(results.slice(0, 20));
                 },
                 minLength: 1,
-                focus: function(event, ui) {
+                focus: function (event, ui) {
                     $("#id_producto").val(ui.item.id);
                     $("#codigo_barras").val(ui.item.codigo_producto);
                     $("#codigo").val(ui.item.codigo_producto);
@@ -739,7 +739,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
 
                     return false;
                 },
-                select: function(event, ui) {
+                select: function (event, ui) {
                     $("#id_producto").val(ui.item.id);
                     $("#codigo_barras").val(ui.item.codigo_producto);
                     $("#codigo").val(ui.item.codigo_producto);
@@ -758,7 +758,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                     return false;
                 }
 
-            }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
                 return $("<li>")
                     .append("<a>" + item.value + "</a>")
                     .appendTo(ul);
@@ -767,7 +767,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         /*---agregar a la tabla---*/
-        $("#cantidad").on("keypress", function(e) {
+        $("#cantidad").on("keypress", function (e) {
             if (e.keyCode == 13) { //tecla del alt para el entrer poner 13 
                 var subtotal0 = 0;
                 var subtotal12 = 0;
@@ -1161,7 +1161,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         });
 
 
-        $("#cantidad").on("focus", function(e) {
+        $("#cantidad").on("focus", function (e) {
             // if(e.keyCode == 13) {//tecla del alt para el entrer poner 13 
             var subtotal0 = 0;
             var subtotal12 = 0;
@@ -1558,7 +1558,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
 
 
         // Calcular IGTF
-        $("#divisas").on("keypress", function(e) {
+        $("#divisas").on("keypress", function (e) {
             if (e.keyCode == 13) { //tecla del alt para el entrer poner 13
                 if ($('#divisas').val() == '0.000' || $('#divisas').val() == '0') {
                     $.gritter.add({
@@ -1656,21 +1656,21 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
 
         // abrir en una nueva ventana reporte facturas
 
-        $scope.methodspdf = function(id) {
+        $scope.methodspdf = function (id) {
 
-                var tipo_tiket = $('#select_tipo_factura').val();
-                if (tipo_tiket == 1) {
-                    var myWindow = window.open('data/reportes/tiket_factura_copia_fiel.php?hoja=A5&id=' + id, 'popup', 'width=900,height=650');
-                } else {
-                    if (tipo_tiket == 2) {
-                        var myWindow = window.open('data/reportes/factura_venta.php?hoja=A5&id=' + id, 'popup', 'width=900,height=650');
-                    }
+            var tipo_tiket = $('#select_tipo_factura').val();
+            if (tipo_tiket == 1) {
+                var myWindow = window.open('data/reportes/tiket_factura_copia_fiel.php?hoja=A5&id=' + id, 'popup', 'width=900,height=650');
+            } else {
+                if (tipo_tiket == 2) {
+                    var myWindow = window.open('data/reportes/factura_venta.php?hoja=A5&id=' + id, 'popup', 'width=900,height=650');
                 }
             }
-            // fin
+        }
+        // fin
 
         // abrir en una nueva ventana reporte notas
-        $scope.methodspdfnota = function(id) {
+        $scope.methodspdfnota = function (id) {
 
             var tipo_tiket = $('#select_tipo_factura').val();
             if (tipo_tiket == 1) {
@@ -1685,14 +1685,14 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // abrir en una nueva ventana reporte proformas
-        $scope.methodspdfproforma = function(id) {
-                var myWindow = window.open('data/reportes/proforma.php?hoja=A5&id=' + id, 'popup', 'width=900,height=650');
-            }
-            // fin
+        $scope.methodspdfproforma = function (id) {
+            var myWindow = window.open('data/reportes/proforma.php?hoja=A5&id=' + id, 'popup', 'width=900,height=650');
+        }
+        // fin
 
         // recargar formulario
         function redireccionar() {
-            setTimeout(function() {
+            setTimeout(function () {
                 location.reload(true);
             }, 1000);
         }
@@ -1713,7 +1713,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // guardar factuta venta
-        $('#btn_0').click(function() {
+        $('#btn_0').click(function () {
             var formulario = $("#form_factura").serialize();
             var submit = "btn_guardar";
             var filas = jQuery("#table").jqGrid("getRowData");
@@ -1809,7 +1809,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                                             type: "POST",
                                             url: "data/factura_venta/app.php",
                                             data: formulario + "&btn_guardar=" + submit + "&campo1=" + string_v1 + "&campo2=" + string_v2 + "&campo3=" + string_v3 + "&campo4=" + string_v4 + "&campo5=" + string_v5 + "&campo6=" + string_v6,
-                                            success: function(data) {
+                                            success: function (data) {
                                                 var id = data;
                                                 var tipo_comprobante = $('#select_tipo_comprobante').val();
                                                 var tipo_tiket = $('#select_tipo_factura').val();
@@ -1856,14 +1856,29 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
 
                                                         }
 
+                                                    } else {
+                                                        if (tipo_comprobante == 3) {
 
+                                                            if (tipo_tiket == 1) {
 
+                                                                //bootbox.alert("Gracias! Por su Información Nota Agregada Correctamente!", function() {
+                                                                var myWindow = window.open('data/reportes/tiket_nota.php?hoja=A5&id=' + id, 'popup', 'width=900,height=650');
+                                                                location.reload();
+                                                                //});
 
+                                                            } else {
 
+                                                                if (tipo_tiket == 2) {
 
+                                                                    //bootbox.alert("Gracias! Por su Información Nota Agregada Correctamente!", function() {
+                                                                    var myWindow = window.open('data/reportes/nota_venta.php?hoja=A5&id=' + id, 'popup', 'width=900,height=650');
+                                                                    location.reload();
+                                                                    //});
 
+                                                                }
 
-
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -1878,7 +1893,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         });
         // fin
 
-        $('#btn_2').click(function() {
+        $('#btn_2').click(function () {
             $("#btn_2").attr("disabled", true);
             var formulario = $("#form_factura").serialize();
             var submit = "btn_anular";
@@ -1905,10 +1920,10 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 type: "POST",
                 url: "data/factura_venta/app.php",
                 data: formulario + "&btn_anular=" + submit + "&campo1=" + string_v1 + "&campo2=" + string_v2,
-                success: function(data) {
+                success: function (data) {
                     var val = data;
                     if (val == 1) {
-                        bootbox.alert("Gracias! Por su Información Factura Anulada Correctamente!", function() {
+                        bootbox.alert("Gracias! Por su Información Factura Anulada Correctamente!", function () {
                             location.reload();
                         });
                     }
@@ -1917,7 +1932,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         });
 
 
-        $('#btn_15').click(function() {
+        $('#btn_15').click(function () {
             $("#btn_15").attr("disabled", true);
             var formulario = $("#form_factura").serialize();
             var submit = "btn_anular_2";
@@ -1944,10 +1959,10 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 type: "POST",
                 url: "data/factura_venta/app.php",
                 data: formulario + "&btn_anular_2=" + submit + "&campo1=" + string_v1 + "&campo2=" + string_v2,
-                success: function(data) {
+                success: function (data) {
                     var val = data;
                     if (val == 1) {
-                        bootbox.alert("Gracias! Por su Información Nota Anulada Correctamente!", function() {
+                        bootbox.alert("Gracias! Por su Información Nota Anulada Correctamente!", function () {
                             location.reload();
                         });
                     }
@@ -1957,7 +1972,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
 
 
         // reimprimir facturas
-        $('#btn_3').click(function() {
+        $('#btn_3').click(function () {
 
 
             if ($('#id_factura').val() == '') {
@@ -1994,7 +2009,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         // fin
 
         // actualizar formulario
-        $('#btn_4').click(function() {
+        $('#btn_4').click(function () {
             location.reload();
         });
         // fin
@@ -2002,18 +2017,18 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
     // fin
 
     /*jqgrid table 1 local*/
-    jQuery(function($) {
+    jQuery(function ($) {
         var grid_selector = "#table";
         var pager_selector = "#pager";
 
-        $(window).on('resize.jqGrid', function() {
+        $(window).on('resize.jqGrid', function () {
             $(grid_selector).jqGrid('setGridWidth', $("#grid_container").width(), true);
         }).trigger('resize');
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
-        $(document).on('settings.ace.jqGrid', function(ev, event_name, collapsed) {
+        $(document).on('settings.ace.jqGrid', function (ev, event_name, collapsed) {
             if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
-                setTimeout(function() {
+                setTimeout(function () {
                     $(grid_selector).jqGrid('setGridWidth', parent_column.width());
                 }, 0);
             }
@@ -2025,27 +2040,27 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             datatype: "local",
             colNames: ['', 'ID', 'CÓDIGO', 'DESCRIPCIÓN', 'CANTID.', 'PVP Bs.', 'PVP $', 'DESCU.', 'CALCULADO', 'TOTAL Bs.', 'TOTAL $', 'IVA', 'INCLUYE', 'PENDIENTE'],
             colModel: [{
-                    name: 'myac',
-                    width: 50,
-                    fixed: true,
-                    sortable: false,
-                    resize: false,
-                    formatter: 'actions',
-                    formatoptions: { keys: false, delbutton: true, editbutton: false }
-                },
-                { name: 'id', index: 'id', frozen: true, align: 'left', search: false, hidden: true },
-                { name: 'codigo', index: 'codigo', editable: false, search: false, hidden: false, editrules: { edithidden: false }, align: 'center', frozen: true, width: 100 },
-                { name: 'detalle', index: 'detalle', editable: false, frozen: true, editrules: { required: true }, align: 'center', width: 290 },
-                { name: 'cantidad', index: 'cantidad', editable: true, frozen: true, editrules: { required: true }, align: 'center', width: 70, editoptions: { maxlength: 10, size: 15, dataInit: function(elem) { $(elem).bind("keypress", function(e) { return numeros(e) }) } } },
-                { name: 'precio_u_bs', index: 'precio_u_bs', editable: true, search: false, frozen: true, editrules: { required: true }, align: 'center', width: 110, editoptions: { maxlength: 10, size: 15, dataInit: function(elem) { $(elem).bind("keypress", function(e) { return punto(e) }) } } },
-                { name: 'precio_u', index: 'precio_u', editable: true, search: false, frozen: true, editrules: { required: true }, align: 'center', width: 110, editoptions: { maxlength: 10, size: 15, dataInit: function(elem) { $(elem).bind("keypress", function(e) { return punto(e) }) } } },
-                { name: 'descuento', index: 'descuento', editable: false, frozen: true, editrules: { required: true }, align: 'center', width: 70 },
-                { name: 'cal_des', index: 'cal_des', editable: false, hidden: true, frozen: true, editrules: { required: true }, align: 'center', width: 90 },
-                { name: 'total_bs', index: 'total_bs', editable: false, search: false, frozen: true, editrules: { required: true }, align: 'center', width: 110 },
-                { name: 'total', index: 'total', editable: false, search: false, frozen: true, editrules: { required: true }, align: 'center', width: 110 },
-                { name: 'iva', index: 'iva', align: 'center', width: 100, hidden: true },
-                { name: 'incluye', index: 'incluye', editable: false, hidden: true, frozen: true, editrules: { required: true }, align: 'center', width: 90 },
-                { name: 'pendiente', index: 'pendiente', editable: false, hidden: true, frozen: true, editrules: { required: true }, align: 'center', width: 90 },
+                name: 'myac',
+                width: 50,
+                fixed: true,
+                sortable: false,
+                resize: false,
+                formatter: 'actions',
+                formatoptions: { keys: false, delbutton: true, editbutton: false }
+            },
+            { name: 'id', index: 'id', frozen: true, align: 'left', search: false, hidden: true },
+            { name: 'codigo', index: 'codigo', editable: false, search: false, hidden: false, editrules: { edithidden: false }, align: 'center', frozen: true, width: 100 },
+            { name: 'detalle', index: 'detalle', editable: false, frozen: true, editrules: { required: true }, align: 'center', width: 290 },
+            { name: 'cantidad', index: 'cantidad', editable: true, frozen: true, editrules: { required: true }, align: 'center', width: 70, editoptions: { maxlength: 10, size: 15, dataInit: function (elem) { $(elem).bind("keypress", function (e) { return numeros(e) }) } } },
+            { name: 'precio_u_bs', index: 'precio_u_bs', editable: true, search: false, frozen: true, editrules: { required: true }, align: 'center', width: 110, editoptions: { maxlength: 10, size: 15, dataInit: function (elem) { $(elem).bind("keypress", function (e) { return punto(e) }) } } },
+            { name: 'precio_u', index: 'precio_u', editable: true, search: false, frozen: true, editrules: { required: true }, align: 'center', width: 110, editoptions: { maxlength: 10, size: 15, dataInit: function (elem) { $(elem).bind("keypress", function (e) { return punto(e) }) } } },
+            { name: 'descuento', index: 'descuento', editable: false, frozen: true, editrules: { required: true }, align: 'center', width: 70 },
+            { name: 'cal_des', index: 'cal_des', editable: false, hidden: true, frozen: true, editrules: { required: true }, align: 'center', width: 90 },
+            { name: 'total_bs', index: 'total_bs', editable: false, search: false, frozen: true, editrules: { required: true }, align: 'center', width: 110 },
+            { name: 'total', index: 'total', editable: false, search: false, frozen: true, editrules: { required: true }, align: 'center', width: 110 },
+            { name: 'iva', index: 'iva', align: 'center', width: 100, hidden: true },
+            { name: 'incluye', index: 'incluye', editable: false, hidden: true, frozen: true, editrules: { required: true }, align: 'center', width: 90 },
+            { name: 'pendiente', index: 'pendiente', editable: false, hidden: true, frozen: true, editrules: { required: true }, align: 'center', width: 90 },
             ],
             rowNum: 10,
             width: 600,
@@ -2062,7 +2077,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             delOptions: {
                 modal: true,
                 jqModal: true,
-                onclickSubmit: function(rp_ge, rowid) {
+                onclickSubmit: function (rp_ge, rowid) {
                     var id = jQuery(grid_selector).jqGrid('getGridParam', 'selrow');
                     jQuery(grid_selector).jqGrid('restoreRow', id);
                     var ret = jQuery(grid_selector).jqGrid('getRowData', id);
@@ -2220,16 +2235,16 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 },
                 processing: true
             },
-            loadComplete: function() {
+            loadComplete: function () {
                 var table = this;
-                setTimeout(function() {
+                setTimeout(function () {
                     styleCheckbox(table);
                     updateActionIcons(table);
                     updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
             },
-            ondblClickRow: function(rowid) {
+            ondblClickRow: function (rowid) {
                 var gsr = jQuery(grid_selector).jqGrid('getGridParam', 'selrow');
                 var ret = jQuery(grid_selector).jqGrid('getRowData', gsr);
             },
@@ -2238,7 +2253,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         $(window).triggerHandler('resize.jqGrid'); //cambiar el tamaño para hacer la rejilla conseguir el tamaño correcto
 
         function aceSwitch(cellvalue, options, cell) {
-            setTimeout(function() {
+            setTimeout(function () {
                 $(cell).find('input[type=checkbox]')
                     .addClass('ace ace-switch ace-switch-5')
                     .after('<span class="lbl"></span>');
@@ -2260,7 +2275,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             viewicon: 'ace-icon fa fa-search-plus grey'
         }, {
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                 style_edit_form(form);
@@ -2269,7 +2284,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             closeAfterAdd: true,
             recreateForm: true,
             viewPagerButtons: false,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
                     .wrapInner('<div class="widget-header" />')
@@ -2277,22 +2292,22 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             }
         }, {
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 if (form.data('styled')) return false;
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                 style_delete_form(form);
                 form.data('styled', true);
             },
-            onClick: function(e) {}
+            onClick: function (e) { }
         }, {
             recreateForm: true,
-            afterShowSearch: function(e) {
+            afterShowSearch: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
                 style_search_form(form);
             },
-            afterRedraw: function() {
+            afterRedraw: function () {
                 style_search_filters($(this));
             },
 
@@ -2303,7 +2318,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         }, {
             //view record form
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
             }
@@ -2361,9 +2376,9 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             style_edit_form(form);
         }
 
-        function styleCheckbox(table) {}
+        function styleCheckbox(table) { }
 
-        function updateActionIcons(table) {}
+        function updateActionIcons(table) { }
 
         function updatePagerIcons(table) {
             var replacement = {
@@ -2372,7 +2387,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 'ui-icon-seek-next': 'ace-icon fa fa-angle-right bigger-140',
                 'ui-icon-seek-end': 'ace-icon fa fa-angle-double-right bigger-140'
             };
-            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function() {
+            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function () {
                 var icon = $(this);
                 var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
                 if ($class in replacement) icon.attr('class', 'ui-icon ' + replacement[$class]);
@@ -2384,7 +2399,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             $(table).find('.ui-pg-div').tooltip({ container: 'body' });
         }
 
-        $(document).one('ajaxloadstart.page', function(e) {
+        $(document).one('ajaxloadstart.page', function (e) {
             $(grid_selector).jqGrid('GridUnload');
             $('.ui-jqdialog').remove();
         });
@@ -2392,19 +2407,19 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
     // fin
 
     /*jqgrid table 2 buscador*/
-    jQuery(function($) {
+    jQuery(function ($) {
         var grid_selector2 = "#table2";
         var pager_selector2 = "#pager2";
 
-        $(window).on('resize.jqGrid', function() {
+        $(window).on('resize.jqGrid', function () {
             $(grid_selector2).jqGrid('setGridWidth', $("#myModal .modal-dialog").width() - 30);
         }).trigger('resize');
 
         var parent_column = $(grid_selector2).closest('[class*="col-"]');
-        $(document).on('settings.ace.jqGrid', function(ev, event_name, collapsed) {
+        $(document).on('settings.ace.jqGrid', function (ev, event_name, collapsed) {
             if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
                 //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
-                setTimeout(function() {
+                setTimeout(function () {
                     $(grid_selector2).jqGrid('setGridWidth', parent_column.width());
                 }, 0);
             }
@@ -2415,37 +2430,36 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             datatype: "xml",
             url: 'data/factura_venta/xml_factura_venta.php',
             autoencode: false,
-            colNames: ['ID', 'IDENTIFICACIÓN', 'CLIENTE', 'SERIE', 'FECHA EMISIÓN', 'TOTAL', 'ACCIÓN'],
+            colNames: ['ID', 'FECHA', 'SERIE', 'CLIENTE', 'TOTAL', 'ACCIÓN'],
             colModel: [
                 { name: 'id', index: 'id', frozen: true, align: 'left', search: false, hidden: true },
-                { name: 'C.identificacion', index: 'C.identificacion', frozen: true, align: 'left', search: true, hidden: false },
-                { name: 'C.nombres_completos', index: 'C.nombres_completos', frozen: true, align: 'left', search: true, width: '250px' },
-                { name: 'F.serie', index: 'F.serie', frozen: true, hidden: false, align: 'left', search: true, width: '' },
-                { name: 'fecha_emision', index: 'fecha_emision', frozen: true, align: 'left', search: false, width: '120px' },
-                { name: 'total_pagar', index: 'total_pagar', frozen: true, search: false, align: 'left', width: '80px' },
+                { name: 'fecha_actual', index: 'fecha_actual', frozen: true, align: 'left', width: '90px', search: true, hidden: false },
+                { name: 'serie', index: 'serie', frozen: true, align: 'left', search: true, width: '190px' },
+                { name: 'identificacion', index: 'identificacion', frozen: true, align: 'left', search: false, width: '410px' },
+                { name: 'total_venta', index: 'total_venta', frozen: true, search: false, align: 'left', width: '80px' },
                 { name: 'accion', index: 'accion', editable: false, hidden: false, search: false, frozen: true, editrules: { required: true }, align: 'center', width: '80px' },
             ],
             rowNum: 10,
             width: 600,
-            shrinkToFit: false,
+            shrinkToFit: true,
             height: 330,
-            rowList: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 500],
+            rowList: [10, 20, 30, 50, 60, 70, 80, 90, 100, 500],
             pager: pager_selector2,
             sortname: 'id',
             sortorder: 'asc',
             altRows: true,
             multiselect: false,
             viewrecords: true,
-            loadComplete: function() {
+            loadComplete: function () {
                 var table = this;
-                setTimeout(function() {
+                setTimeout(function () {
                     styleCheckbox(table);
                     updateActionIcons(table);
                     updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
             },
-            gridComplete: function() {
+            gridComplete: function () {
                 var ids = jQuery(grid_selector2).jqGrid('getDataIDs');
                 for (var i = 0; i < ids.length; i++) {
                     var id_factura = ids[i];
@@ -2453,7 +2467,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                     jQuery(grid_selector2).jqGrid('setRowData', ids[i], { accion: pdf });
                 }
             },
-            ondblClickRow: function(rowid) {
+            ondblClickRow: function (rowid) {
                 var gsr = jQuery(grid_selector2).jqGrid('getGridParam', 'selrow');
                 var ret = jQuery(grid_selector2).jqGrid('getRowData', gsr);
                 $("#table").jqGrid("clearGridData", true);
@@ -2463,7 +2477,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                     type: 'post',
                     data: { llenar_cabezera_factura: 'llenar_cabezera_factura', id: ret.id },
                     dataType: 'json',
-                    success: function(data) {
+                    success: function (data) {
                         $('#id_factura').val(data.id_factura);
                         $('#fecha_actual').val(data.fecha_actual);
                         $('#hora_actual').val(data.hora_actual);
@@ -2519,7 +2533,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                     type: 'post',
                     data: { llenar_detalle_factura: 'llenar_detalle_factura', id: ret.id },
                     dataType: 'json',
-                    success: function(data) {
+                    success: function (data) {
                         var tama = data.length;
                         var descuento = 0;
                         var desc = 0;
@@ -2553,9 +2567,9 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                                 cal_des: resultado,
                                 total_bs: total,
                                 total: total_dolar
-                                    //iva: data[i + 7],
-                                    //incluye: data[i + 8],
-                                    // pendiente: data[i + 7]
+                                //iva: data[i + 7],
+                                //incluye: data[i + 8],
+                                // pendiente: data[i + 7]
                             };
 
                             jQuery("#table").jqGrid('addRowData', data[i], datarow);
@@ -2577,7 +2591,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         $(window).triggerHandler('resize.jqGrid'); //cambiar el tamaño para hacer la rejilla conseguir el tamaño correcto
 
         function aceSwitch(cellvalue, options, cell) {
-            setTimeout(function() {
+            setTimeout(function () {
                 $(cell).find('input[type=checkbox]')
                     .addClass('ace ace-switch ace-switch-5')
                     .after('<span class="lbl"></span>');
@@ -2599,7 +2613,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             viewicon: 'ace-icon fa fa-search-plus grey'
         }, {
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                 style_edit_form(form);
@@ -2608,7 +2622,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             closeAfterAdd: true,
             recreateForm: true,
             viewPagerButtons: false,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
                     .wrapInner('<div class="widget-header" />')
@@ -2616,22 +2630,22 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             }
         }, {
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 if (form.data('styled')) return false;
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                 style_delete_form(form);
                 form.data('styled', true);
             },
-            onClick: function(e) {}
+            onClick: function (e) { }
         }, {
             recreateForm: true,
-            afterShowSearch: function(e) {
+            afterShowSearch: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
                 style_search_form(form);
             },
-            afterRedraw: function() {
+            afterRedraw: function () {
                 style_search_filters($(this));
             },
 
@@ -2642,7 +2656,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         }, {
             //view record form
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
             }
@@ -2700,10 +2714,10 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             style_edit_form(form);
         }
 
-        function styleCheckbox(table) {}
+        function styleCheckbox(table) { }
 
 
-        function updateActionIcons(table) {}
+        function updateActionIcons(table) { }
 
         function updatePagerIcons(table) {
             var replacement = {
@@ -2712,7 +2726,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 'ui-icon-seek-next': 'ace-icon fa fa-angle-right bigger-140',
                 'ui-icon-seek-end': 'ace-icon fa fa-angle-double-right bigger-140'
             };
-            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function() {
+            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function () {
                 var icon = $(this);
                 var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
                 if ($class in replacement) icon.attr('class', 'ui-icon ' + replacement[$class]);
@@ -2724,7 +2738,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             $(table).find('.ui-pg-div').tooltip({ container: 'body' });
         }
 
-        $(document).one('ajaxloadstart.page', function(e) {
+        $(document).one('ajaxloadstart.page', function (e) {
             $(grid_selector2).jqGrid('GridUnload');
             $('.ui-jqdialog').remove();
         });
@@ -2732,19 +2746,19 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
     // fin
 
     /*jqgrid table 3 buscador*/
-    jQuery(function($) {
+    jQuery(function ($) {
         var grid_selector3 = "#table3";
         var pager_selector3 = "#pager3";
 
-        $(window).on('resize.jqGrid', function() {
+        $(window).on('resize.jqGrid', function () {
             $(grid_selector3).jqGrid('setGridWidth', $("#myModal .modal-dialog").width() - 30);
         }).trigger('resize');
 
         var parent_column = $(grid_selector3).closest('[class*="col-"]');
-        $(document).on('settings.ace.jqGrid', function(ev, event_name, collapsed) {
+        $(document).on('settings.ace.jqGrid', function (ev, event_name, collapsed) {
             if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
                 //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
-                setTimeout(function() {
+                setTimeout(function () {
                     $(grid_selector3).jqGrid('setGridWidth', parent_column.width());
                 }, 0);
             }
@@ -2755,36 +2769,36 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             datatype: "xml",
             url: 'data/factura_venta/xml_nota_venta.php',
             autoencode: false,
-            colNames: ['ID', 'IDENTIFICACIÓN', 'CLIENTE', 'FECHA EMISIÓN', 'TOTAL', 'ACCIÓN'],
+            colNames: ['ID', 'FECHA', 'SERIE', 'CLIENTE', 'TOTAL', 'ACCIÓN'],
             colModel: [
                 { name: 'id', index: 'id', frozen: true, align: 'left', search: false, hidden: true },
-                { name: 'C.identificacion', index: 'C.identificacion', frozen: true, align: 'left', search: true, hidden: false },
-                { name: 'C.nombres_completos', index: 'C.nombres_completos', frozen: true, align: 'left', search: true, width: '350px' },
-                { name: 'fecha_emision', index: 'fecha_emision', frozen: true, align: 'left', search: false, width: '120px' },
-                { name: 'total_pagar', index: 'total_pagar', frozen: true, search: false, align: 'left', width: '80px' },
+                { name: 'fecha_actual', index: 'fecha_actual', frozen: true, align: 'left', width: '90px', search: true, hidden: false },
+                { name: 'serie', index: 'serie', frozen: true, align: 'left', search: true, width: '190px' },
+                { name: 'identificacion', index: 'identificacion', frozen: true, align: 'left', search: false, width: '410px' },
+                { name: 'total_venta', index: 'total_venta', frozen: true, search: false, align: 'left', width: '80px' },
                 { name: 'accion', index: 'accion', editable: false, hidden: false, search: false, frozen: true, editrules: { required: true }, align: 'center', width: '80px' },
             ],
-            rowNum: 10,
+            rowNum: 20,
             width: 600,
             shrinkToFit: false,
             height: 330,
-            rowList: [10, 20, 30],
+            rowList: [10, 20, 30, 50, 60, 70, 80, 90, 100, 500],
             pager: pager_selector3,
             sortname: 'id',
             sortorder: 'asc',
             altRows: true,
             multiselect: false,
             viewrecords: true,
-            loadComplete: function() {
+            loadComplete: function () {
                 var table = this;
-                setTimeout(function() {
+                setTimeout(function () {
                     styleCheckbox(table);
                     updateActionIcons(table);
                     updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
             },
-            gridComplete: function() {
+            gridComplete: function () {
                 var ids = jQuery(grid_selector3).jqGrid('getDataIDs');
                 for (var i = 0; i < ids.length; i++) {
                     var id_nota = ids[i];
@@ -2792,7 +2806,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                     jQuery(grid_selector3).jqGrid('setRowData', ids[i], { accion: pdf });
                 }
             },
-            ondblClickRow: function(rowid) {
+            ondblClickRow: function (rowid) {
                 var gsr = jQuery(grid_selector3).jqGrid('getGridParam', 'selrow');
                 var ret = jQuery(grid_selector3).jqGrid('getRowData', gsr);
                 $("#table").jqGrid("clearGridData", true);
@@ -2802,7 +2816,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                     type: 'post',
                     data: { llenar_cabezera_nota: 'llenar_cabezera_nota', id: ret.id },
                     dataType: 'json',
-                    success: function(data) {
+                    success: function (data) {
                         $('#id_nota').val(data.id_nota);
                         $('#fecha_actual').val(data.fecha_actual);
                         $('#hora_actual').val(data.hora_actual);
@@ -2858,7 +2872,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                     type: 'post',
                     data: { llenar_detalle_nota: 'llenar_detalle_nota', id: ret.id },
                     dataType: 'json',
-                    success: function(data) {
+                    success: function (data) {
                         var tama = data.length;
                         var descuento = 0;
                         var desc = 0;
@@ -2892,9 +2906,9 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                                 cal_des: resultado,
                                 total_bs: total,
                                 total: total_dolar
-                                    //iva: data[i + 7],
-                                    //incluye: data[i + 8],
-                                    // pendiente: data[i + 7]
+                                //iva: data[i + 7],
+                                //incluye: data[i + 8],
+                                // pendiente: data[i + 7]
                             };
 
                             jQuery("#table").jqGrid('addRowData', data[i], datarow);
@@ -2915,7 +2929,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         $(window).triggerHandler('resize.jqGrid'); //cambiar el tamaño para hacer la rejilla conseguir el tamaño correcto
 
         function aceSwitch(cellvalue, options, cell) {
-            setTimeout(function() {
+            setTimeout(function () {
                 $(cell).find('input[type=checkbox]')
                     .addClass('ace ace-switch ace-switch-5')
                     .after('<span class="lbl"></span>');
@@ -2937,7 +2951,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             viewicon: 'ace-icon fa fa-search-plus grey'
         }, {
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                 style_edit_form(form);
@@ -2946,7 +2960,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             closeAfterAdd: true,
             recreateForm: true,
             viewPagerButtons: false,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
                     .wrapInner('<div class="widget-header" />')
@@ -2954,22 +2968,22 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             }
         }, {
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 if (form.data('styled')) return false;
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                 style_delete_form(form);
                 form.data('styled', true);
             },
-            onClick: function(e) {}
+            onClick: function (e) { }
         }, {
             recreateForm: true,
-            afterShowSearch: function(e) {
+            afterShowSearch: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
                 style_search_form(form);
             },
-            afterRedraw: function() {
+            afterRedraw: function () {
                 style_search_filters($(this));
             },
 
@@ -2980,7 +2994,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
         }, {
             //view record form
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
             }
@@ -3038,10 +3052,10 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             style_edit_form(form);
         }
 
-        function styleCheckbox(table) {}
+        function styleCheckbox(table) { }
 
 
-        function updateActionIcons(table) {}
+        function updateActionIcons(table) { }
 
         function updatePagerIcons(table) {
             var replacement = {
@@ -3050,7 +3064,7 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
                 'ui-icon-seek-next': 'ace-icon fa fa-angle-right bigger-140',
                 'ui-icon-seek-end': 'ace-icon fa fa-angle-double-right bigger-140'
             };
-            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function() {
+            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function () {
                 var icon = $(this);
                 var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
                 if ($class in replacement) icon.attr('class', 'ui-icon ' + replacement[$class]);
@@ -3062,317 +3076,12 @@ angular.module('scotchApp').controller('factura_ventaController', function($scop
             $(table).find('.ui-pg-div').tooltip({ container: 'body' });
         }
 
-        $(document).one('ajaxloadstart.page', function(e) {
+        $(document).one('ajaxloadstart.page', function (e) {
             $(grid_selector3).jqGrid('GridUnload');
             $('.ui-jqdialog').remove();
         });
     });
     // fin
 
-    /*jqgrid table 4 buscador*/
-    jQuery(function($) {
-        var grid_selector4 = "#table4";
-        var pager_selector4 = "#pager4";
 
-        $(window).on('resize.jqGrid', function() {
-            $(grid_selector4).jqGrid('setGridWidth', $("#myModal .modal-dialog").width() - 30);
-        }).trigger('resize');
-
-        var parent_column = $(grid_selector4).closest('[class*="col-"]');
-        $(document).on('settings.ace.jqGrid', function(ev, event_name, collapsed) {
-            if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
-                //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
-                setTimeout(function() {
-                    $(grid_selector4).jqGrid('setGridWidth', parent_column.width());
-                }, 0);
-            }
-        })
-
-        // buscador proformas
-        jQuery(grid_selector4).jqGrid({
-            datatype: "xml",
-            url: 'data/factura_venta/xml_proforma.php',
-            autoencode: false,
-            colNames: ['ID', 'IDENTIFICACIÓN', 'CLIENTE', 'FECHA EMISIÓN', 'TOTAL', 'ACCIÓN'],
-            colModel: [
-                { name: 'id', index: 'id', frozen: true, align: 'left', search: false, hidden: true },
-                { name: 'C.identificacion', index: 'C.identificacion', frozen: true, align: 'left', search: true, hidden: false },
-                { name: 'C.nombres_completos', index: 'C.nombres_completos', frozen: true, align: 'left', search: true, width: '250px' },
-                { name: 'fecha_emision', index: 'fecha_emision', frozen: true, align: 'left', search: false, width: '120px' },
-                { name: 'total_pagar', index: 'total_pagar', frozen: true, search: false, align: 'left', width: '80px' },
-                { name: 'accion', index: 'accion', editable: false, hidden: false, search: false, frozen: true, editrules: { required: true }, align: 'center', width: '80px' },
-            ],
-            rowNum: 10,
-            width: 600,
-            shrinkToFit: false,
-            height: 330,
-            rowList: [10, 20, 30],
-            pager: pager_selector4,
-            sortname: 'id',
-            sortorder: 'asc',
-            altRows: true,
-            multiselect: false,
-            viewrecords: true,
-            loadComplete: function() {
-                var table = this;
-                setTimeout(function() {
-                    styleCheckbox(table);
-                    updateActionIcons(table);
-                    updatePagerIcons(table);
-                    enableTooltips(table);
-                }, 0);
-            },
-            gridComplete: function() {
-                var ids = jQuery(grid_selector4).jqGrid('getDataIDs');
-                for (var i = 0; i < ids.length; i++) {
-                    var id_proforma = ids[i];
-                    pdf = "<a onclick=\"angular.element(this).scope().methodspdfproforma('" + id_proforma + "')\" title='Reporte Proforma' ><i class='fa fa-file-pdf-o red2' style='cursor:pointer; cursor: hand'> PDF</i></a>";
-                    jQuery(grid_selector4).jqGrid('setRowData', ids[i], { accion: pdf });
-                }
-            },
-            ondblClickRow: function(rowid) {
-                var gsr = jQuery(grid_selector4).jqGrid('getGridParam', 'selrow');
-                var ret = jQuery(grid_selector4).jqGrid('getRowData', gsr);
-                $("#table").jqGrid("clearGridData", true);
-
-                $.ajax({
-                    url: 'data/factura_venta/app.php',
-                    type: 'post',
-                    data: { llenar_cabezera_proforma: 'llenar_cabezera_proforma', id: ret.id },
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#id_proforma').val(data.id_proforma);
-                        $('#fecha_actual').val(data.fecha_actual);
-                        $('#hora_actual').val(data.hora_actual);
-                        $('#id_cliente').val(data.id_cliente);
-                        $('#ruc').val(data.identificacion);
-                        $('#cliente').val(data.nombres_completos);
-                        $('#direccion').val(data.direccion);
-                        $('#telefono').val(data.telefono2);
-                        $('#correo').val(data.correo);
-                        $("#select_tipo_precio").select2('val', data.tipo_precio).trigger("change");
-
-                        $('#subtotal').val(data.subtotal);
-                        $('#tarifa').val(data.tarifa);
-                        $('#tarifa_0').val(data.tarifa0);
-                        $('#iva').val(data.iva);
-                        $('#otros').val(data.descuento);
-                        $('#total_pagar').val(data.total_pagar);
-                        $('#efectivo').val('0.00');
-                        $('#cambio').val('0.00');
-                        $("#estado h3").remove();
-                        $("#btn_2").attr("disabled", true);
-                    }
-                });
-
-                $.ajax({
-                    url: 'data/factura_venta/app.php',
-                    type: 'post',
-                    data: { llenar_detalle_proforma: 'llenar_detalle_proforma', id: ret.id },
-                    dataType: 'json',
-                    success: function(data) {
-                        var tama = data.length;
-                        var descuento = 0;
-                        var desc = 0;
-                        var precio = 0;
-                        var multi = 0;
-                        var flotante = 0;
-                        var resultado = 0;
-                        var total = 0;
-                        var suma_total = 0;
-
-                        for (var i = 0; i < tama; i = i + 9) {
-                            desc = data[i + 5];
-                            precio = (parseFloat(data[i + 4])).toFixed(3);
-                            multi = (parseFloat(data[i + 3]) * parseFloat(precio)).toFixed(3);
-                            descuento = ((multi * parseFloat(desc)) / 100);
-                            flotante = parseFloat(descuento);
-                            resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(3);
-                            total = (multi - resultado).toFixed(3);
-
-                            var datarow = {
-                                id: data[i],
-                                codigo: data[i + 1],
-                                detalle: data[i + 2],
-                                cantidad: data[i + 3],
-                                precio_u: precio,
-                                descuento: desc,
-                                cal_des: resultado,
-                                total: total,
-                                iva: data[i + 7],
-                                incluye: data[i + 8],
-                                pendiente: 0
-                            };
-
-                            jQuery("#table").jqGrid('addRowData', data[i], datarow);
-                            suma_total = suma_total + parseFloat(data[i + 3]);
-                        }
-                        var filas = jQuery("#table").jqGrid("getRowData");
-                        $("#items").val(filas.length);
-                        $("#num").val(suma_total);
-                    }
-                });
-
-                $('#myModal3').modal('hide');
-                $('#btn_0').attr('disabled', false);
-            },
-            caption: "LISTA PROFORMAS"
-        });
-
-        $(window).triggerHandler('resize.jqGrid'); //cambiar el tamaño para hacer la rejilla conseguir el tamaño correcto
-
-        function aceSwitch(cellvalue, options, cell) {
-            setTimeout(function() {
-                $(cell).find('input[type=checkbox]')
-                    .addClass('ace ace-switch ace-switch-5')
-                    .after('<span class="lbl"></span>');
-            }, 0);
-        }
-
-        jQuery(grid_selector4).jqGrid('navGrid', pager_selector4, { //navbar options
-            edit: false,
-            editicon: 'ace-icon fa fa-pencil blue',
-            add: false,
-            addicon: 'ace-icon fa fa-plus-circle purple',
-            del: false,
-            delicon: 'ace-icon fa fa-trash-o red',
-            search: true,
-            searchicon: 'ace-icon fa fa-search orange',
-            refresh: true,
-            refreshicon: 'ace-icon fa fa-refresh green',
-            view: false,
-            viewicon: 'ace-icon fa fa-search-plus grey'
-        }, {
-            recreateForm: true,
-            beforeShowForm: function(e) {
-                var form = $(e[0]);
-                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                style_edit_form(form);
-            }
-        }, {
-            closeAfterAdd: true,
-            recreateForm: true,
-            viewPagerButtons: false,
-            beforeShowForm: function(e) {
-                var form = $(e[0]);
-                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
-                    .wrapInner('<div class="widget-header" />')
-                style_edit_form(form);
-            }
-        }, {
-            recreateForm: true,
-            beforeShowForm: function(e) {
-                var form = $(e[0]);
-                if (form.data('styled')) return false;
-                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                style_delete_form(form);
-                form.data('styled', true);
-            },
-            onClick: function(e) {}
-        }, {
-            recreateForm: true,
-            afterShowSearch: function(e) {
-                var form = $(e[0]);
-                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-                style_search_form(form);
-            },
-            afterRedraw: function() {
-                style_search_filters($(this));
-            },
-
-            //multipleSearch: true
-            overlay: false,
-            sopt: ['eq', 'cn'],
-            defaultSearch: 'eq',
-        }, {
-            //view record form
-            recreateForm: true,
-            beforeShowForm: function(e) {
-                var form = $(e[0]);
-                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-            }
-        })
-
-        function style_edit_form(form) {
-            form.find('input[name=sdate]').datepicker({ format: 'yyyy-mm-dd', autoclose: true })
-            form.find('input[name=stock]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
-
-            //update buttons classes
-            var buttons = form.next().find('.EditButton .fm-button');
-            buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide(); //ui-icon, s-icon
-            buttons.eq(0).addClass('btn-primary').prepend('<i class="ace-icon fa fa-check"></i>');
-            buttons.eq(1).prepend('<i class="ace-icon fa fa-times"></i>')
-
-            buttons = form.next().find('.navButton a');
-            buttons.find('.ui-icon').hide();
-            buttons.eq(0).append('<i class="ace-icon fa fa-chevron-left"></i>');
-            buttons.eq(1).append('<i class="ace-icon fa fa-chevron-right"></i>');
-        }
-
-        function style_delete_form(form) {
-            var buttons = form.next().find('.EditButton .fm-button');
-            buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide(); //ui-icon, s-icon
-            buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
-            buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>')
-        }
-
-        function style_search_filters(form) {
-            form.find('.delete-rule').val('X');
-            form.find('.add-rule').addClass('btn btn-xs btn-primary');
-            form.find('.add-group').addClass('btn btn-xs btn-success');
-            form.find('.delete-group').addClass('btn btn-xs btn-danger');
-        }
-
-        function style_search_form(form) {
-            var dialog = form.closest('.ui-jqdialog');
-            var buttons = dialog.find('.EditTable')
-            buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'ace-icon fa fa-retweet');
-            buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
-            buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
-        }
-
-        function beforeDeleteCallback(e) {
-            var form = $(e[0]);
-            if (form.data('styled')) return false;
-            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-            style_delete_form(form);
-            form.data('styled', true);
-        }
-
-        function beforeEditCallback(e) {
-            var form = $(e[0]);
-            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-            style_edit_form(form);
-        }
-
-        function styleCheckbox(table) {}
-
-
-        function updateActionIcons(table) {}
-
-        function updatePagerIcons(table) {
-            var replacement = {
-                'ui-icon-seek-first': 'ace-icon fa fa-angle-double-left bigger-140',
-                'ui-icon-seek-prev': 'ace-icon fa fa-angle-left bigger-140',
-                'ui-icon-seek-next': 'ace-icon fa fa-angle-right bigger-140',
-                'ui-icon-seek-end': 'ace-icon fa fa-angle-double-right bigger-140'
-            };
-            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function() {
-                var icon = $(this);
-                var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-                if ($class in replacement) icon.attr('class', 'ui-icon ' + replacement[$class]);
-            })
-        }
-
-        function enableTooltips(table) {
-            $('.navtable .ui-pg-button').tooltip({ container: 'body' });
-            $(table).find('.ui-pg-div').tooltip({ container: 'body' });
-        }
-
-        $(document).one('ajaxloadstart.page', function(e) {
-            $(grid_selector4).jqGrid('GridUnload');
-            $('.ui-jqdialog').remove();
-        });
-    });
-    // fin
 });

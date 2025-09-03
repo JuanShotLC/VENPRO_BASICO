@@ -166,35 +166,46 @@ class PDF extends PDF_Rotate {
     $resultado = mysqli_query($con,"SELECT C.nombres_completos, C.identificacion, C.direccion, C.telefono2, 
                                            C.ciudad,c.direccion, F.fecha_actual, F.forma_pago,F.subtotal, 
                                            F.tarifa0, F.tarifa, F.iva_venta,F.descuento_venta, F.total_venta, 
-                                           F.serie, F.precinto_nro,F.iva_igtf,F.divisas,F.factor
+                                           F.serie, F.precinto_nro,F.iva_igtf,F.divisas,F.factor, F.tipo_comprobante
                                            from nota_venta F, clientes C WHERE F.id_cliente = C.id AND F.id = '$_GET[id]'");    
 
     while ($row = mysqli_fetch_array($resultado)) {        
         $pdf->SetX(5);
         $pdf->SetFillColor(216, 216, 231);  
-        $pdf->Cell(35, 6, utf8_decode('Fecha: ' . strtoupper($row[6])),1,0, 'L',true); ///FECHA (X,Y)
-        $pdf->Cell(40, 6, utf8_decode('Nota de Entrega N° ' . strtoupper($row[14])),1,0, 'L',true); //Numero de factura 
-        $pdf->Cell(40, 6, utf8_decode('N° Precinto: ' . strtoupper($row[15])),1,0, 'L',true); //Numero de factura 
-        $pdf->Cell(85, 6, utf8_decode('Forma de pago: ' . strtoupper($row[7])),1,0, 'L',true); ///RIF/CI(X,Y)
+        $pdf->Cell(67, 6, utf8_decode('Fecha: ' . strtoupper($row[6])),1,0, 'L',true); ///FECHA (X,Y)
+        if ($row[19] == 2){
+            $pdf->Cell(66, 6, utf8_decode('Nota de Entrega N° ' . strtoupper($row[14])),1,0, 'L',true); //Numero de factura 
+        } else {
+            $pdf->Cell(66, 6, utf8_decode('Nota de Crédito  N° ' . strtoupper($row[14])),1,0, 'L',true); //Numero de factura 
+        }
+        
+
+        $pdf->Cell(67, 6, utf8_decode('Forma de pago: ' . strtoupper($row[7])),1,0, 'L',true); ///RIF/CI(X,Y)
        // $pdf->Cell(60, 6, utf8_decode('CLIENTE: ' . strtoupper($row[0])),1,0, 'L',true); ////CLIENTE (X,Y)  
+       $pdf->ln();
+       $pdf->SetX(5);
+       $pdf->Cell(200, 6, utf8_decode('N° Precinto: ' . strtoupper($row[15])),1,0, 'L',true); //Numero de factura 
+       
         $pdf->ln();
         $pdf->SetX(5);
         $pdf->Cell(35, 6, utf8_decode('Rif./C.I.: ' . strtoupper($row[1])),1,0, 'L',true); ///FECHA (X,Y)
         $pdf->Cell(80, 6, utf8_decode('Cliente: ' . strtoupper($row[0])),1,0, 'L',true); //Numero de factura 
         $pdf->Cell(85, 6, utf8_decode('Domicilio fiscal: ' . strtoupper($row[2])),1,0, 'L',true); ///RIF/CI(X,Y)
         //$pdf->Cell(60, 6, utf8_decode('' . strtoupper($row[0])),1,0, 'L',true); ////CLIENTE (X,Y)    
+
     
 
         $pdf->Text(150, 230, utf8_decode('Base Imp. ' . number_format(($row[8]),2,',','.') ), 0, 'C', 0); ////SUBTOTAL (X,Y) 
-        $pdf->Text(150, 235, utf8_decode('IVA G 16.00% ' . number_format(($row[11]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
-        $pdf->Text(150, 240, utf8_decode('IGTF 3% ' . number_format(($row[16]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
-        $pdf->Text(150, 245, utf8_decode('DIVISA ' . number_format(($row[17]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
-        $pdf->Text(150, 250, utf8_decode('TOTAL: ' . number_format(($row[13]),2,',','.')  ), 0, 'C', 0); ///Total (X,Y)  
+        $pdf->Text(150, 235, utf8_decode('TASA ' . number_format(($row[18]),2,',','.') ), 0, 'C', 0); ////SUBTOTAL (X,Y) 
+        $pdf->Text(150, 240, utf8_decode('IVA G 16.00% ' . number_format(($row[11]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
+        $pdf->Text(150, 245, utf8_decode('IGTF 3% ' . number_format(($row[16]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
+        $pdf->Text(150, 250, utf8_decode('DIVISA ' . number_format(($row[17]),2,',','.')   ), 0, 'C', 0); ////IVA (X,Y) 
+        $pdf->Text(150, 255, utf8_decode('TOTAL: ' . number_format(($row[13]),2,',','.')  ), 0, 'C', 0); ///Total (X,Y)  
         
                  
         $pdf->Ln(1);
     }
-    $pdf->SetY(55);///PARA LOS DETALLES
+    $pdf->SetY(60);///PARA LOS DETALLES
 
     $pdf->SetX(5);///PARA LOS DETALLES
     $pdf->SetFont('Arial','',8);       
@@ -219,7 +230,7 @@ class PDF extends PDF_Rotate {
     
     $total_items = 0;
     $caracteres = 20;
-    $posiciony = 60;
+    $posiciony = 65;
     while ($row = mysqli_fetch_array($resultado)) {
         $cantidad = $row[0];
         $codigo = $row[1];
