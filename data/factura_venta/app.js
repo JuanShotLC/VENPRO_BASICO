@@ -835,10 +835,19 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
                                     if (filas.length == 0) {
                                         if ($("#descuento").val() != "") {
                                             desc = $("#descuento").val();
-                                            precio_bolivar = (parseFloat($("#precio_bs").val())).toFixed(3);
-                                            precio = (parseFloat($("#precio_venta").val())).toFixed(3);
-                                            multi = (parseFloat($("#cantidad").val()) * parseFloat(precio)).toFixed(3);
-                                            multi2 = (parseFloat($("#cantidad").val()) * parseFloat(precio_bolivar)).toFixed(3);
+
+                                            var iva_porcentaje = parseFloat($("#iva_producto").val()); // Trae el 16
+                                            var factor_iva = (iva_porcentaje / 100) + 1; // Resulta en 1.16
+
+                                            // CORRECCIÓN: Desglosar el IVA del precio que viene del sistema
+                                            var precio_con_iva = parseFloat($("#precio_bs").val());
+                                            precio_bolivar = precio_con_iva / factor_iva;
+
+                                            precio = (parseFloat($("#precio_venta").val())).toFixed(2);
+                                            multi = (parseFloat($("#cantidad").val()) * parseFloat(precio)).toFixed(2);
+
+                                            // Ahora multi2 tendrá la Base Imponible real
+                                            multi2 = (parseFloat($("#cantidad").val()) * precio_bolivar);
                                             ///DESCUENTO
                                             descuento = ((multi * parseFloat(desc)) / 100);
                                             flotante = parseFloat(descuento);
@@ -849,17 +858,25 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
 
                                         } else {
                                             desc = 0;
-                                            precio = (parseFloat($("#precio_venta").val())).toFixed(3);
-                                            precio_bolivar = (parseFloat($("#precio_bs").val())).toFixed(3);
-                                            multi = (parseFloat($("#cantidad").val()) * parseFloat(precio)).toFixed(3);
-                                            multi2 = (parseFloat($("#cantidad").val()) * parseFloat(precio_bolivar)).toFixed(3);
+                                            var iva_porcentaje = parseFloat($("#iva_producto").val()); // Trae el 16
+                                            var factor_iva = (iva_porcentaje / 100) + 1; // Resulta en 1.16
+
+                                            // CORRECCIÓN: Desglosar el IVA del precio que viene del sistema
+                                            var precio_con_iva = parseFloat($("#precio_bs").val());
+                                            precio_bolivar = precio_con_iva / factor_iva;
+
+                                            precio = (parseFloat($("#precio_venta").val())).toFixed(2);
+                                            multi = (parseFloat($("#cantidad").val()) * parseFloat(precio)).toFixed(2);
+
+                                            // Ahora multi2 tendrá la Base Imponible real
+                                            multi2 = (parseFloat($("#cantidad").val()) * precio_bolivar);
 
                                             descuento = ((multi * parseFloat(desc)) / 100);
                                             flotante = parseFloat(descuento);
-                                            resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(3);
+                                            resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(2);
 
-                                            total = (parseFloat(multi)).toFixed(3);
-                                            total2 = (parseFloat(multi2)).toFixed(3);
+                                            total = (parseFloat(multi)).toFixed(2);
+                                            total2 = (parseFloat(multi2)).toFixed(2);
 
                                         }
 
@@ -905,33 +922,46 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
                                             } else {
                                                 if ($("#descuento").val() != "") {
                                                     desc = $("#descuento").val();
-                                                    precio = (parseFloat($("#precio_venta").val())).toFixed(3);
-                                                    precio_bolivar = (parseFloat($("#precio_bs").val())).toFixed(3);
+                                                    var iva_porcentaje = parseFloat($("#iva_producto").val()); // Trae el 16
+                                                    var factor_iva = (iva_porcentaje / 100) + 1; // Resulta en 1.16
 
-                                                    multi2 = (parseFloat(suma) * parseFloat(precio_bolivar)).toFixed(3);
-                                                    multi = (parseFloat(suma) * parseFloat(precio)).toFixed(3);
+                                                    // CORRECCIÓN: Desglosar el IVA del precio que viene del sistema
+                                                    var precio_con_iva = parseFloat($("#precio_bs").val());
+                                                    precio_bolivar = precio_con_iva / factor_iva;
+
+                                                    precio = (parseFloat($("#precio_venta").val())).toFixed(2);
+                                                    multi = (parseFloat($("#cantidad").val()) * parseFloat(precio)).toFixed(2);
+
+                                                    // Ahora multi2 tendrá la Base Imponible real
+                                                    multi2 = (parseFloat($("#cantidad").val()) * precio_bolivar);
 
                                                     descuento = ((multi * parseFloat(desc)) / 100);
                                                     flotante = parseFloat(descuento);
-                                                    resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(3);
+                                                    resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(2);
 
 
-                                                    total = (multi - resultado).toFixed(3);
-                                                    total2 = (multi2 - resultado).toFixed(3);
+                                                    total = (multi - resultado).toFixed(2);
+                                                    total2 = (multi2 - resultado).toFixed(2);
 
                                                 } else {
                                                     desc = 0;
-                                                    precio = (parseFloat($("#precio_venta").val())).toFixed(3);
-                                                    precio_bolivar = (parseFloat($("#precio_bs").val())).toFixed(3);
+                                                    var iva_porcentaje = parseFloat($("#iva_producto").val()); // Trae el 16
+                                                    var factor_iva = (iva_porcentaje / 100) + 1; // Resulta en 1.16
 
-                                                    multi2 = (parseFloat(suma) * parseFloat(precio_bolivar)).toFixed(3);
+                                                    // CORRECCIÓN: Desglosar el IVA del precio que viene del sistema
+                                                    var precio_con_iva = parseFloat($("#precio_bs").val());
+                                                    precio_bolivar = precio_con_iva / factor_iva;
 
-                                                    multi = (parseFloat(suma) * parseFloat(precio)).toFixed(3);
+                                                    precio = (parseFloat($("#precio_venta").val())).toFixed(2);
+                                                    multi = (parseFloat($("#cantidad").val()) * parseFloat(precio)).toFixed(2);
+
+                                                    // Ahora multi2 tendrá la Base Imponible real
+                                                    multi2 = (parseFloat($("#cantidad").val()) * precio_bolivar);
                                                     descuento = ((multi * parseFloat(desc)) / 100);
                                                     flotante = parseFloat(descuento);
-                                                    resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(3);
-                                                    total = (parseFloat(multi)).toFixed(3);
-                                                    total2 = (parseFloat(multi2)).toFixed(3);
+                                                    resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(2);
+                                                    total = (parseFloat(multi)).toFixed(2);
+                                                    total2 = (parseFloat(multi2)).toFixed(2);
 
                                                 }
 
@@ -958,30 +988,45 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
                                             if (filas.length < 40) {
                                                 if ($("#descuento").val() != "") {
                                                     desc = $("#descuento").val();
-                                                    precio = (parseFloat($("#precio_venta").val())).toFixed(3);
-                                                    precio_bolivar = (parseFloat($("#precio_bs").val())).toFixed(3);
+                                                    var iva_porcentaje = parseFloat($("#iva_producto").val()); // Trae el 16
+                                                    var factor_iva = (iva_porcentaje / 100) + 1; // Resulta en 1.16
 
-                                                    multi = (parseFloat($("#cantidad").val()) * parseFloat(precio)).toFixed(3);
-                                                    multi2 = (parseFloat($("#cantidad").val()) * parseFloat(precio_bolivar)).toFixed(3);
+                                                    // CORRECCIÓN: Desglosar el IVA del precio que viene del sistema
+                                                    var precio_con_iva = parseFloat($("#precio_bs").val());
+                                                    precio_bolivar = precio_con_iva / factor_iva;
+
+                                                    precio = (parseFloat($("#precio_venta").val())).toFixed(2);
+                                                    multi = (parseFloat($("#cantidad").val()) * parseFloat(precio)).toFixed(2);
+
+                                                    // Ahora multi2 tendrá la Base Imponible real
+                                                    multi2 = (parseFloat($("#cantidad").val()) * precio_bolivar);
 
                                                     descuento = ((multi * parseFloat(desc)) / 100);
                                                     flotante = parseFloat(descuento);
-                                                    resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(3);
-                                                    total = (multi - resultado).toFixed(3);
-                                                    total2 = (multi2 - resultado).toFixed(3);
+                                                    resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(2);
+                                                    total = (multi - resultado).toFixed(2);
+                                                    total2 = (multi2 - resultado).toFixed(2);
                                                 } else {
                                                     desc = 0;
-                                                    precio = (parseFloat($("#precio_venta").val())).toFixed(3);
-                                                    precio_bolivar = (parseFloat($("#precio_bs").val())).toFixed(3);
-                                                    multi = (parseFloat($("#cantidad").val()) * parseFloat(precio)).toFixed(3);
-                                                    multi2 = (parseFloat($("#cantidad").val()) * parseFloat(precio_bolivar)).toFixed(3);
+                                                    var iva_porcentaje = parseFloat($("#iva_producto").val()); // Trae el 16
+                                                    var factor_iva = (iva_porcentaje / 100) + 1; // Resulta en 1.16
+
+                                                    // CORRECCIÓN: Desglosar el IVA del precio que viene del sistema
+                                                    var precio_con_iva = parseFloat($("#precio_bs").val());
+                                                    precio_bolivar = precio_con_iva / factor_iva;
+
+                                                    precio = (parseFloat($("#precio_venta").val())).toFixed(2);
+                                                    multi = (parseFloat($("#cantidad").val()) * parseFloat(precio)).toFixed(2);
+
+                                                    // Ahora multi2 tendrá la Base Imponible real
+                                                    multi2 = (parseFloat($("#cantidad").val()) * precio_bolivar);
 
                                                     descuento = ((multi * parseFloat(desc)) / 100);
                                                     flotante = parseFloat(descuento);
-                                                    resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(3);
+                                                    resultado = (Math.round(flotante * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(2);
 
-                                                    total = (parseFloat(multi)).toFixed(3);
-                                                    total2 = (parseFloat(multi2)).toFixed(3);
+                                                    total = (parseFloat(multi)).toFixed(2);
+                                                    total2 = (parseFloat(multi2)).toFixed(2);
                                                 }
 
                                                 datarow = {
@@ -1042,8 +1087,8 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
 
                                                 sub1 = parseFloat(subtotal);
                                                 sub5 = parseFloat(subtotal_dolar);
-                                                iva1 = parseFloat(sub1 * dd['iva'] / 100).toFixed(3);
-                                                iva_do1 = parseFloat(sub5 * dd['iva'] / 100).toFixed(3);
+                                                iva1 = parseFloat(sub1 * dd['iva'] / 100).toFixed(2);
+                                                iva_do1 = parseFloat(sub5 * dd['iva'] / 100).toFixed(2);
 
                                                 subtotal0 = parseFloat(subtotal0) + 0;
                                                 subtotal12 = parseFloat(subtotal12) + parseFloat(sub1);
@@ -1056,12 +1101,12 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
 
 
 
-                                                subtotal0 = parseFloat(subtotal0).toFixed(3);
-                                                subtotal12 = parseFloat(subtotal12).toFixed(3);
-                                                subtotal23 = parseFloat(subtotal23).toFixed(3);
+                                                subtotal0 = parseFloat(subtotal0).toFixed(2);
+                                                subtotal12 = parseFloat(subtotal12).toFixed(2);
+                                                subtotal23 = parseFloat(subtotal23).toFixed(2);
 
-                                                subtotal_total = parseFloat(subtotal_total).toFixed(3);
-                                                iva12 = parseFloat(iva12).toFixed(3);
+                                                subtotal_total = parseFloat(subtotal_total).toFixed(2);
+                                                iva12 = parseFloat(iva12).toFixed(2);
                                                 descu_total = parseFloat(descu_total).toFixed(3);
                                                 suma_total = suma_total + parseFloat(dd['cantidad']);
 
@@ -1071,11 +1116,11 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
                                                     subtotal_dolar = dd['total'];
 
 
-                                                    sub2 = parseFloat(subtotal / ((dd['iva'] / 100) + 1)).toFixed(3);
-                                                    sub4 = parseFloat(subtotal_dolar / ((dd['iva'] / 100) + 1)).toFixed(3);
+                                                    sub2 = parseFloat(subtotal / ((dd['iva'] / 100) + 1)).toFixed(2);
+                                                    sub4 = parseFloat(subtotal_dolar / ((dd['iva'] / 100) + 1)).toFixed(2);
 
-                                                    iva2 = parseFloat(sub2 * dd['iva'] / 100).toFixed(3);
-                                                    iva_do = parseFloat(sub4 * dd['iva'] / 100).toFixed(3);
+                                                    iva2 = parseFloat(sub2 * dd['iva'] / 100).toFixed(2);
+                                                    iva_do = parseFloat(sub4 * dd['iva'] / 100).toFixed(2);
 
 
                                                     subtotal0 = parseFloat(subtotal0) + 0;
@@ -1094,15 +1139,15 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
                                                     descu_total = parseFloat(descu_total) + parseFloat(dd['cal_des']);
 
 
-                                                    subtotal0 = parseFloat(subtotal0).toFixed(3);
-                                                    subtotal12 = parseFloat(subtotal12).toFixed(3);
-                                                    subtotal23 = parseFloat(subtotal23).toFixed(3);
+                                                    subtotal0 = parseFloat(subtotal0).toFixed(2);
+                                                    subtotal12 = parseFloat(subtotal12).toFixed(2);
+                                                    subtotal23 = parseFloat(subtotal23).toFixed(2);
 
-                                                    subtotal_total = parseFloat(subtotal_total).toFixed(3);
+                                                    subtotal_total = parseFloat(subtotal_total).toFixed(2);
 
-                                                    iva12 = parseFloat(iva12).toFixed(3);
+                                                    iva12 = parseFloat(iva12).toFixed(2);
 
-                                                    descu_total = parseFloat(descu_total).toFixed(3);
+                                                    descu_total = parseFloat(descu_total).toFixed(2);
 
                                                     suma_total = suma_total + parseFloat(dd['cantidad']);
                                                 }
@@ -1123,16 +1168,16 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
 
 
                                                 descu_total = parseFloat(descu_total) + parseFloat(dd['cal_des']);
-                                                subtotal0 = parseFloat(subtotal0).toFixed(3);
-                                                subtotal12 = parseFloat(subtotal12).toFixed(3);
-                                                subtotal23 = parseFloat(subtotal23).toFixed(3);
+                                                subtotal0 = parseFloat(subtotal0).toFixed(2);
+                                                subtotal12 = parseFloat(subtotal12).toFixed(2);
+                                                subtotal23 = parseFloat(subtotal23).toFixed(2);
 
-                                                subtotal_total = parseFloat(subtotal_total).toFixed(3);
-                                                subtotal_total_dolar = parseFloat(subtotal_dolar).toFixed(3);
+                                                subtotal_total = parseFloat(subtotal_total).toFixed(2);
+                                                subtotal_total_dolar = parseFloat(subtotal_dolar).toFixed(2);
 
 
-                                                iva12 = parseFloat(iva12).toFixed(3);
-                                                descu_total = parseFloat(descu_total).toFixed(3);
+                                                iva12 = parseFloat(iva12).toFixed(2);
+                                                descu_total = parseFloat(descu_total).toFixed(2);
                                                 suma_total = suma_total + parseFloat(dd['cantidad']);
                                             }
                                         }
@@ -1711,6 +1756,7 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
         $("#btn_15").attr("disabled", true);
         $("#btn_3").attr("disabled", true);
         // fin
+
 
         // guardar factuta venta
         $('#btn_0').click(function () {
