@@ -766,7 +766,7 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
         });
 
 
-        /*--- INGRESO DE PRODUCTOS: 2 Decimales Estrictos y Totales Exactos ---*/
+        /*--- NUEVO: Ingreso de Productos con Precisión Financiera ---*/
         $("#cantidad").on("keypress", function (e) {
             if (e.keyCode == 13) { // Enter
 
@@ -784,9 +784,11 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
                     return;
                 }
 
-                // Sanitizar precios (coma por punto)
+                // 2. Precios (Entrada con IVA - PVP)
                 var precio_bs_str = $("#precio_bs").val() || "0";
                 var precio_usd_str = $("#precio_venta").val() || "0";
+
+                // Sanitizar (cambiar coma por punto)
                 var precio_pvp_bs = parseFloat(precio_bs_str.toString().replace(',', '.')) || 0;
                 var precio_pvp_usd = parseFloat(precio_usd_str.toString().replace(',', '.')) || 0;
 
@@ -817,51 +819,46 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
                     return;
                 }
 
-                // --- CÁLCULOS (Estrategia Híbrida) ---
+                // 4. CÁLCULOS (Estrategia: Total Exacto con IVA)
                 var iva_pct = parseFloat($("#iva_producto").val()) || 0;
                 var factor_iva = (iva_pct / 100) + 1;
 
-                // A. Calculamos el TOTAL REAL A COBRAR (PVP) - "La Verdad"
-                // Esto asegura que 98.99 * 1 = 98.99 (y no 98.98)
+                // A. Total Bruto con IVA (Sagrado: Precio * Cantidad, redondeado a 2 decimales)
                 var total_pvp_bs = parseFloat((precio_pvp_bs * cantidad_final).toFixed(2));
                 var total_pvp_usd = parseFloat((precio_pvp_usd * cantidad_final).toFixed(2));
 
-                // B. Descuentos (Sobre PVP)
+                // B. Descuentos (Sobre el monto con IVA)
                 var desc_pct = parseFloat($("#descuento").val()) || 0;
                 var monto_desc_bs = parseFloat(((total_pvp_bs * desc_pct) / 100).toFixed(2));
                 var monto_desc_usd = parseFloat(((total_pvp_usd * desc_pct) / 100).toFixed(2));
 
-                // C. Totales Netos Reales (Con IVA)
+                // C. Neto a Pagar (Con IVA) - Valor final real
                 var neto_real_bs = total_pvp_bs - monto_desc_bs;
                 var neto_real_usd = total_pvp_usd - monto_desc_usd;
 
-                // D. Calculamos la BASE para mostrar en la grilla (Sin IVA)
-                // Esto es "Lo que mostramos", aunque tenga error de redondeo visual
+                // D. Base Imponible (Para mostrar en la grilla sin IVA)
                 var base_total_bs = neto_real_bs / factor_iva;
                 var base_total_usd = neto_real_usd / factor_iva;
-
                 var base_unit_bs = precio_pvp_bs / factor_iva;
                 var base_unit_usd = precio_pvp_usd / factor_iva;
 
-                // --- GUARDAR EN GRILLA ---
+                // 5. GUARDAR EN GRILLA
                 var datarow = {
                     id: id_producto,
                     codigo: $("#codigo").val(),
                     detalle: $("#producto").val(),
                     cantidad: cantidad_final,
-                    // COLUMNAS VISIBLES: Mostramos BASE (Sin IVA) como pediste
+                    // VISUAL (Base Imponible)
                     precio_u_bs: base_unit_bs.toFixed(2),
                     precio_u: base_unit_usd.toFixed(2),
                     descuento: desc_pct,
-                    cal_des: (monto_desc_bs / factor_iva).toFixed(2),
+                    cal_des: (monto_desc_bs / factor_iva).toFixed(2), // Descuento base
                     total_bs: base_total_bs.toFixed(2), // Base Bs
                     total: base_total_usd.toFixed(2),   // Base USD
                     iva: iva_pct,
-                    // COLUMNAS OCULTAS: Guardamos el TOTAL EXACTO para sumar al final
-                    // Usamos 'incluye' para guardar el Total Bs Exacto
-                    incluye: neto_real_bs.toFixed(2),
-                    // Usamos 'pendiente' para guardar el Total Dolar Exacto
-                    pendiente: neto_real_usd.toFixed(2)
+                    // OCULTO (Totales Exactos con IVA para que sume perfecto)
+                    incluye: neto_real_bs.toFixed(2),   // Total Bs Exacto
+                    pendiente: neto_real_usd.toFixed(2) // Total USD Exacto
                 };
 
                 if (repetido) {
@@ -877,180 +874,59 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
 
                 limpiar_input();
 
+                // Llama a la función maestra
                 recalcularTotalesFactura();
 
+                // Regresar foco
                 setTimeout(function () { $("#codigo_barras").focus(); }, 100);
             }
         });
 
-        /*--- EVENTO FOCUS (SCANNER): Misma lógica blindada que keypress ---*/
+        /*--- NUEVO: Evento Focus para Scanner ---*/
         $("#cantidad").on("focus", function (e) {
-            // Nota: Si usas lector de barras, asegúrate de que el lector envíe 'Enter' o Tab
-            // Si el evento se dispara muy rápido, validamos que haya datos.
+            // Validación rápida para evitar disparos accidentales
+            if ($("#codigo").val() == "" || parseFloat($("#cantidad").val()) <= 0) return;
 
-            // 1. VALIDACIONES
-            if ($("#codigo").val() == "" && $("#producto").val() == "") {
-                $("#codigo_barras").focus();
-                // Usamos return para no mostrar alerta si es un foco accidental sin datos
-                return;
-            }
-
-            var cantidad_val = parseFloat($("#cantidad").val()) || 0;
-            if (cantidad_val <= 0) {
-                // Si entra al foco pero no hay cantidad, no hacemos nada (esperamos que escriba)
-                return;
-            }
-
-            var precio_bs_str = $("#precio_bs").val() || "0";
-            var precio_usd_str = $("#precio_venta").val() || "0";
-
-            // Precio Unitario (CON IVA)
-            var precio_pvp_bs = parseFloat(precio_bs_str.toString().replace(',', '.')) || 0;
-            var precio_pvp_usd = parseFloat(precio_usd_str.toString().replace(',', '.')) || 0;
-
-            if (precio_pvp_bs == 0) {
-                $.gritter.add({ title: 'Error', text: 'El producto no tiene precio', class_name: 'gritter-error' });
-                limpiar_input();
-                return;
-            }
-
-            // 2. STOCK
-            var stock_actual = parseInt($("#stock").val()) || 0;
-            var id_producto = $("#id_producto").val();
-            var filas = jQuery("#table").jqGrid("getRowData");
-            var cantidad_final = cantidad_val;
-            var repetido = false;
-
-            for (var i = 0; i < filas.length; i++) {
-                if (filas[i]['id'] == id_producto) {
-                    cantidad_final += parseFloat(filas[i]['cantidad']);
-                    repetido = true;
-                }
-            }
-
-            if (cantidad_final > stock_actual) {
-                $("#codigo_barras").focus();
-                $.gritter.add({ title: 'Stock', text: 'Cantidad supera disponible (' + stock_actual + ')', class_name: 'gritter-error' });
-                limpiar_input();
-                return;
-            }
-
-            // 3. CÁLCULOS (Total Exacto con IVA)
-            var iva_pct = parseFloat($("#iva_producto").val()) || 0;
-            var factor_iva = (iva_pct / 100) + 1;
-
-            // A. Total Bruto con IVA (Sagrado: Precio * Cantidad)
-            var total_pvp_bs = parseFloat((precio_pvp_bs * cantidad_final).toFixed(2));
-            var total_pvp_usd = parseFloat((precio_pvp_usd * cantidad_final).toFixed(2));
-
-            // B. Descuentos
-            var desc_pct = parseFloat($("#descuento").val()) || 0;
-            var monto_desc_bs = parseFloat(((total_pvp_bs * desc_pct) / 100).toFixed(2));
-            var monto_desc_usd = parseFloat(((total_pvp_usd * desc_pct) / 100).toFixed(2));
-
-            // C. Neto a Pagar (Con IVA) - Esto es lo que se cobra realmente
-            var neto_real_bs = total_pvp_bs - monto_desc_bs;
-            var neto_real_usd = total_pvp_usd - monto_desc_usd;
-
-            // D. Base Imponible (Para mostrar en la grilla sin IVA)
-            var base_total_bs = neto_real_bs / factor_iva;
-            var base_total_usd = neto_real_usd / factor_iva;
-            var base_unit_bs = precio_pvp_bs / factor_iva;
-            var base_unit_usd = precio_pvp_usd / factor_iva;
-
-            // 4. GUARDAR EN GRILLA
-            var datarow = {
-                id: id_producto,
-                codigo: $("#codigo").val(),
-                detalle: $("#producto").val(),
-                cantidad: cantidad_final,
-                // Visual (Base)
-                precio_u_bs: base_unit_bs.toFixed(2),
-                precio_u: base_unit_usd.toFixed(2),
-                descuento: desc_pct,
-                cal_des: (monto_desc_bs / factor_iva).toFixed(2), // Descuento en base
-                total_bs: base_total_bs.toFixed(2), // Base Bs
-                total: base_total_usd.toFixed(2),   // Base USD
-                iva: iva_pct,
-                // OCULTO (Total Exacto)
-                incluye: neto_real_bs.toFixed(2),   // Total Bs Exacto
-                pendiente: neto_real_usd.toFixed(2) // Total USD Exacto
-            };
-
-            if (repetido) {
-                jQuery("#table").jqGrid('setRowData', id_producto, datarow);
-            } else {
-                if (filas.length < 40) {
-                    jQuery("#table").jqGrid('addRowData', id_producto, datarow);
-                } else {
-                    $.gritter.add({ title: 'Límite', text: 'Máximo de items alcanzado', class_name: 'gritter-error' });
-                    return;
-                }
-            }
-
-            limpiar_input();
-
-            // 5. RECALCULAR (Llamamos a la función global)
-            recalcularTotalesFactura();
-
-            // 6. VOLVER AL CÓDIGO DE BARRAS
-            setTimeout(function () { $("#codigo_barras").focus(); }, 100);
+            // Simulamos un 'Enter' llamando a la misma lógica
+            var e = jQuery.Event("keypress");
+            e.keyCode = 13;
+            $("#cantidad").trigger(e);
         });
 
 
-// --- CALCULAR IGTF (3%) ---
+        /*--- NUEVO: Cálculo IGTF ---*/
         $("#divisas").on("keypress", function (e) {
-            if (e.keyCode == 13) { // Enter
-
-                // 1. Obtener y Sanitizar el monto en divisas (Pago)
-                var divisas_str = $('#divisas').val() || "0";
-                var divisas_val = parseFloat(divisas_str.toString().replace(',', '.')) || 0;
+            if (e.keyCode == 13) {
+                var divisas_val = parseFloat(($('#divisas').val() || "0").replace(',', '.')) || 0;
 
                 if (divisas_val <= 0) {
-                    $.gritter.add({ 
-                        title: 'Error', 
-                        text: 'Ingrese un monto a pagar válido', 
-                        class_name: 'gritter-error' 
-                    });
+                    $.gritter.add({ title: 'Error', text: 'Monto inválido', class_name: 'gritter-error' });
                     return;
                 }
 
-                // 2. Obtener Variables del Sistema (Sanitizadas)
-                // Subtotal y IVA vienen en Bs desde los inputs
-                var sub_tt_bs = parseFloat(($('#subtotal').val() || "0").toString().replace(',', '.')) || 0;
-                var iva_bs = parseFloat(($('#iva').val() || "0").toString().replace(',', '.')) || 0;
-                
-                // Total en Dólares actual (Monto de la factura)
-                var tt_divisa = parseFloat(($('#total_pagar_dolar').val() || "0").toString().replace(',', '.')) || 0;
-                
-                var igtf_pct = parseFloat($('#igtf').val()) || 0; // 3%
-                var tasa_cambio = parseFloat($('#factor').val()) || 0;
+                var sub_tt_bs = parseFloat(($('#subtotal').val() || "0").replace(',', '.')) || 0;
+                var iva_bs = parseFloat(($('#iva').val() || "0").replace(',', '.')) || 0;
+                var tt_divisa = parseFloat(($('#total_pagar_dolar').val() || "0").replace(',', '.')) || 0;
 
-                // 3. Cálculos del Impuesto
-                // El IGTF se calcula sobre el MONTO QUE SE PAGA en divisas, no sobre el total de la factura
-                var igtf_monto_usd = (divisas_val * igtf_pct) / 100;
-                
-                // Convertimos el impuesto a Bolívares
-                var igtf_monto_bs = igtf_monto_usd * tasa_cambio;
+                var igtf_pct = parseFloat($('#igtf').val()) || 0;
+                var tasa = parseFloat($('#factor').val()) || 0;
 
-                // 4. Totales Finales (Base + IVA + IGTF)
-                
-                // Nuevo Total a Pagar en Bolívares
-                var grand_total_bs = sub_tt_bs + iva_bs + igtf_monto_bs;
+                // Cálculo IGTF (3% del pago en divisas)
+                var igtf_usd = (divisas_val * igtf_pct) / 100;
+                var igtf_bs = igtf_usd * tasa;
 
-                // Nuevo Total a Pagar en Dólares (Factura + Impuesto generado)
-                var grand_total_usd = tt_divisa + igtf_monto_usd;
+                // Totales Finales
+                var gran_total_bs = sub_tt_bs + iva_bs + igtf_bs;
+                var gran_total_usd = tt_divisa + igtf_usd;
 
-                // 5. Asignar a la Vista (2 Decimales)
                 $('#divisas').val(divisas_val.toFixed(2));
-                $("#iva_igtf").val(igtf_monto_bs.toFixed(2)); // Mostrar cuánto es el impuesto en Bs
-                
-                $("#total_pagar").val(grand_total_bs.toFixed(2));       // Total final Bs
-                $('#total_pagar_dolar').val(grand_total_usd.toFixed(2)); // Total final USD
+                $("#iva_igtf").val(igtf_bs.toFixed(2));
+                $("#total_pagar").val(gran_total_bs.toFixed(2));
+                $('#total_pagar_dolar').val(gran_total_usd.toFixed(2));
 
-                // 6. Bloquear Interfaz (Para evitar cambios post-cálculo)
+                // Bloquear
                 $('#divisas').attr('readonly', true);
-                $('#codigo_barras, #producto, #cantidad, #codigo').attr("disabled", true);
+                $('#codigo_barras,#codigo, #producto, #cantidad').attr("disabled", true);
                 $(".ui-jqgrid .ui-icon-trash").css('display', 'none');
             }
         });
@@ -1506,25 +1382,22 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
             multiselect: false,
             viewrecords: true,
             shrinkToFit: true,
-            /* REEMPLAZA TODO EL BLOQUE delOptions CON ESTO */
+            /*--- NUEVO: Borrado Limpio ---*/
             delOptions: {
                 modal: true,
                 jqModal: true,
                 onclickSubmit: function (rp_ge, postdata) {
-                    // Obtener ID real de la fila seleccionada
+                    // Obtener ID real
                     var rowid = jQuery(grid_selector).jqGrid('getGridParam', 'selrow');
 
                     // Borrar fila
                     var su = jQuery(grid_selector).jqGrid('delRowData', rowid);
 
                     if (su === true) {
-                        // Intentar recalcular
-                        if (typeof recalcularTotalesFactura === "function") {
-                            recalcularTotalesFactura();
-                        } else {
-                            console.error("Error: No encuentro la función recalcularTotalesFactura. Verifique su ubicación en app.js");
-                        }
-                        // Cerrar modal
+                        // Recalcular todo desde cero (evita residuos 0.004)
+                        recalcularTotalesFactura();
+
+                        // Cerrar modal automáticamente
                         $(".ui-icon-closethick").trigger('click');
                     }
                     return true;
@@ -2379,12 +2252,12 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
     });
     // fin
 
-
-    // --- FUNCIÓN MAESTRA DE CÁLCULO (Pegar al final del bloque jQuery) ---
+    // --- FUNCIÓN MAESTRA: Recalcular Totales ---
+    // (Pegar esto al final del archivo, antes del cierre del controller)
     function recalcularTotalesFactura() {
         var filas = jQuery("#table").jqGrid("getRowData");
 
-        // 1. LIMPIEZA ABSOLUTA: Si no hay filas, todo a CERO
+        // LIMPIEZA ABSOLUTA si no hay productos
         if (filas.length === 0) {
             $("#subtotal, #tarifa, #tarifa_0, #iva, #otros, #total_pagar, #total_pagar_dolar").val("0.00");
             $("#items, #num").val("0");
@@ -2400,48 +2273,43 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
 
         for (var i = 0; i < filas.length; i++) {
             var row = filas[i];
-
-            // Sanitizar datos (evitar errores NaN)
             var iva_pct = parseFloat(row.iva) || 0;
-            var row_total_bs = parseFloat((row.total_bs || "0").toString().replace(',', '.')) || 0;
-            var row_total_usd = parseFloat((row.total || "0").toString().replace(',', '.')) || 0;
 
-            total_descuento += parseFloat((row.cal_des || "0").toString().replace(',', '.')) || 0;
-            cantidad_items += parseFloat((row.cantidad || "0").toString().replace(',', '.')) || 0;
-
-            // RECUPERAR TOTALES EXACTOS (Memoria Oculta vs Cálculo)
+            // Recuperamos los datos visuales (Base) y los exactos (Ocultos)
+            var row_base_bs = parseFloat((row.total_bs || "0").replace(',', '.')) || 0;
             var exacto_bs = parseFloat((row.incluye || "").toString());
             var exacto_usd = parseFloat((row.pendiente || "").toString());
 
-            // Si es una fila antigua sin memoria oculta, la reconstruimos
-            if (isNaN(exacto_bs)) exacto_bs = row_total_bs * ((iva_pct / 100) + 1);
-            if (isNaN(exacto_usd)) exacto_usd = row_total_usd * ((iva_pct / 100) + 1);
+            // Reconstrucción para filas antiguas sin memoria oculta
+            if (isNaN(exacto_bs)) exacto_bs = row_base_bs * ((iva_pct / 100) + 1);
+            if (isNaN(exacto_usd)) exacto_usd = parseFloat((row.total || "0").replace(',', '.')) * ((iva_pct / 100) + 1);
 
-            // Sumamos los totales exactos (con IVA)
+            // Sumamos Totales Exactos
             gran_total_bs += exacto_bs;
             gran_total_usd += exacto_usd;
 
-            // Sumamos bases para el reporte visual
+            total_descuento += parseFloat((row.cal_des || "0").replace(',', '.')) || 0;
+            cantidad_items += parseFloat((row.cantidad || "0").replace(',', '.')) || 0;
+
+            // Sumamos Bases
             if (iva_pct == 0) {
-                sum_exento_bs += row_total_bs;
+                sum_exento_bs += row_base_bs;
             } else {
-                sum_base_bs += row_total_bs;
+                sum_base_bs += row_base_bs;
             }
         }
 
-        // CÁLCULO INVERSO DEL IVA (Total Exacto - Bases)
-        // Esto garantiza que: Total = Base + IVA (sin perder centavos)
+        // IVA = Total Exacto - Bases (Asegura cuadre perfecto)
         var total_bases = sum_exento_bs + sum_base_bs;
         var total_iva_bs = gran_total_bs - total_bases;
 
-        // ASIGNAR VALORES (2 decimales estrictos)
+        // Asignar
         $("#subtotal").val(total_bases.toFixed(2));
         $("#tarifa").val(sum_base_bs.toFixed(2));
         $("#tarifa_0").val(sum_exento_bs.toFixed(2));
         $("#iva").val(total_iva_bs.toFixed(2));
         $("#otros").val(total_descuento.toFixed(2));
 
-        // TOTALES A PAGAR
         $("#total_pagar").val(gran_total_bs.toFixed(2));
         $("#total_pagar_dolar").val(gran_total_usd.toFixed(2));
 
