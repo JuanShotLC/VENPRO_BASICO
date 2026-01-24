@@ -764,7 +764,7 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
                     .appendTo(ul);
             };
         });
-
+        // fin
 
         /*--- NUEVO: Ingreso de Productos con Precisión Financiera ---*/
         $("#cantidad").on("keypress", function (e) {
@@ -1018,7 +1018,6 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
         $("#btn_15").attr("disabled", true);
         $("#btn_3").attr("disabled", true);
         // fin
-
 
         // guardar factuta venta
         $('#btn_0').click(function () {
@@ -1324,7 +1323,7 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
     });
     // fin
 
-    /*jqgrid table 1 local*/
+    /*jqgrid table Pos de forma local*/
     jQuery(function ($) {
         var grid_selector = "#table";
         var pager_selector = "#pager";
@@ -1382,27 +1381,166 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
             multiselect: false,
             viewrecords: true,
             shrinkToFit: true,
-            /*--- NUEVO: Borrado Limpio ---*/
             delOptions: {
                 modal: true,
                 jqModal: true,
-                onclickSubmit: function (rp_ge, postdata) {
-                    // Obtener ID real
-                    var rowid = jQuery(grid_selector).jqGrid('getGridParam', 'selrow');
+                onclickSubmit: function (rp_ge, rowid) {
+                    var id = jQuery(grid_selector).jqGrid('getGridParam', 'selrow');
+                    jQuery(grid_selector).jqGrid('restoreRow', id);
+                    var ret = jQuery(grid_selector).jqGrid('getRowData', id);
 
-                    // Borrar fila
+                    var subtotal0 = 0;
+                    var subtotal12 = 0;
+                    var subtotal_total = 0;
+                    var iva12 = 0;
+                    var total_total = 0;
+                    var descu_total = 0;
+
+                    var subtotal = 0;
+                    var sub = 0;
+                    var sub1 = 0;
+                    var sub2 = 0;
+                    var iva = 0;
+                    var iva1 = 0;
+                    var iva2 = 0;
+                    var suma_total = 0;
+                    //Nuevas
+                    var subtotal_total_dolar = 0;
+                    var total_total_do = 0;
+                    var subtotal_dolar = 0;
+                    var sub_do = 0;
+                    var sub_do1 = 0;
+                    var sub_do2 = 0;
+                    var iva_do2 = 0;
+
+                    var filas = jQuery(grid_selector).jqGrid("getRowData");
+
+                    for (var t = 0; t < filas.length; t++) {
+                        if (ret.iva != 0) {
+                            if (ret.incluye == "NO") {
+                                subtotal = ret.total_bs;
+                                subtotal_dolar = ret.total;
+
+                                sub1 = subtotal;
+                                sub_do2 = subtotal_dolar;
+
+                                iva1 = parseFloat(sub1 * ret.iva / 100).toFixed(3);
+
+                                iva_do2 = parseFloat(sub_do2 * ret.iva / 100).toFixed(3);
+
+                                subtotal0 = parseFloat($("#tarifa_0").val()) + 0;
+                                subtotal12 = parseFloat($("#tarifa").val()) - parseFloat(sub1);
+
+                                subtotal_total = parseFloat($("#subtotal").val()) - parseFloat(sub1);
+
+                                subtotal_iva = parseFloat(sub_do2) + parseFloat(iva_do2);
+                                subtotal_total_dolar = parseFloat($("#total_pagar_dolar").val()) - parseFloat(subtotal_iva);
+
+
+                                iva12 = parseFloat($("#iva").val()) - parseFloat(iva1);
+                                descu_total = parseFloat($("#otros").val()) - parseFloat(ret.cal_des);
+
+                                subtotal0 = parseFloat(subtotal0).toFixed(3);
+                                subtotal12 = parseFloat(subtotal12).toFixed(3);
+                                subtotal_total = parseFloat(subtotal_total).toFixed(3);
+                                subtotal_total_dolar = parseFloat(subtotal_total_dolar).toFixed(3);
+
+                                iva12 = parseFloat(iva12).toFixed(3);
+                                descu_total = parseFloat(descu_total).toFixed(3);
+                                suma_total = parseFloat($("#num").val()) - parseFloat(ret.cantidad);
+
+
+
+                            } else {
+                                if (ret.incluye == "SI") {
+                                    subtotal = ret.total_bs;
+                                    subtotal_dolar = ret.total;
+
+                                    sub2 = parseFloat(subtotal / ((ret.iva / 100) + 1)).toFixed(3);
+                                    sub_do1 = parseFloat(subtotal_dolar / ((ret.iva / 100) + 1)).toFixed(3);
+
+                                    iva2 = parseFloat(sub2 * ret.iva / 100).toFixed(3);
+
+                                    subtotal0 = parseFloat($("#tarifa_0").val()) + 0;
+                                    subtotal12 = parseFloat($("#tarifa").val()) - parseFloat(sub2);
+
+                                    subtotal_total = parseFloat($("#subtotal").val()) - parseFloat(sub2);
+                                    subtotal_total_dolar = parseFloat($("#total_pagar_dolar").val()) - parseFloat(subtotal_dolar);
+
+                                    iva12 = parseFloat($("#iva").val()) - parseFloat(iva2);
+                                    descu_total = parseFloat($("#otros").val()) - parseFloat(ret.cal_des);
+
+
+
+
+                                    subtotal0 = parseFloat(subtotal0).toFixed(3);
+                                    subtotal12 = parseFloat(subtotal12).toFixed(3);
+                                    subtotal_total = parseFloat(subtotal_total).toFixed(3);
+                                    subtotal_total_dolar = parseFloat(subtotal_total_dolar).toFixed(3);
+                                    iva12 = parseFloat(iva12).toFixed(3);
+                                    descu_total = parseFloat(descu_total).toFixed(3);
+                                    suma_total = parseFloat($("#num").val()) - parseFloat(ret.cantidad);
+                                }
+                            }
+                        } else {
+                            if (ret.iva == 0) {
+                                subtotal = ret.total_bs;
+                                subtotal_dolar = ret.total;
+                                sub = subtotal;
+                                sub_do = subtotal_dolar;
+
+
+
+                                subtotal0 = parseFloat($("#tarifa_0").val()) - parseFloat(sub);
+                                subtotal12 = parseFloat($("#tarifa").val()) + 0;
+
+                                subtotal_total = parseFloat($("#subtotal").val()) - parseFloat(sub);
+                                subtotal_total_dolar = parseFloat($("#total_pagar_dolar").val()) - parseFloat(sub_do);
+
+                                iva12 = parseFloat($("#iva").val()) + 0;
+
+
+
+
+                                descu_total = parseFloat($("#otros").val()) - parseFloat(ret.cal_des);
+
+                                subtotal0 = parseFloat(subtotal0).toFixed(3);
+
+                                subtotal12 = parseFloat(subtotal12).toFixed(3);
+
+                                subtotal_total = parseFloat(subtotal_total).toFixed(3);
+                                subtotal_total_dolar = parseFloat(subtotal_total_dolar).toFixed(3);
+
+
+                                iva12 = parseFloat(iva12).toFixed(3);
+                                descu_total = parseFloat(descu_total).toFixed(3);
+                                suma_total = parseFloat($("#num").val()) - parseFloat(ret.cantidad);
+                            }
+                        }
+                    }
+
+                    total_total = parseFloat(total_total) + (parseFloat(subtotal0) + parseFloat(subtotal12) + parseFloat(iva12));
+                    total_total = parseFloat(total_total).toFixed(2);
+
+                    var item = filas.length - 1;
+                    $("#subtotal").val(subtotal_total);
+                    $("#tarifa_0").val(subtotal0);
+                    $("#tarifa").val(subtotal12);
+                    $("#iva").val(iva12);
+                    $("#otros").val(descu_total);
+                    $("#total_pagar").val(total_total);
+                    $("#total_pagar_dolar").val(subtotal_total_dolar);
+                    $("#items").val(item);
+                    $("#num").val(suma_total);
+
                     var su = jQuery(grid_selector).jqGrid('delRowData', rowid);
-
-                    if (su === true) {
-                        // Recalcular todo desde cero (evita residuos 0.004)
-                        recalcularTotalesFactura();
-
-                        // Cerrar modal automáticamente
+                    if (su == true) {
+                        rp_ge.processing = true;
                         $(".ui-icon-closethick").trigger('click');
                     }
                     return true;
                 },
-                processing: false
+                processing: true
             },
             loadComplete: function () {
                 var table = this;
@@ -1575,7 +1713,7 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
     });
     // fin
 
-    /*jqgrid table 2 buscador*/
+    /*jqgrid Tablas Buscadora de Facturas*/
     jQuery(function ($) {
         var grid_selector2 = "#table2";
         var pager_selector2 = "#pager2";
@@ -1608,7 +1746,7 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
                 { name: 'total_venta', index: 'total_venta', frozen: true, search: false, align: 'left', width: '80px' },
                 { name: 'accion', index: 'accion', editable: false, hidden: false, search: false, frozen: true, editrules: { required: true }, align: 'center', width: '80px' },
             ],
-            rowNum: 20,
+            rowNum: 10,
             width: 600,
             shrinkToFit: true,
             height: 330,
@@ -1914,7 +2052,7 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
     });
     // fin
 
-    /*jqgrid table 3 buscador*/
+    /*jqgrid Tabla de Notas de Ventas*/
     jQuery(function ($) {
         var grid_selector3 = "#table3";
         var pager_selector3 = "#pager3";
@@ -1926,7 +2064,6 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
         var parent_column = $(grid_selector3).closest('[class*="col-"]');
         $(document).on('settings.ace.jqGrid', function (ev, event_name, collapsed) {
             if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
-                //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
                 setTimeout(function () {
                     $(grid_selector3).jqGrid('setGridWidth', parent_column.width());
                 }, 0);
@@ -1947,7 +2084,7 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
                 { name: 'total_venta', index: 'total_venta', frozen: true, search: false, align: 'left', width: '80px' },
                 { name: 'accion', index: 'accion', editable: false, hidden: false, search: false, frozen: true, editrules: { required: true }, align: 'center', width: '80px' },
             ],
-            rowNum: 20,
+            rowNum: 10,
             width: 600,
             shrinkToFit: false,
             height: 330,
@@ -2251,6 +2388,7 @@ angular.module('scotchApp').controller('factura_ventaController', function ($sco
         });
     });
     // fin
+
 
     // --- FUNCIÓN MAESTRA: Recalcular Totales ---
     // (Pegar esto al final del archivo, antes del cierre del controller)
