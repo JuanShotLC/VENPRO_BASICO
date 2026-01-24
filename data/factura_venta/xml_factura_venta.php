@@ -1,101 +1,121 @@
 <?php
-    require_once ("../../config/db.php");//Contiene las variables de configuracion para conectar a la base de datos
-    require_once ("../../config/conexion.php");//Contiene funcion que conecta a la base de datos
+// 1. LIMPIEZA DE BUFFER (Vital para que no salgan espacios en blanco al inicio)
+ob_start();
 
-    date_default_timezone_set('America/Caracas');
-    setlocale (LC_TIME,"spanish");
+require_once("../../config/db.php");
+require_once("../../config/conexion.php");
 
-    $page = $_GET['page'];
-    $limit = $_GET['rows'];
-    $sidx = $_GET['sidx'];
-    $sord = $_GET['sord'];
-    $search = $_GET['_search'];
+// Desactivar errores en pantalla
+error_reporting(0);
+ini_set('display_errors', 0);
 
-    if (!$sidx)
-        $sidx = 1;
-    
-    $count = 0;
-    $resultado = mysqli_query($con,"SELECT  COUNT(*) AS count FROM nota_venta");         
-    while ($row = mysqli_fetch_array($resultado)) {
-        $count = $count + $row[0];    
-    }    
-    if ($count > 0 && $limit > 0) {
-        $total_pages = ceil($count / $limit);
-    } else {
-        $total_pages = 0;
+date_default_timezone_set('America/Caracas');
+setlocale(LC_TIME, "spanish");
+
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$limit = isset($_GET['rows']) ? $_GET['rows'] : 10;
+$sidx = isset($_GET['sidx']) ? $_GET['sidx'] : 1;
+$sord = isset($_GET['sord']) ? $_GET['sord'] : 'asc';
+$search = isset($_GET['_search']) ? $_GET['_search'] : 'false';
+
+// --- CORRECCIÓN ORDENAMIENTO ---
+if (!$sidx || $sidx == 'id') {
+    $sidx = 'F.id';
+}
+
+if ($sidx == 'serie')
+    $sidx = 'F.serie';
+if ($sidx == 'IDENTIFICACION')
+    $sidx = 'C.identificacion';
+if ($sidx == 'fecha_actual')
+    $sidx = 'F.fecha_actual';
+
+// 2. CONTAR
+$count = 0;
+$sql_count = "SELECT COUNT(*) AS count FROM facturas";
+$resultado_count = mysqli_query($con, $sql_count);
+
+if ($resultado_count) {
+    if ($row = mysqli_fetch_array($resultado_count)) {
+        $count = $count + $row[0];
     }
-    if ($page > $total_pages)
-        $page = $total_pages;
-    $start = $limit * $page - $limit;
-    if ($start < 0)
-        $start = 0;
-    
-    if ($search == 'false') {
-        $SQL = "SELECT 
-                    F.id,
-                    F.fecha_actual,
-                    CONCAT(T.nombre_tipo_comprobante, ' N°: ', F.serie) AS serie,
-                    CONCAT( C.identificacion, '  ',C.nombres_completos) AS IDENTIFICACION,
-                    F.total_venta
-                FROM facturas F
-                INNER JOIN clientes C 
-                    ON F.id_cliente = C.id
-                INNER JOIN tipo_comprobante T 
-                    ON F.tipo_comprobante = T.codigo
-        ORDER BY $sidx $sord limit $limit offset $start";
-    } else {
-        $campo = $_GET['searchField'];
-      
-        if ($_GET['searchOper'] == 'eq') {
-            $SQL = "SELECT 
-                    F.id,
-                    F.fecha_actual,
-                    CONCAT(T.nombre_tipo_comprobante, ' N°: ', F.serie) AS serie,
-                    CONCAT( C.identificacion, '  ',C.nombres_completos) AS IDENTIFICACION,
-                    C.nombres_completos,
-                    F.total_venta
-                FROM facturas F
-                INNER JOIN clientes C 
-                    ON F.id_cliente = C.id
-                INNER JOIN tipo_comprobante T 
-                    ON F.tipo_comprobante = T.codigo
-            AND $campo = '$_GET[searchString]' ORDER BY $sidx $sord limit $limit offset $start";
-        }         
-        if ($_GET['searchOper'] == 'cn') {
-            $SQL = "SELECT 
-                    F.id,
-                    F.fecha_actual,
-                    CONCAT(T.nombre_tipo_comprobante, ' N°: ', F.serie) AS serie,
-                    CONCAT( C.identificacion, '  ',C.nombres_completos) AS IDENTIFICACION,
-                    C.nombres_completos,
-                    F.total_venta
-                FROM facturas F
-                INNER JOIN clientes C 
-                    ON F.id_cliente = C.id
-                INNER JOIN tipo_comprobante T 
-                    ON F.tipo_comprobante = T.codigo
-            AND $campo like '%$_GET[searchString]%' ORDER BY $sidx $sord  limit $limit offset $start";
-        }
-    }  
+}
 
-    $resultado = mysqli_query($con,$SQL);  
-    
-    header("Content-Type: text/html;charset=utf-8");   
-    $s = "<?xml version='1.0' encoding='utf-8'?>";
-    $s .= "<rows>";
-        $s .= "<page>" . $page . "</page>";
-        $s .= "<total>" . $total_pages . "</total>";
-        $s .= "<records>" . $count . "</records>";
-        while ($row = mysqli_fetch_array($resultado)) {
-            $s .= "<row id='" . $row[0] . "'>";
-            $s .= "<cell>" . $row[0] . "</cell>";
-            $s .= "<cell>" . $row[1] . "</cell>";
-            $s .= "<cell>" . $row[2] . "</cell>";
-            $s .= "<cell>" . $row[3] . "</cell>";
-            $s .= "<cell>" . $row[4] . "</cell>";
-            $s .= "<cell></cell>";
-            $s .= "</row>";
-        }
-    $s .= "</rows>";
-    echo $s;    
+if ($count > 0 && $limit > 0) {
+    $total_pages = ceil($count / $limit);
+} else {
+    $total_pages = 0;
+}
+if ($page > $total_pages)
+    $page = $total_pages;
+
+$start = $limit * $page - $limit;
+if ($start < 0)
+    $start = 0;
+
+// 3. CONSULTA
+$select = "SELECT 
+                F.id,
+                F.fecha_actual,
+                CONCAT(IFNULL(T.nombre_tipo_comprobante, 'DOC'), ' N°: ', F.serie) AS serie,
+                CONCAT(IFNULL(C.identificacion,'S/N'), ' - ', IFNULL(C.nombres_completos,'Consumidor Final')) AS cliente,
+                F.total_venta";
+
+$from = "FROM facturas F
+             LEFT JOIN clientes C ON F.id_cliente = C.id
+             LEFT JOIN tipo_comprobante T ON F.tipo_comprobante = T.id";
+
+if ($search == 'false') {
+    $SQL = "$select $from ORDER BY $sidx $sord LIMIT $limit OFFSET $start";
+} else {
+    $campo = isset($_GET['searchField']) ? $_GET['searchField'] : '';
+    $searchString = isset($_GET['searchString']) ? $_GET['searchString'] : '';
+
+    // Mapeo
+    if ($campo == 'id')
+        $campo = "F.id";
+    if ($campo == 'serie')
+        $campo = "F.serie";
+    if ($campo == 'IDENTIFICACION')
+        $campo = "C.identificacion";
+
+    if (isset($_GET['searchOper']) && $_GET['searchOper'] == 'eq') {
+        $SQL = "$select $from WHERE $campo = '$searchString' ORDER BY $sidx $sord LIMIT $limit OFFSET $start";
+    } else {
+        $SQL = "$select $from WHERE $campo LIKE '%$searchString%' ORDER BY $sidx $sord LIMIT $limit OFFSET $start";
+    }
+}
+
+$resultado = mysqli_query($con, $SQL);
+
+// 4. GENERAR XML (Con Sanitización)
+if (ob_get_length())
+    ob_clean();
+header("Content-Type: text/xml;charset=utf-8");
+
+$s = "<?xml version='1.0' encoding='utf-8'?>";
+$s .= "<rows>";
+$s .= "<page>" . $page . "</page>";
+$s .= "<total>" . $total_pages . "</total>";
+$s .= "<records>" . $count . "</records>";
+
+if ($resultado) {
+    while ($row = mysqli_fetch_array($resultado)) {
+        $s .= "<row id='" . $row[0] . "'>";
+        $s .= "<cell>" . $row[0] . "</cell>"; // ID
+        $s .= "<cell>" . $row[1] . "</cell>"; // Fecha
+
+        // --- AQUÍ ESTÁ EL ARREGLO MÁGICO ---
+        // Usamos htmlspecialchars para convertir '&' en '&amp;', etc.
+        $s .= "<cell>" . htmlspecialchars($row[2], ENT_QUOTES, 'UTF-8') . "</cell>"; // Serie
+        $s .= "<cell>" . htmlspecialchars($row[3], ENT_QUOTES, 'UTF-8') . "</cell>"; // Cliente
+        // ------------------------------------
+
+        $s .= "<cell>" . $row[4] . "</cell>"; // Total
+        $s .= "<cell></cell>";
+        $s .= "</row>";
+    }
+}
+$s .= "</rows>";
+echo $s;
 ?>
