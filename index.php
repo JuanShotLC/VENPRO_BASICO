@@ -204,30 +204,18 @@ require_once("config/conexion.php");//Contiene funcion que conecta a la base de 
 						</a>
 						<b class="arrow"></b>
 					</li>
-
-					<!-- <li class="<?php echo $active_facturas; ?>"><a href="facturas.php"><i class='glyphicon glyphicon-list-alt'></i> Facturas <span class="sr-only">(current)</span></a></li> -->
-
-					<!-- <li class="<?php if (isset($active_nota_entrega)) {
-						echo $active_nota_entrega;
-					} ?>"><a href="Nota_de_entrega.php"><i class='glyphicon glyphicon-list-alt'></i> Nota de Entrega</a></li> -->
-
-					<!--li class="<?php echo $active_productos; ?>"><a href="productos.php"><i class='glyphicon glyphicon-barcode'></i> Productos</a></li-->
-
 					<li class="<?php echo $active_clientes; ?>"><a href="clientes.php"><i
 								class='glyphicon glyphicon-user'></i> Clientes</a></li>
-
 
 					<?php if ($_SESSION['user_name'] == 'baraka') { ?>
 
 						<li class="<?php if (isset($active_productos)) {
 							echo $active_productos;
-						} ?>"><a
-								href="inventario.php"><i class='glyphicon glyphicon-barcode'></i> Inventario</a></li>
+						} ?>"><a href="inventario.php"><i class='glyphicon glyphicon-barcode'></i> Inventario</a></li>
 
 						<li class="<?php if (isset($active_categoria)) {
 							echo $active_categoria;
-						} ?>"><a
-								href="categorias.php"><i class='glyphicon glyphicon-tags'></i> Categorías</a></li>
+						} ?>"><a href="categorias.php"><i class='glyphicon glyphicon-tags'></i> Categorías</a></li>
 
 						<li class="<?php echo $active_usuarios; ?>"><a href="usuarios.php"><i
 									class='glyphicon glyphicon-lock'></i> Usuarios</a></li>
@@ -241,15 +229,16 @@ require_once("config/conexion.php");//Contiene funcion que conecta a la base de 
 
 						<li class="<?php if (isset($active_perfil)) {
 							echo $active_perfil;
-						} ?>"><a href="perfil.php"><i
-									class='glyphicon glyphicon-cog'></i> Configuración</a></li>
+						} ?>"><a href="perfil.php"><i class='glyphicon glyphicon-cog'></i> Configuración</a></li>
 					<?php } ?>
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#" target='_blank'><i class='glyphicon glyphicon-envelope'></i> Soporte</a></li-->
 					<li>
-						<a href="#" target='_blank'></i> <?php echo date("d/m/Y"); ?></a>
+						<a href="#" target='_blank'></i>
+							<?php echo date("d/m/Y"); ?>
+						</a>
 					</li>
 
 					<li><a href="login.php?logout"><i class='glyphicon glyphicon-off'></i></a></li>

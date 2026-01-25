@@ -1,0 +1,211 @@
+/* css/modern-venpro.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f2f5;
+    padding-top: 80px;
+    /* Empuja todo el contenido hacia abajo */
+    /* Fondo gris moderno */
+    color: #344767;
+    font-size: 14px;
+}
+
+/* Modernizar Paneles de Bootstrap 3 */
+.panel {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    background: #ffffff;
+    margin-bottom: 24px;
+}
+
+.panel-heading {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    /* Quitar gradientes viejos */
+    border-bottom: 1px solid #f0f0f0;
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+    padding: 15px 20px;
+}
+
+.panel-title {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 16px;
+}
+
+/* Modernizar Inputs */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #d2d6da;
+    box-shadow: none;
+    height: 40px;
+    /* Más altos para pantallas táctiles/modernas */
+    padding: 8px 12px;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+/* Modernizar Botones */
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    padding: 8px 16px;
+    letter-spacing: 0.3px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.1s;
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    /* Azul plano moderno */
+}
+
+.btn-success {
+    background-color: #2ecc71;
+    /* Verde plano */
+}
+
+/* Tablas */
+.table>thead>tr>th {
+    border-bottom: 2px solid #e9ecef;
+    color: #8898aa;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* Estilos para Navbar Moderna */
+.navbar-modern {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e7e7e7;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    /* Sombra suave */
+    min-height: 60px;
+    padding-top: 5px;
+}
+
+.navbar-modern .navbar-brand {
+    font-weight: 800;
+    color: #2c3e50 !important;
+    font-size: 22px;
+    letter-spacing: -0.5px;
+}
+
+.navbar-modern .navbar-nav>li>a {
+    color: #6c757d !important;
+    /* Gris suave */
+    font-weight: 500;
+    transition: all 0.3s;
+    border-radius: 4px;
+    margin: 5px 2px;
+}
+
+.navbar-modern .navbar-nav>li>a:hover,
+.navbar-modern .navbar-nav>.active>a {
+    background-color: #f8f9fa !important;
+    color: #3498db !important;
+    /* Azul al pasar el mouse */
+}
+
+/* Colores utilitarios para iconos */
+.text-primary {
+    color: #3498db;
+}
+
+.text-success {
+    color: #2ecc71;
+}
+
+.text-info {
+    color: #17a2b8;
+}
+
+.text-warning {
+    color: #f39c12;
+}
+
+.text-danger {
+    color: #e74c3c;
+}
+
+.text-muted {
+    color: #95a5a6;
+}
+
+/* css/modern-venpro.css - AGREGAR AL FINAL */
+
+/* Modernizar Tablas de Bootstrap automáticamente */
+.table {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table>thead>tr>th {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    border-top: none;
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 15px;
+    letter-spacing: 0.5px;
+}
+
+.table>tbody>tr>td {
+    padding: 15px;
+    vertical-align: middle;
+    border-top: 1px solid #f2f4f6;
+    color: #555;
+    font-size: 14px;
+}
+
+/* Efecto Hover en filas */
+.table-hover>tbody>tr:hover {
+    background-color: #f1f8ff;
+    /* Un azul muy suave al pasar el mouse */
+    transform: scale(1.002);
+    /* Sutil efecto de elevación */
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+/* Etiquetas de estado (Labels) más modernas */
+.label {
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-weight: 500;
+    font-size: 85%;
+}
+
+/* Acciones en la tabla (iconos editar/borrar) */
+.table a.btn,
+.table button.btn {
+    margin: 0 2px;
+    box-shadow: none;
+    background: transparent;
+    color: #6c757d;
+    border: 1px solid transparent;
+}
+
+.table a.btn:hover,
+.table button.btn:hover {
+    background: #e9ecef;
+    color: #3498db;
+    border-radius: 50%;
+    /* Botones circulares al pasar el mouse */
+}
