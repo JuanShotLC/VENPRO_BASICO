@@ -87,40 +87,58 @@ body {
     font-weight: 700;
 }
 
-/* Estilos para Navbar Moderna */
+/* --- ESTILOS MODERNOS PARA EL NAVBAR --- */
+
+/* Barra blanca y sombra suave */
 .navbar-modern {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e7e7e7;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-    /* Sombra suave */
+    background-color: #ffffff !important;
+    border: none !important;
+    border-bottom: 1px solid #e7e7e7 !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    /* Sombra muy sutil */
     min-height: 60px;
-    padding-top: 5px;
+    /* Un poco más alta para que respire */
 }
 
+/* Marca / Logo */
 .navbar-modern .navbar-brand {
-    font-weight: 800;
     color: #2c3e50 !important;
     font-size: 22px;
+    font-weight: 800;
+    line-height: 30px;
+    /* Centrado vertical */
     letter-spacing: -0.5px;
 }
 
+/* Enlaces del menú */
 .navbar-modern .navbar-nav>li>a {
-    color: #6c757d !important;
-    /* Gris suave */
-    font-weight: 500;
+    color: #555 !important;
+    font-weight: 600;
+    font-size: 13px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     transition: all 0.3s;
-    border-radius: 4px;
-    margin: 5px 2px;
 }
 
-.navbar-modern .navbar-nav>li>a:hover,
-.navbar-modern .navbar-nav>.active>a {
+/* Efecto Hover (Pasar el mouse) */
+.navbar-modern .navbar-nav>li>a:hover {
     background-color: #f8f9fa !important;
     color: #3498db !important;
-    /* Azul al pasar el mouse */
+    /* Azul moderno */
 }
 
-/* Colores utilitarios para iconos */
+/* Item Activo (En el que estás actualmente) */
+.navbar-modern .navbar-nav>.active>a,
+.navbar-modern .navbar-nav>.active>a:hover,
+.navbar-modern .navbar-nav>.active>a:focus {
+    background-color: #eef2f5 !important;
+    /* Fondo gris muy suave */
+    color: #2c3e50 !important;
+    border-bottom: 3px solid #3498db;
+    /* Línea azul abajo */
+}
+
+/* Colores de ayuda para iconos */
 .text-primary {
     color: #3498db;
 }
@@ -143,6 +161,16 @@ body {
 
 .text-muted {
     color: #95a5a6;
+}
+
+/* Botón hamburguesa en móviles */
+.navbar-modern .navbar-toggle {
+    border-color: #ddd;
+    margin-top: 13px;
+}
+
+.navbar-modern .navbar-toggle .icon-bar {
+    background-color: #888;
 }
 
 /* css/modern-venpro.css - AGREGAR AL FINAL */
