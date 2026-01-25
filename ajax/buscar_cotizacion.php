@@ -20,7 +20,7 @@ if ($action == 'ajax') {
 	include 'pagination.php'; //include pagination file
 
 	$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-	$per_page = 10; //registros por pagina
+	$per_page = 9; //registros por pagina
 	$adjacents = 4; //gap between pages after number of adjacents
 	$offset = ($page - 1) * $per_page;
 

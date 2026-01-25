@@ -38,11 +38,7 @@
     <li class="<?php echo $active_reportes;?>"><a href="reportes.php"><i  class='glyphicon glyphicon-lock'></i> Reportes</a></li>
 
     <li class="<?php echo $active_cotizacion;?>"><a href="cotizacion.php"><i  class='glyphicon glyphicon-lock'></i> Cotizacion </a></li>
-
-    <li class="<?php echo $active_precio;?>"><a href="actualizar_precios.php"><i  class='glyphicon glyphicon-lock'></i> Actualizar</a></li>
-
-    
-
+  
 		<li class="<?php if(isset($active_perfil)){echo $active_perfil;}?>"><a href="perfil.php"><i  class='glyphicon glyphicon-cog'></i> Configuración</a></li>
 <?php }         ?>
 

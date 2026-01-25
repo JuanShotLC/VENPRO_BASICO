@@ -14,9 +14,9 @@ $active_productos = "";
 $active_cotizacion = "active";
 $active_clientes = "";
 $active_usuarios = "";
-$title = "Control de Tasa | VENPRO";
+$title = "Vista Precios | Sistema";
 
-// OBTENER LA TASA ACTUAL
+// OBTENER LA TASA ACTUAL DE LA BASE DE DATOS
 $sql_last = mysqli_query($con, "SELECT precio FROM cotizacion ORDER BY id_coti DESC LIMIT 1");
 $row_last = mysqli_fetch_array($sql_last);
 $precio_actual_header = isset($row_last['precio']) ? $row_last['precio'] : 0.00;
@@ -28,13 +28,53 @@ $precio_actual_header = isset($row_last['precio']) ? $row_last['precio'] : 0.00;
 
   <head>
     <?php include("head.php"); ?>
-
     <style>
-      /* ESTILOS LIMPIOS Y MODERNOS */
+      /* ESTILOS PERSONALIZADOS PARA EL DASHBOARD */
       body {
-        background-color: #f5f5f5;
-        /* Fondo suave para resaltar los paneles */
+        background-color: #ecf0f5;
+        /* Gris muy suave estilo AdminLTE */
       }
+
+      .container-fluid {
+        padding-top: 20px;
+      }
+
+      /* TARJETA DE TASA (Izquierda) */
+      .card-tasa {
+        background: white;
+        border-top: 3px solid #3c8dbc;
+        /* Azul profesional */
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .tasa-titulo {
+        color: #777;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: bold;
+      }
+
+      .tasa-valor {
+        font-size: 48px;
+        font-weight: bold;
+        color: #00a65a;
+        /* Verde éxito */
+        margin: 10px 0;
+      }
+
+      .calculator-box {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 20px;
+        border: 1px solid #ddd;
+      }
+
 
       /* Tarjeta de Tasa (KPI) */
       .rate-card {
@@ -87,41 +127,34 @@ $precio_actual_header = isset($row_last['precio']) ? $row_last['precio'] : 0.00;
         box-shadow: 0 6px 12px rgba(0, 166, 90, 0.4);
       }
 
-      /* Panel de Productos */
-      .content-panel {
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        padding: 20px;
-        border: 1px solid #e3e3e3;
+      /* PANEL DE LISTA (Derecha) */
+      .panel-lista {
+        border: none;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
       }
 
-      .panel-header-custom {
-        border-bottom: 1px solid #eee;
-        padding-bottom: 15px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+      .panel-heading-custom {
+        background-color: #fff !important;
+        padding: 10px;
+        border-bottom: 1px solid #f4f4f4;
       }
 
-      .panel-title-custom {
-        font-size: 18px;
-        font-weight: 600;
-        color: #444;
-        margin: 0;
-      }
-
-      /* Input de búsqueda estilizado */
       .search-input {
-        border-radius: 20px !important;
-        border: 1px solid #ddd;
-        padding-left: 20px;
+        height: 45px;
+        font-size: 16px;
+        border-radius: 30px 0 0 30px !important;
       }
 
       .search-btn {
-        border-radius: 20px !important;
-        margin-left: -5px;
+        height: 45px;
+        border-radius: 0 30px 30px 0 !important;
+        background-color: #3c8dbc;
+        color: white;
+        border: 1px solid #3c8dbc;
+      }
+
+      .search-btn:hover {
+        background-color: #367fa9;
       }
     </style>
   </head>
@@ -129,10 +162,11 @@ $precio_actual_header = isset($row_last['precio']) ? $row_last['precio'] : 0.00;
   <body>
     <?php include("navbar.php"); ?>
 
-    <div class="container">
-
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+
+
+        <div class="col-md-3 col-sm-4">
           <div class="rate-card">
             <div class="rate-title">Tasa de Cambio</div>
             <div class="rate-value">
@@ -149,50 +183,82 @@ $precio_actual_header = isset($row_last['precio']) ? $row_last['precio'] : 0.00;
               automáticamente.
             </p>
           </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-12">
-          <div class="content-panel">
-
-            <div class="row" style="margin-bottom: 20px;">
-              <div class="col-md-6">
-                <h3 class="panel-title-custom">
-                  <i class="glyphicon glyphicon-tags text-blue"></i> Precios en Sistema (Vista Previa)
-                </h3>
+          <div class="card-tasa">
+            <div class="tasa-titulo"><i class="glyphicon glyphicon-phone"></i> Calculadora Rápida</div>
+            <div class="calculator-box">
+              <div class="form-group">
+                <label for="calc_usd" class="sr-only">Dólares</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="number" id="calc_usd" class="form-control" placeholder="Monto en USD">
+                </div>
               </div>
-              <div class="col-md-6">
-                <form class="form-horizontal" role="form" id="datos_cotizacion">
-                  <div class="input-group">
-                    <input type="text" class="form-control search-input" id="q"
-                      placeholder="Buscar producto por nombre o código..." onkeyup='load(1);'>
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-default search-btn" onclick='load(1);'>
-                        <i class="glyphicon glyphicon-search"></i>
-                      </button>
-                    </span>
-                  </div>
-                </form>
+              <div class="text-center" style="font-size: 20px; font-weight: bold; color: #333;">
+                = <span id="calc_result">0.00</span> Bs.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-9 col-sm-8">
+          <div class="panel panel-default panel-lista">
+            <div class="panel-heading panel-heading-custom">
+              <div class="row">
+                <div class="col-md-7">
+                  <h4 style=""><i class='glyphicon glyphicon-list-alt'></i> Lista de Precios</h4>
+                </div>
+                <div class="col-md-5">
+                  <form class="form-horizontal" role="form" id="datos_cotizacion">
+                    <div class="input-group">
+                      <input type="text" class="form-control search-input" id="q"
+                        placeholder="Buscar por código o nombre..." onkeyup='load(1);'>
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default search-btn" onclick='load(1);'>
+                          <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
 
-            <div id="loader" class="text-center"></div>
-            <div id="resultados"></div>
-            <div class='outer_div'></div>
-
+            <div class="panel-body">
+              <div id="loader" class="text-center"></div>
+              <div id="resultados"></div>
+              <div class='outer_div'></div>
+            </div>
           </div>
         </div>
+
       </div>
-
     </div>
-    <hr>
+
     <?php include("footer.php"); ?>
-
     <?php include("modal/editar_cotizacion.php"); ?>
-
     <script type="text/javascript" src="js/cotizacion.js"></script>
+
+    <script>
+      // Script para la calculadora rápida lateral (no afecta la base de datos, solo visual)
+      $(document).ready(function () {
+        var tasa = <?php echo $precio_actual_header; ?>;
+
+        $('#calc_usd').on('keyup change', function () {
+          var usd = $(this).val();
+          var total = usd * tasa;
+          // Formatear a moneda venezolana
+          var formateado = new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2 }).format(total);
+          $('#calc_result').text(formateado);
+        });
+      });
+    </script>
   </body>
 
   </html>
-<?php } ?>
+<?php } else {
+  // Redirección si no es el usuario autorizado
+  header("location: login.php");
+  exit;
+} ?>

@@ -32,7 +32,7 @@ if (empty($_POST['mod_cotizacion'])) {
 
 		mysqli_query($con, $update_precios);
 
-		$messages[] = "La tasa se actualizó y los precios se redondearon a 2 decimales correctamente.";
+		$messages[] = "La tasa se actualizó y los precios de los productos se actualizaron.";
 
 	} else {
 		$errors[] = "Lo sentimos, el registro falló. Por favor, regrese y vuelva a intentarlo.";
