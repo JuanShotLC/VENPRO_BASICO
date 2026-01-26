@@ -154,7 +154,7 @@ $title = "Inventario | Sistema";
 <body>
 	<?php include("navbar.php"); ?>
 
-	<div class="container-fluid" style="margin-top: 80px;">
+	<div class="container-fluid">
 		<div class="row main-header-area">
 			<div class="col-md-6 col-sm-6 col-xs-12">
 				<h1 class="page-title">

@@ -35,10 +35,6 @@ $precio_actual_header = isset($row_last['precio']) ? $row_last['precio'] : 0.00;
         /* Gris muy suave estilo AdminLTE */
       }
 
-      .container-fluid {
-        padding-top: 20px;
-      }
-
       /* TARJETA DE TASA (Izquierda) */
       .card-tasa {
         background: white;

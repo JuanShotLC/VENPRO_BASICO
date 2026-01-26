@@ -1,33 +1,307 @@
+<style>
+    /* 2. FORMULARIOS MODERNOS */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    /* Etiquetas (Labels) */
+    .control-label {
+        font-weight: 600;
+        color: #546e7a;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding-top: 7px;
+        text-align: left !important;
+        /* Forzar alineación izquierda */
+    }
+
+    /* Inputs (Cajas de texto) */
+    .form-control,
+    select.form-control {
+        border-radius: 6px !important;
+        border: 1px solid #cfd8dc !important;
+        box-shadow: none !important;
+        height: 40px !important;
+        /* Más altos para toque moderno */
+        font-size: 14px;
+        color: #37474f;
+        background-color: #fafafa;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        background-color: #fff;
+        border-color: #29b6f6 !important;
+        box-shadow: 0 0 0 3px rgba(41, 182, 246, 0.1) !important;
+    }
+
+    /* Inputs de solo lectura (Totales, etc) */
+    .form-control[readonly] {
+        background-color: #eef2f3;
+        color: #455a64;
+        font-weight: 600;
+        cursor: not-allowed;
+    }
+
+    /* Iconos dentro de los inputs (Input Groups) */
+    .input-group-addon {
+        background-color: #eceff1;
+        border: 1px solid #cfd8dc;
+        border-radius: 0 6px 6px 0;
+        color: #78909c;
+    }
+
+    .input-icon>input {
+        padding-left: 30px !important;
+    }
+
+    .input-icon>i {
+        z-index: 3;
+        color: #90a4ae;
+        top: 12px;
+    }
+
+    /* 3. ENCABEZADOS Y SECCIONES */
+    h3.header {
+        border-bottom: 2px solid #e0e0e0;
+        color: #263238;
+        font-weight: 700;
+        padding-bottom: 10px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-size: 18px;
+    }
+
+    /* 4. MODERNIZACIÓN DE LA TABLA jqGrid (La parte más difícil) */
+    .ui-jqgrid {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        font-family: inherit;
+    }
+
+    .ui-jqgrid-view {
+        font-size: 13px;
+    }
+
+    /* Cabecera de la tabla */
+    .ui-jqgrid .ui-jqgrid-hdiv {
+        background: #f1f8e9 !important;
+        border-bottom: 2px solid #c5e1a5;
+    }
+
+    .ui-jqgrid .ui-jqgrid-htable th {
+        height: 40px;
+        color: #33691e;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    /* Filas de la tabla */
+    .ui-jqgrid tr.jqgrow td {
+        height: 35px;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 5px;
+        color: #455a64;
+    }
+
+    .ui-jqgrid tr.jqgrow:hover td {
+        background-color: #e3f2fd !important;
+    }
+
+    /* 5. SECCIÓN DE TOTALES (Derecha) */
+    .col-sm-3 .form-group {
+        margin-bottom: 5px;
+        background: #f9f9f9;
+        padding: 5px;
+        border-radius: 4px;
+    }
+
+    .col-sm-3 .form-group label {
+        color: #333;
+        font-weight: 700;
+    }
+
+    #divisas,
+    #subtotal,
+    #iva,
+    #iva_igtf,
+    #total_pagar,
+    #total_pagar_dolar {
+        text-align: right;
+        font-weight: bold;
+        background: white;
+    }
+
+    /* ESTILOS NUEVOS PARA BADGES EN INPUTS */
+    .input-badge {
+        border: none !important;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 20px !important;
+        /* Bordes redondos */
+        margin-top: 5px;
+    }
+
+    .badge-bs {
+        background-color: #e3f2fd !important;
+        color: #1565c0 !important;
+    }
+
+    .badge-usd {
+        background-color: #e8f5e9 !important;
+        color: #2e7d32 !important;
+    }
+
+    .badge-stock {
+        background-color: #fff3e0 !important;
+        color: #ef6c00 !important;
+    }
+
+    /* Título de sección pequeña */
+    .section-label {
+        font-size: 10px;
+        color: #999;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+
+    /* 6. BOTONES DE ACCIÓN (Footer) */
+    .clearfix.form-actions {
+        background-color: #fff;
+        border-top: 1px solid #eee;
+        padding: 20px;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .btn {
+        border-radius: 30px !important;
+        border: none;
+        padding: 10px 20px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Colores Específicos para botones */
+    button[name="btn_0"] {
+        background-color: #2ecc71 !important;
+        color: white;
+    }
+
+    /* Guardar */
+    button[href="#myModal"],
+    button[href="#myModal2"] {
+        background-color: #3498db !important;
+        color: white;
+    }
+
+    /* Buscar */
+    button[name="btn_2"],
+    button[name="btn_15"] {
+        background-color: #e74c3c !important;
+        color: white;
+    }
+
+    /* Anular */
+    button[name="btn_3"] {
+        background-color: #9b59b6 !important;
+        color: white;
+    }
+
+    /* Imprimir */
+    button[name="btn_4"] {
+        background-color: #95a5a6 !important;
+        color: white;
+    }
+
+    /* Limpiar */
+
+    /* 7. MODALES */
+    .modal-content {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+        background-color: #f5f5f5;
+        border-radius: 10px 10px 0 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .modal-title {
+        font-weight: 700;
+        color: #333;
+    }
+
+    .modal-footer {
+        background-color: #fff;
+        border-top: 1px solid #eee;
+        border-radius: 0 0 10px 10px;
+    }
+
+    /* Parche para Select2 (Listas desplegables) */
+    .select2-container .select2-choice {
+        height: 40px !important;
+        line-height: 40px !important;
+        border-radius: 6px !important;
+        border: 1px solid #cfd8dc !important;
+        background-image: none !important;
+    }
+
+
+
+    .price-bs {
+        color: #0d47a1;
+
+    }
+
+    .price-usd {
+        color: #1b5e20;
+
+    }
+
+    .price-stock {
+        color: #e65100;
+
+    }
+</style>
 <div class="main-content">
     <div class="page-content">
         <div class="row">
             <div class="col-xs-12">
-                <div class="space"></div>
+
                 <form class="form-horizontal" name="form_factura" id="form_factura" autocomplete="off">
                     <div class="tabbable">
-                        <!-- <ul class="nav nav-tabs padding-16">
-								<li ng-class="{ active: isSet(1)}">
-									<a data-toggle="tab" href ng-click="setTab(1)">
-										<i class="green ace-icon fa fa-pencil-square-o bigger-125"></i>
-										FACTURA VENTA
-									</a>
-								</li>
-							</ul> -->
-
-                        <div class="tab-content profile-edit-tab-content">
+                        <div class="tab-content" style="border:none; padding:0;">
                             <div ng-show="isSet(1)">
+
                                 <div class="row">
-                                    &nbsp;
                                     <div class="col-sm-12">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label class="col-sm-4 control-label no-padding-right" for="fecha_actual">FECHA ACTUAL.:</label>
-                                                <div class="col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-right"
+                                                    for="fecha_actual">Fecha:</label>
+                                                <div class="col-sm-8">
                                                     <div class="input-group">
-                                                        <input type="text" name="fecha_actual" id="fecha_actual" class="form-control datepicker" readonly/>
-                                                        <span class="input-group-addon">
-																<i class="ace-icon fa fa-calendar"></i>
-															</span>
+                                                        <input type="text" name="fecha_actual" id="fecha_actual"
+                                                            class="form-control datepicker" readonly />
+                                                        <span class="input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -35,13 +309,13 @@
 
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label class="control-label col-sm-4 no-padding-right">Hora Actual.:</label>
-                                                <div class="col-sm-6">
+                                                <label class="control-label col-sm-4 no-padding-right">Hora:</label>
+                                                <div class="col-sm-8">
                                                     <div class="input-group">
-                                                        <input type="text" name="hora_actual" id="hora_actual" class="form-control" readonly />
-                                                        <span class="input-group-addon">
-										                        <i class="glyphicon glyphicon-time"></i>
-										                    </span>
+                                                        <input type="text" name="hora_actual" id="hora_actual"
+                                                            class="form-control" readonly />
+                                                        <span class="input-group-addon"><i
+                                                                class="glyphicon glyphicon-time"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -49,9 +323,12 @@
 
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label class="col-sm-4 control-label no-padding-right" for="ruc">FACTURA N°:</label>
-                                                <div class="col-sm-6">
-                                                    <input type="text" name="serie" id="serie" class="form-control" readonly/>
+                                                <label class="col-sm-4 control-label no-padding-right" for="serie"
+                                                    style="color:#d32f2f; font-weight:bold;">FACTURA N°:</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="serie" id="serie" class="form-control"
+                                                        readonly
+                                                        style="font-weight:bold; color:#d32f2f; font-size:16px;" />
                                                 </div>
                                             </div>
                                         </div>
@@ -62,310 +339,265 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label class="control-label col-sm-4 no-padding-right">RIF/CI.:</label>
-                                                <div class="col-sm-6">
+                                                <label class="control-label col-sm-4 no-padding-right">RIF/CI:</label>
+                                                <div class="col-sm-8">
                                                     <div class="clearfix">
-                                                        <input type="text" name="ruc" id="ruc" class="form-control" placeholder="Buscar..." />
-                                                        <input type="hidden" name="id_cliente" id="id_cliente" class="form-control" />
-                                                        <input type="hidden" name="id_factura" id="id_factura" class="form-control" />
-                                                        <input type="hidden" name="id_nota" id="id_nota" class="form-control" />
-                                                        <input type="hidden" name="id_proforma" id="id_proforma" class="form-control" />
-
+                                                        <input type="text" name="ruc" id="ruc" class="form-control"
+                                                            placeholder="Buscar RIF/CI..." />
+                                                        <input type="hidden" name="id_cliente" id="id_cliente"
+                                                            class="form-control" />
+                                                        <input type="hidden" name="id_factura" id="id_factura"
+                                                            class="form-control" />
+                                                        <input type="hidden" name="id_nota" id="id_nota"
+                                                            class="form-control" />
+                                                        <input type="hidden" name="id_proforma" id="id_proforma"
+                                                            class="form-control" />
                                                     </div>
                                                 </div>
-                                                <!-- <button type="button" name="btn_verificar" id="btn_verificar" class="btn btn-pink btn-sm" onclick="angular.element(this).scope().cargadatos('estado')"><i class="ace-icon fa fa-search"></i></button> -->
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-sm-4 control-label no-padding-right" for="telefono">TELÉFONO.:</label>
-                                                <div class="col-sm-6">
-                                                    <input type="text" name="telefono" id="telefono" class="form-control" readonly />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-sm-4 control-label no-padding-right" for="select_tipo_comprobante">TIPO:</label>
-                                                <div class="col-sm-6">
-                                                    <select name="select_tipo_comprobante" id="select_tipo_comprobante" class="select2" data-placeholder="Tipo Comprobante...">
-													
-
-														</select>
-                                                </div>
-                                            </div>
-
-              
-                                        </div>
-
-                                        <div class="col-sm-4">
-                                            <div class="form-group">
-                                                <label class="col-sm-4 control-label no-padding-right" for="cliente">NOMBRES COMPLETOS.:</label>
+                                                <label class="col-sm-4 control-label no-padding-right"
+                                                    for="telefono">Teléfono:</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" name="cliente" id="cliente" class="form-control" placeholder="Buscar..." />
+                                                    <input type="text" name="telefono" id="telefono"
+                                                        class="form-control" readonly />
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-sm-4 control-label no-padding-right" for="correo">CORREO.:</label>
+                                                <label class="col-sm-4 control-label no-padding-right"
+                                                    for="select_tipo_comprobante">Tipo Doc:</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" name="correo" id="correo" class="form-control" readonly />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-sm-4 control-label no-padding-right" for="select_forma_pago">FORMA PAGO.:</label>
-                                                <div class="col-sm-6">
-                                                    <select name="select_forma_pago" id="select_forma_pago" class="select2" data-placeholder="Forma Pago...">
-															<option value="CONTADO" selected>CONTADO</option>
-															<option value="CRÉDITO">CRÉDITO</option>
-														</select>
+                                                    <select name="select_tipo_comprobante" id="select_tipo_comprobante"
+                                                        class="select2" style="width:100%;"
+                                                        data-placeholder="Seleccione...">
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label class="col-sm-4 control-label no-padding-right" for="direccion">DIRECCIÓN.:</label>
+                                                <label class="col-sm-4 control-label no-padding-right"
+                                                    for="cliente">Cliente:</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" name="direccion" id="direccion" class="form-control" readonly />
+                                                    <input type="text" name="cliente" id="cliente" class="form-control"
+                                                        placeholder="Nombre del cliente..." />
                                                 </div>
                                             </div>
-
 
                                             <div class="form-group">
-                                                <label class="col-sm-4 control-label no-padding-right" for="select_tipo_precio">TIPO PRECIO:</label>
-                                                <div class="col-sm-6">
-                                                    <select name="select_tipo_precio" id="select_tipo_precio" class="select2" data-placeholder="Tipo Precio...">
-															<option value="MINORISTA" selected>MINORISTA</option>
-															<!-- <option value="MAYORISTA">MAYORISTA</option> -->
-														</select>
+                                                <label class="col-sm-4 control-label no-padding-right"
+                                                    for="correo">Correo:</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="correo" id="correo" class="form-control"
+                                                        readonly />
                                                 </div>
                                             </div>
-
 
                                             <div class="form-group">
-                                                <label class="col-sm-4 control-label no-padding-right" for="select_tipo_comprobante">TIPO FACTURA:</label>
-                                                <div class="col-sm-6">
-                                                    <select name="select_tipo_factura" id="select_tipo_factura" class="select2" data-placeholder="Tipo Factura...">
-													
-
-														</select>
+                                                <label class="col-sm-4 control-label no-padding-right"
+                                                    for="select_forma_pago">Pago:</label>
+                                                <div class="col-sm-8">
+                                                    <select name="select_forma_pago" id="select_forma_pago"
+                                                        class="select2" style="width:100%;">
+                                                        <option value="CONTADO" selected>CONTADO</option>
+                                                        <option value="CRÉDITO">CRÉDITO</option>
+                                                    </select>
                                                 </div>
                                             </div>
-   
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label no-padding-right"
+                                                    for="direccion">Dirección:</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="direccion" id="direccion"
+                                                        class="form-control" readonly />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label no-padding-right"
+                                                    for="select_tipo_precio">Precio:</label>
+                                                <div class="col-sm-8">
+                                                    <select name="select_tipo_precio" id="select_tipo_precio"
+                                                        class="select2" style="width:100%;">
+                                                        <option value="MINORISTA" selected>MINORISTA</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label no-padding-right"
+                                                    for="select_tipo_factura">Tipo:</label>
+                                                <div class="col-sm-8">
+                                                    <select name="select_tipo_factura" id="select_tipo_factura"
+                                                        class="select2" style="width:100%;">
+                                                    </select>
+                                                </div>
+                                            </div>
 
                                             <div class="form-group">
                                                 <div id="estado" style="margin-top: -10px">
                                                     <h3></h3>
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-1 control-label no-padding-right" for="precinto_nro">N° Precinto:</label>
-                                            <div class="col-sm-11">
-                                                <input type="text" name="precinto_nro" id="precinto_nro" class="form-control" />
+
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-1 control-label no-padding-right"
+                                                    for="precinto_nro">Precinto:</label>
+                                                <div class="col-sm-11">
+                                                    <input type="text" name="precinto_nro" id="precinto_nro"
+                                                        class="form-control"
+                                                        placeholder="Número de precinto (opcional)" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h3 class="header smaller lighter blue">DETALLE FACTURA VENTA</h3>
-                                        <div class="row" id="prood">
-                                            <div class="col-sm-12">
+                                <div class="row"
+                                    style="background: #eef2f3; padding: 8px; border-radius: 8px; margin: 0 0 5px 0;">
+                                    <div class="col-md-12">
+                                        <div class="row" id="prood"
+                                            style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
 
-                                                <div class="col-sm-2">
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <label> CÓDIGO BARRAS</label>
+                                            <div class="col-xl-12">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <div class="input-group">
+                                                            <input type="text" name="codigo_barras" id="codigo_barras"
+                                                                class="form-control" placeholder="Escanear..." />
+                                                            <span class="input-group-addon"><i
+                                                                    class="fa fa-barcode"></i></span>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <input type="text" name="codigo_barras" id="codigo_barras" class="form-control" placeholder="Buscar......" />
+                                                    <div class="col-md-2">
+                                                        <input type="text" name="codigo" id="codigo"
+                                                            class="form-control" placeholder="Código" />
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="text" name="producto" id="producto"
+                                                            class="form-control" placeholder="Nombre del producto"
+                                                            style="background-color:#fff;" />
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <input type="text" name="cantidad" id="cantidad"
+                                                            class="form-control" style="background-color:#fff;"
+                                                            placeholder="0" />
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div class="input-group">
+                                                            <input type="text" name="descuento" id="descuento"
+                                                                class="form-control" readonly />
+                                                            <span class="input-group-addon">%</span>
                                                         </div>
+                                                        <span id="visual_precio_bs" class="price-bs">Bs
+                                                            0,00</span>
+                                                        <span id="visual_precio_venta" class="price-usd">$
+                                                            0.00</span>
+                                                        <span id="visual_stock" class="price-stock">Stock
+                                                            0</span>
+
                                                     </div>
                                                 </div>
-
-                                                <div class="col-sm-2">
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <label> CÓDIGO</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <input type="text" name="codigo" id="codigo" class="form-control" placeholder="Buscar......" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <label> DESCRIPCIÓN</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <input type="text" name="producto" id="producto" class="form-control" placeholder="Buscar......" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-xs-1">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label> CANTIDAD</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <input type="text" name="cantidad" id="cantidad" class="form-control" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label> Bs</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <input type="text" name="precio_bs" id="precio_bs" class="form-control" readonly/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-1">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label> $</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <input type="text" name="precio_venta" id="precio_venta" class="form-control" readonly/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="col-sm-1">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label> DESCU.</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <input type="text" name="descuento" id="descuento" class="form-control" readonly/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-1">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label>STOCK</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <input type="text" name="stock" id="stock" class="form-control" readonly />
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-1">
-
-                                                    <input type="hidden" name="id_producto" id="id_producto" class="form-control" />
-                                                    <input type="hidden" name="precio_costo" id="precio_costo" class="form-control" />
-                                                    <input type="hidden" name="factor" id="factor" class="form-control" />
-                                                    <input type="hidden" name="iva_producto" id="iva_producto" class="form-control" />
-                                                    <input type="hidden" name="igtf" id="igtf" class="form-control" value="" />
-                                                    <input type="hidden" name="incluye" id="incluye" class="form-control" value="SI" />
-                                                    <input type="hidden" name="otros" id="otros" class="form-control" value="0.000" readonly />
-                                                    <input type="hidden" name="tarifa" id="tarifa" class="form-control" value="0.000" readonly />
-                                                    <input type="hidden" name="tarifa_0" id="tarifa_0" class="form-control" value="0.000" readonly />
-                                                </div>
-
                                             </div>
-                                        </div>
-                                        &nbsp; &nbsp;
 
+                                            <div style="display:none;">
+                                                <input type="hidden" name="id_producto" id="id_producto"
+                                                    class="form-control" />
+                                                <input type="hidden" name="precio_bs" id="precio_bs"
+                                                    class="form-control" readonly />
+                                                <input type="hidden" name="precio_venta" id="precio_venta"
+                                                    class="form-control" readonly />
+                                                <input type="hidden" name="precio_costo" id="precio_costo"
+                                                    class="form-control" />
+                                                <input type="hidden" name="factor" id="factor" class="form-control" />
+                                                <input type="hidden" name="iva_producto" id="iva_producto"
+                                                    class="form-control" />
+                                                <input type="hidden" name="igtf" id="igtf" class="form-control"
+                                                    value="" />
+                                                <input type="hidden" name="stock" id="stock" class="form-control"
+                                                    readonly />
+                                                <input type="hidden" name="incluye" id="incluye" class="form-control"
+                                                    value="SI" />
+                                                <input type="hidden" name="otros" id="otros" class="form-control"
+                                                    value="0.000" readonly />
+                                                <input type="hidden" name="tarifa" id="tarifa" class="form-control"
+                                                    value="0.000" readonly />
+                                                <input type="hidden" name="tarifa_0" id="tarifa_0" class="form-control"
+                                                    value="0.000" readonly />
+                                            </div>
+
+                                        </div>
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="col-sm-9">
                                                     <div id="grid_container">
                                                         <table id="table"></table>
-                                                        <!-- <div id="pager"></div>	 -->
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-3"
+                                                    style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+
                                                     <div class="form-group">
-                                                        <label class="col-md-5">DIVISA:</label>
+                                                        <label class="col-md-5">Total Divisas:</label>
                                                         <div class="col-md-7">
-                                                            <span class="input-icon">
-																	<input type="text" name="divisas" id="divisas" class="form-control" value="0.000"/>
-																	<i class="ace-icon fa fa fa-usd orange"></i>
-																</span>
+                                                            <div class="input-icon">
+                                                                <input type="text" name="divisas" id="divisas"
+                                                                    class="form-control" value="0.00" />
+                                                            </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-md-5">Base Impo.</label>
+                                                        <label class="col-md-5">Subtotal:</label>
                                                         <div class="col-md-7">
-                                                            <span class="input-icon">
-																	<input type="text" name="subtotal" id="subtotal" class="form-control" value="0.000" readonly />
-																	
-																
-																</span>
+                                                            <input type="text" name="subtotal" id="subtotal"
+                                                                class="form-control" value="0.00" readonly />
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="col-md-5">IVA G 16.00% </label>
+                                                        <label class="col-md-5">IVA 16%:</label>
                                                         <div class="col-md-7">
-                                                            <span class="input-icon">
-																	<input type="text" name="iva" id="iva" class="form-control" value="0.000" readonly />
-																																
-																</span>
+                                                            <input type="text" name="iva" id="iva" class="form-control"
+                                                                value="0.00" readonly />
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-md-5">IGTF 3% </label>
+                                                        <label class="col-md-5">IGTF 3%:</label>
                                                         <div class="col-md-7">
-                                                            <span class="input-icon">
-																	<input type="text" name="iva_igtf" id="iva_igtf" class="form-control" value="0.000" readonly />
-																	
-																</span>
+                                                            <input type="text" name="iva_igtf" id="iva_igtf"
+                                                                class="form-control" value="0.00" readonly />
+                                                        </div>
+                                                    </div>
+
+                                                    <hr style="margin: 10px 0;">
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-5" style="color:#555;">Total Bs:</label>
+                                                        <div class="col-md-7">
+                                                            <input type="text" name="total_pagar" id="total_pagar"
+                                                                class="form-control" value="0.00" readonly
+                                                                style="font-weight:bold; font-size:15px;" />
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-md-5">TOTAL Bs.</label>
-
+                                                        <label class="col-md-5" style="color:#555;">Total
+                                                            $:</label>
                                                         <div class="col-md-7">
-                                                            <span class="input-icon">														
-                                                                    <input type="text" name="total_pagar" id="total_pagar" class="form-control" value="0.000" readonly />
-                                                                </span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label class="col-md-5">TOTAL</label>
-                                                        <div class="col-md-7">
-                                                            <span class="input-icon">
-                                                                    <input type="text" name="total_pagar_dolar" id="total_pagar_dolar" class="form-control" value="0.000" readonly />
-    
-                                                                    <i class="ace-icon fa fa fa-usd orange"></i>
-                                                                </span>
+                                                            <input type="text" name="total_pagar_dolar"
+                                                                id="total_pagar_dolar" class="form-control" value="0.00"
+                                                                readonly style="font-weight:bold; font-size:15px;" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -374,27 +606,21 @@
 
                                             <div class="col-sm-12">
                                                 <div class="col-sm-2">
-                                                    <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-12">Items:</label>
                                                         <div class="col-sm-12">
-                                                            <label>N° ITEMS:</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <input type="text" name="items" id="items" class="form-control" readonly value="0" />
+                                                            <input type="text" name="items" id="items"
+                                                                class="form-control" readonly value="0" />
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-sm-2">
-                                                    <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-12">Productos:</label>
                                                         <div class="col-sm-12">
-                                                            <label>N° PRODUCTOS:</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <input type="text" name="num" id="num" class="form-control" readonly value="0" />
+                                                            <input type="text" name="num" id="num" class="form-control"
+                                                                readonly value="0" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -408,39 +634,37 @@
 
                     <div class="clearfix form-actions center">
                         <div class="col-md-12">
-                            <button type="button" name="btn_0" id="btn_0" class="btn btn-primary" data-toggle='tooltip' title='Registrar Factura/Nota'>
-									<i class="ace-icon fa fa-save bigger-110"></i>
-									Guardar
-								</button>
+                            <button type="button" name="btn_0" id="btn_0" class="btn btn-primary" data-toggle='tooltip'
+                                title='Registrar'>
+                                <i class="fa fa-save"></i> Guardar
+                            </button>
 
-                            <button type="button" class="btn btn-primary" data-toggle="modal" href="#myModal">
-									<i class="ace-icon fa fa-search bigger-110"></i>
-									Facturas Venta
-								</button>
+                            <button type="button" class="btn btn-info" data-toggle="modal" href="#myModal">
+                                <i class="fa fa-search"></i> Facturas
+                            </button>
 
-                            <button type="button" class="btn btn-primary" data-toggle="modal" href="#myModal2">
-									<i class="ace-icon fa fa-search bigger-110"></i>
-									Notas Venta
-								</button>
+                            <button type="button" class="btn btn-info" data-toggle="modal" href="#myModal2">
+                                <i class="fa fa-search"></i> Notas
+                            </button>
 
-                            <button type="button" name="btn_2" id="btn_2" class="btn btn-primary" data-toggle='tooltip' title='Anular Factura'>
-									<i class="ace-icon fa fa-close bigger-110"></i>
-									Anular
-								</button>
-                            <button type="button" name="btn_15" id="btn_15" class="btn btn-primary" data-toggle='tooltip' title='Anular Nota'>
-									<i class="ace-icon fa fa-close bigger-110"></i>
-									Anular Nota
-								</button>
+                            <button type="button" name="btn_2" id="btn_2" class="btn btn-danger" data-toggle='tooltip'
+                                title='Anular'>
+                                <i class="fa fa-ban"></i> Anular
+                            </button>
+                            <button type="button" name="btn_15" id="btn_15" class="btn btn-danger" data-toggle='tooltip'
+                                title='Anular Nota'>
+                                <i class="fa fa-ban"></i> Anular Nota
+                            </button>
 
-                            <button type="button" name="btn_3" id="btn_3" class="btn btn-primary" data-toggle='tooltip' title='Imprimir Factura'>
-									<i class="ace-icon fa fa-print bigger-110"></i>
-									Imprimir
-								</button>
+                            <button type="button" name="btn_3" id="btn_3" class="btn btn-inverse" data-toggle='tooltip'
+                                title='Imprimir'>
+                                <i class="fa fa-print"></i> Imprimir
+                            </button>
 
-                            <button type="button" name="btn_4" id="btn_4" class="btn btn-primary" data-toggle='tooltip' title='Limpiar'>
-									<i class="ace-icon fa fa-refresh bigger-110"></i>
-									Actualizar
-								</button>
+                            <button type="button" name="btn_4" id="btn_4" class="btn btn-default" data-toggle='tooltip'
+                                title='Limpiar'>
+                                <i class="fa fa-refresh"></i> Nueva
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -449,72 +673,68 @@
     </div>
 </div>
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    id="myModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">BUSCAR FACTURAS VENTA</h4>
             </div>
-
             <div class="modal-body">
                 <table id="table2"></table>
                 <div id="pager2"></div>
             </div>
-
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle='tooltip' title='Cerrar Ventana'>Cerrar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal2">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    id="myModal2">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">BUSCAR NOTAS VENTA</h4>
             </div>
-
             <div class="modal-body">
                 <table id="table3"></table>
                 <div id="pager3"></div>
             </div>
-
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle='tooltip' title='Cerrar Ventana'>Cerrar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
 
-
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal4">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    id="myModal4">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">FORMA PAGO</h4>
             </div>
-
             <div class="modal-body">
                 <form class="form-horizontal" name="form_registro" id="form_registro">
                     <div class="row">
-                        &nbsp; &nbsp;
                         <div class="col-sm-12">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="col-md-4">ADELANTO:</label>
                                     <div class="col-md-6">
                                         <span class="input-icon">
-												<input type="text" id="adelanto" name="adelanto" class="form-control" value="0.00" />
-												<i class="ace-icon fa fa fa-usd orange"></i>
-											</span>
+                                            <input type="text" id="adelanto" name="adelanto" class="form-control"
+                                                value="0.00" />
+                                            <i class="ace-icon fa fa fa-usd orange"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="col-md-3">MESES:</label>
@@ -523,15 +743,15 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="col-md-6">MONTO TOTAL:</label>
                                     <div class="col-md-6">
                                         <span class="input-icon">
-												<input type="text" id="monto_total" name="monto_total" class="form-control" value="0.00" readonly />
-												<i class="ace-icon fa fa fa-usd orange"></i>
-											</span>
+                                            <input type="text" id="monto_total" name="monto_total" class="form-control"
+                                                value="0.00" readonly />
+                                            <i class="ace-icon fa fa fa-usd orange"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -539,19 +759,14 @@
                     </div>
                 </form>
             </div>
-
             <div class="modal-footer no-margin-top">
-                <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal" data-toggle="tooltip" title="Cerrar ventana">
-						<i class="ace-icon fa fa-times"></i>
-						Cerrar
-					</button>
-
-                <button type="button" name="btn_confirmar" id="btn_confirmar" class="btn btn-primary pull-right" data-toggle="tooltip" title="Confirmar Forma">
-						<i class="ace-icon fa fa-save"></i>
-						Confirmar
-					</button>
+                <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                    <i class="fa fa-times"></i> Cerrar
+                </button>
+                <button type="button" name="btn_confirmar" id="btn_confirmar" class="btn btn-primary pull-right">
+                    <i class="fa fa-save"></i> Confirmar
+                </button>
             </div>
         </div>
     </div>
-</div>
 </div>

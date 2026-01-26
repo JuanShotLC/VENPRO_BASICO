@@ -67,6 +67,13 @@ if (isset($title)) {
               <i class='glyphicon glyphicon-cog text-muted'></i> Config
             </a>
           </li>
+          <li class="<?php if (isset($active_backup)) {
+            echo $active_backup;
+          } ?>">
+            <a href="util_backup.php">
+              <i class='glyphicon glyphicon-cog text-muted'></i> Mantenimiento
+            </a>
+          </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">

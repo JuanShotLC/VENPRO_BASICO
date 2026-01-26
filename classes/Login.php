@@ -85,11 +85,21 @@ class Login
                         // write user data into PHP SESSION (a file on your server)
                         $_SESSION['user_id'] = $result_row->user_id;
                         $_SESSION['user_name'] = $result_row->user_name;
-						$_SESSION['firstname'] = $result_row->firstname;
+                        $_SESSION['firstname'] = $result_row->firstname;
                         $_SESSION['user_email'] = $result_row->user_email;
                         $_SESSION['tipo_usuario'] = $result_row->tipo_usuario;
                         $_SESSION['cedual_u'] = $result_row->cedual_u;
                         $_SESSION['user_login_status'] = 1;
+
+                        // --- AGREGAR ESTO PARA EL LOG ---
+                        $user_id_log = $_SESSION['user_id'];
+                        $fecha_log = date("Y-m-d H:i:s");
+                        $ip_log = $_SERVER['REMOTE_ADDR'];
+                        // Usamos la conexión de la clase ($this->db_connection)
+                        $sql_log = "INSERT INTO user_log (user_id, fecha_login, ip_address, estado) 
+            VALUES ('$user_id_log', '$fecha_log', '$ip_log', 'Exitoso')";
+                        $this->db_connection->query($sql_log);
+                        // --------------------------------
 
                     } else {
                         $this->errors[] = "Usuario y/o contraseña no coinciden.";
