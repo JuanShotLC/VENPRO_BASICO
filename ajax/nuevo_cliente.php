@@ -1,58 +1,63 @@
-<?php
-	include('is_logged.php');//Archivo verifica que el usario que intenta acceder a la URL esta logueado
-	/*Inicia validacion del lado del servidor*/
-	if (empty($_POST['rif'])) {
-           $errors[] = "rif vacío";
-        } else if (!empty($_POST['rif'])){
-		/* Connect To Database*/
-		require_once ("../config/db.php");//Contiene las variables de configuracion para conectar a la base de datos
-		require_once ("../config/conexion.php");//Contiene funcion que conecta a la base de datos
-		// escaping, additionally removing everything that could be (html/javascript-) code
-		$rif=mysqli_real_escape_string($con,(strip_tags($_POST["rif"],ENT_QUOTES)));		
-		$nombre=mysqli_real_escape_string($con,(strip_tags($_POST["nombre"],ENT_QUOTES)));
-		$telefono=mysqli_real_escape_string($con,(strip_tags($_POST["telefono"],ENT_QUOTES)));
-		$email=mysqli_real_escape_string($con,(strip_tags($_POST["email"],ENT_QUOTES)));
-		$direccion=mysqli_real_escape_string($con,(strip_tags($_POST["direccion"],ENT_QUOTES)));
-		//$estado=intval($_POST['estado']);
-		$date_added=date("Y-m-d H:i:s");
-		$sql="INSERT INTO clientes (rif_empresa,nombre_cliente, telefono_cliente, email_cliente, direccion_cliente, status_cliente, date_added) VALUES ('$rif','$nombre','$telefono','$email','$direccion','1','$date_added')";
-		$query_new_insert = mysqli_query($con,$sql);
-			if ($query_new_insert){
-				$messages[] = "Cliente ha sido ingresado satisfactoriamente.";
-			} else{
-				$errors []= "Lo siento algo ha salido mal intenta nuevamente.".mysqli_error($con);
-			}
-		} else {
-			$errors []= "Error desconocido.";
-		}
-		
-		if (isset($errors)){
-			
-			?>
-			<div class="alert alert-danger" role="alert">
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<strong>Error!</strong> 
-					<?php
-						foreach ($errors as $error) {
-								echo $error;
-							}
-						?>
-			</div>
-			<?php
-			}
-			if (isset($messages)){
-				
-				?>
-				<div class="alert alert-success" role="alert">
-						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						<strong>¡Bien hecho!</strong>
-						<?php
-							foreach ($messages as $message) {
-									echo $message;
-								}
-							?>
-				</div>
-				<?php
-			}
+﻿<?php
+include("is_logged.php");
 
+if (empty($_POST["rif"])) {
+    $errors[] = "RIF vacío";
+} else if (empty($_POST["nombre"])) {
+    $errors[] = "Nombre vacío";
+} else if (!empty($_POST["email"]) && !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+    $errors[] = "Formato de correo inválido";
+} else if (!empty($_POST["rif"])) {
+    require_once("../config/db.php");
+    require_once("../config/conexion.php");
+
+    $rif = strip_tags($_POST["rif"], ENT_QUOTES);
+    $nombre = strip_tags($_POST["nombre"], ENT_QUOTES);
+    $telefono = strip_tags($_POST["telefono"], ENT_QUOTES);
+    $email = strip_tags($_POST["email"], ENT_QUOTES);
+    $direccion = strip_tags($_POST["direccion"], ENT_QUOTES);
+    $date_added = date("Y-m-d H:i:s");
+
+    // Refactored by Tom Dev: Secure Prepared Statements
+    $sql = "INSERT INTO clientes (rif_empresa, nombre_cliente, telefono_cliente, email_cliente, direccion_cliente, status_cliente, date_added) 
+            VALUES (?, ?, ?, ?, ?, '1', ?)";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("ssssss", $rif, $nombre, $telefono, $email, $direccion, $date_added);
+
+    if ($stmt->execute()) {
+        $messages[] = "Cliente ha sido ingresado satisfactoriamente.";
+    } else {
+        $errors[] = "Lo siento algo ha salido mal intenta nuevamente." . $con->error;
+    }
+    $stmt->close();
+} else {
+    $errors[] = "Error desconocido.";
+}
+
+if (isset($errors)) {
+?>
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Error!</strong>
+        <?php
+        foreach ($errors as $error) {
+            echo $error;
+        }
+        ?>
+    </div>
+<?php
+}
+if (isset($messages)) {
+?>
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>¡Bien hecho!</strong>
+        <?php
+        foreach ($messages as $message) {
+            echo $message;
+        }
+        ?>
+    </div>
+<?php
+}
 ?>
