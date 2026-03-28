@@ -9,29 +9,29 @@ if (version_compare(PHP_VERSION, '5.3.7', '<')) {
     require_once("../libraries/password_compatibility_library.php");
 }		
 		if (empty($_POST['firstname'])){
-			$errors[] = "Nombres vacÃ­os";
+			$errors[] = "Nombres vacíos";
 		} elseif (empty($_POST['cedula_u'])){
-			$errors[] = "Cedula vacÃ­as";
+			$errors[] = "Cedula vacías";
 		} elseif (empty($_POST['lastname'])){
-            $errors[] = "Apellidos vacÃ­os";
+            $errors[] = "Apellidos vacíos";
         } elseif (empty($_POST['user_name'])) {
-            $errors[] = "Nombre de usuario vacÃ­o";
+            $errors[] = "Nombre de usuario vacío";
         } elseif (empty($_POST['user_password_new']) || empty($_POST['user_password_repeat'])) {
-            $errors[] = "ContraseÃ±a vacÃ­a";
+            $errors[] = "Contraseña vacía";
         } elseif ($_POST['user_password_new'] !== $_POST['user_password_repeat']) {
-            $errors[] = "la contraseÃ±a y la repeticiÃ³n de la contraseÃ±a no son lo mismo";
+            $errors[] = "la Contraseña y la repetición de la Contraseña no son lo mismo";
         } elseif (strlen($_POST['user_password_new']) < 6) {
-            $errors[] = "La contraseÃ±a debe tener como mÃ­nimo 6 caracteres";
+            $errors[] = "La Contraseña debe tener como mínimo 6 caracteres";
         } elseif (strlen($_POST['user_name']) > 64 || strlen($_POST['user_name']) < 2) {
-            $errors[] = "Nombre de usuario no puede ser inferior a 2 o mÃ¡s de 64 caracteres";
+            $errors[] = "Nombre de usuario no puede ser inferior a 2 o más de 64 caracteres";
         } elseif (!preg_match('/^[a-z\d]{2,64}$/i', $_POST['user_name'])) {
-            $errors[] = "Nombre de usuario no encaja en el esquema de nombre: SÃ³lo aZ y los nÃºmeros estÃ¡n permitidos , de 2 a 64 caracteres";
+            $errors[] = "Nombre de usuario no encaja en el esquema de nombre: Sólo aZ y los nÃºmeros están permitidos , de 2 a 64 caracteres";
         } elseif (empty($_POST['user_email'])) {
-            $errors[] = "El correo electrÃ³nico no puede estar vacÃ­o";
+            $errors[] = "El correo electrónico no puede estar vacío";
         } elseif (strlen($_POST['user_email']) > 64) {
-            $errors[] = "El correo electrÃ³nico no puede ser superior a 64 caracteres";
+            $errors[] = "El correo electrónico no puede ser superior a 64 caracteres";
         } elseif (!filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Su direcciÃ³n de correo electrÃ³nico no estÃ¡ en un formato de correo electrÃ³nico vÃ¡lida";
+            $errors[] = "Su dirección de correo electrónico no estÃ¡ en un formato de correo electrónico válida";
         } elseif (
 			!empty($_POST['user_name'])
             && !empty($_POST['firstname'])
@@ -70,7 +70,7 @@ if (version_compare(PHP_VERSION, '5.3.7', '<')) {
                 $query_check_user_name = mysqli_query($con,$sql);
 				$query_check_user=mysqli_num_rows($query_check_user_name);
                 if ($query_check_user == 1) {
-                    $errors[] = "Lo sentimos ,el nombre de usuario Ã³ la cedula ya estÃ¡ en uso.";
+                    $errors[] = "Lo sentimos ,el nombre de usuario ó la cedula ya estÃ¡ en uso.";
                 } else {
 					// write new user's data into database
                     $sql = "INSERT INTO users (cedula_u, firstname, lastname, user_name, user_password_hash, user_email, date_added)
@@ -81,12 +81,12 @@ if (version_compare(PHP_VERSION, '5.3.7', '<')) {
                     if ($query_new_user_insert) {
                         $messages[] = "La cuenta ha sido creada con Ã©xito.";
                     } else {
-                        $errors[] = "Lo sentimos , el registro fallÃ³. Por favor, regrese y vuelva a intentarlo.";
+                        $errors[] = "Lo sentimos , el registro falló. Por favor, regrese y vuelva a intentarlo.";
                     }
                 }
             
         } else {
-            $errors[] = "Un error desconocido ocurriÃ³.";
+            $errors[] = "Un error desconocido ocurrió.";
         }
 		
 		if (isset($errors)){
