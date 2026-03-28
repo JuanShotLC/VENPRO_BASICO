@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include('is_logged.php');//Archivo verifica que el usario que intenta acceder a la URL esta logueado
 // checking for minimum PHP version
 if (version_compare(PHP_VERSION, '5.3.7', '<')) {
@@ -9,21 +9,21 @@ if (version_compare(PHP_VERSION, '5.3.7', '<')) {
     require_once("../libraries/password_compatibility_library.php");
 }		
 		if (empty($_POST['firstname2'])){
-			$errors[] = "Nombres vacíos";
+			$errors[] = "Nombres vacÃ­os";
 		} elseif (empty($_POST['lastname2'])){
-			$errors[] = "Apellidos vacíos";
+			$errors[] = "Apellidos vacÃ­os";
 		}  elseif (empty($_POST['user_name2'])) {
-            $errors[] = "Nombre de usuario vacío";
+            $errors[] = "Nombre de usuario vacÃ­o";
         }  elseif (strlen($_POST['user_name2']) > 64 || strlen($_POST['user_name2']) < 2) {
-            $errors[] = "Nombre de usuario no puede ser inferior a 2 o más de 64 caracteres";
+            $errors[] = "Nombre de usuario no puede ser inferior a 2 o mÃ¡s de 64 caracteres";
         } elseif (!preg_match('/^[a-z\d]{2,64}$/i', $_POST['user_name2'])) {
-            $errors[] = "Nombre de usuario no encaja en el esquema de nombre: Sólo aZ y los números están permitidos , de 2 a 64 caracteres";
+            $errors[] = "Nombre de usuario no encaja en el esquema de nombre: SÃ³lo aZ y los nÃºmeros estÃ¡n permitidos , de 2 a 64 caracteres";
         } elseif (empty($_POST['user_email2'])) {
-            $errors[] = "El correo electrónico no puede estar vacío";
+            $errors[] = "El correo electrÃ³nico no puede estar vacÃ­o";
         } elseif (strlen($_POST['user_email2']) > 64) {
-            $errors[] = "El correo electrónico no puede ser superior a 64 caracteres";
+            $errors[] = "El correo electrÃ³nico no puede ser superior a 64 caracteres";
         } elseif (!filter_var($_POST['user_email2'], FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Su dirección de correo electrónico no está en un formato de correo electrónico válida";
+            $errors[] = "Su direcciÃ³n de correo electrÃ³nico no estÃ¡ en un formato de correo electrÃ³nico vÃ¡lida";
         } elseif (
 			!empty($_POST['user_name2'])
 			&& !empty($_POST['firstname2'])
@@ -55,14 +55,14 @@ if (version_compare(PHP_VERSION, '5.3.7', '<')) {
 
                     // if user has been added successfully
                     if ($query_update) {
-                        $messages[] = "La cuenta ha sido modificada con éxito.";
+                        $messages[] = "La cuenta ha sido modificada con Ã©xito.";
                     } else {
-                        $errors[] = "Lo sentimos , el registro falló. Por favor, regrese y vuelva a intentarlo.";
+                        $errors[] = "Lo sentimos , el registro fallÃ³. Por favor, regrese y vuelva a intentarlo.";
                     }
                 
             
         } else {
-            $errors[] = "Un error desconocido ocurrió.";
+            $errors[] = "Un error desconocido ocurriÃ³.";
         }
 		
 		if (isset($errors)){
@@ -84,7 +84,7 @@ if (version_compare(PHP_VERSION, '5.3.7', '<')) {
 				?>
 				<div class="alert alert-success" role="alert">
 						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						<strong>¡Bien hecho!</strong>
+						<strong>Â¡Bien hecho!</strong>
 						<?php
 							foreach ($messages as $message) {
 									echo $message;
