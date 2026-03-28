@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include('is_logged.php');//Archivo verifica que el usario que intenta acceder a la URL esta logueado
 		
 	/*Inicia validacion del lado del servidor*/
@@ -65,7 +65,7 @@ include('is_logged.php');//Archivo verifica que el usario que intenta acceder a 
 				?>
 				<div class="alert alert-success" role="alert">
 						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						<strong>¡Bien hecho!</strong>
+						<strong>Â¡Bien hecho!</strong>
 						<?php
 							foreach ($messages as $message) {
 									echo $message;
