@@ -235,6 +235,12 @@ dcapp.config(function($routeProvider) {
             controller  : 'devolucion_compraController',
             activetab: 'devolucion_compra'
         })
+        // proceso factura venta (NUEVA VERSIÓN VUE)
+        .when('/factura_venta_vue', {
+            templateUrl : 'data/factura_venta/app_vue.html',
+            controller  : 'facturaVentaVueController',
+            activetab: 'factura_venta'
+        })
         // proceso factura venta
         .when('/factura_venta', {
             templateUrl : 'data/factura_venta/app.html',
@@ -325,6 +331,15 @@ dcapp.config(function($routeProvider) {
             controller  : 'reportes_estadisticosController',
             activetab: 'reportes_estadisticos'
         })
+});
+
+// CONTROLADOR PARA LA VERSIÓN VUE.JS
+dcapp.controller('facturaVentaVueController', function($scope, $timeout) {
+    $timeout(function() {
+        if (typeof window.initVueFacturacion === 'function') {
+            window.initVueFacturacion();
+        }
+    }, 100);
 });
 
 dcapp.factory('Auth', function($location) {

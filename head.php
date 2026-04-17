@@ -41,11 +41,17 @@
 <script src="dist/angular-1.5.0/angular-resource.js"></script>
 <script src="dist/js/ngStorage.min.js"></script>
 
+<!-- Vue.js 3 & Axios -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- controlador procesos angular -->
 <script src="data/app.js"></script>
 <script src="data/home/app.js"></script>
 
 <script src="data/factura_venta/app.js"></script>
+<script src="data/factura_venta/app_vue.js"></script>
 <link rel="stylesheet" href="css/modern-venpro.css">
 
 

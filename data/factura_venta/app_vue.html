@@ -1,0 +1,631 @@
+<!-- 
+    MODULO DE FACTURACIÓN - VERSIÓN VUE.JS 3 (FIDELIDAD TOTAL + MODERNIZACIÓN)
+    Mantenemos la estructura exacta de la imagen 'vieja' para evitar el choque del usuario.
+-->
+<div id="vue-facturacion" class="main-content-pos">
+    <div class="page-content-pos">
+        <div v-if="loading" class="text-center" style="padding: 100px;">
+            <i class="fa fa-spinner fa-spin fa-3x blue"></i>
+            <h3>Cargando sistema de facturación...</h3>
+        </div>
+
+        <div v-cloak v-else>
+            <form @submit.prevent="" class="form-horizontal" autocomplete="off">
+                <!-- Barra superior: Factura, Fecha, Hora (ESTILO IMAGEN) -->
+                <div class="top-emision-bar shadow-sm mb-2">
+                    <!-- Izquierda: Emisión -->
+                    <div class="emision-label">
+                        <span>EMISIÓN</span>
+                    </div>
+
+                    <!-- Centro: Selector Tipo Doc (Pill Switch) -->
+                    <div class="doc-type-switch">
+                        <label class="switch-btn" :class="{ 'active': invoice.tipoComprobante === '1' }">
+                            <input type="radio" value="1" v-model="invoice.tipoComprobante" class="hide-radio"> Factura
+                        </label>
+                        <label class="switch-btn" :class="{ 'active': invoice.tipoComprobante === '2' }">
+                            <input type="radio" value="2" v-model="invoice.tipoComprobante" class="hide-radio"> Nota Venta
+                        </label>
+                        <label class="switch-btn" :class="{ 'active': invoice.tipoComprobante === '3' }">
+                            <input type="radio" value="3" v-model="invoice.tipoComprobante" class="hide-radio"> Crédito
+                        </label>
+                    </div>
+
+                    <!-- Derecha: Datos Transacción -->
+                    <div class="transaction-data-box">
+                        <div class="data-item"><strong>FECHA:</strong> {{ fechaActual }}</div>
+                        <div class="data-item"><strong>HORA:</strong> {{ horaActual }}</div>
+                        <div class="transaccion-badge">FACTURA N° {{ serieFactura }}</div>
+                    </div>
+                </div>
+
+                <div class="row info-section mb-2">
+                    <!-- Izquierda: Datos del Cliente -->
+                    <div class="col-md-7">
+                        <div class="panel-modern shadow-sm h-100">
+                            <div class="panel-heading"><i class="fa fa-user"></i> Datos del Cliente</div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-4 form-group-modern" style="position: relative;">
+                                        <label>RIF/CI:</label>
+                                        <input type="text" v-model="cliente.ruc" @input="mostrarSugerenciasClientes = true" @blur="hideSugerenciasClientes" @keyup.enter="buscarClienteExacto" class="form-control-pos" placeholder="Buscar RIF/CI o Nombre...">
+                                        <!-- Autocomplete Dropdown -->
+                                        <ul v-if="mostrarSugerenciasClientes && sugerenciasClientes.length > 0" class="autocomplete-list shadow">
+                                            <li v-for="sug in sugerenciasClientes" :key="sug.id" @mousedown.prevent="seleccionarCliente(sug)">
+                                                <strong>{{ sug.value }}</strong> - {{ sug.cliente }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-8 form-group-modern">
+                                        <label>CLIENTE:</label>
+                                        <input type="text" v-model="cliente.nombre" class="form-control-pos" placeholder="Nombre completo">
+                                    </div>
+                                    <div class="col-sm-6 form-group-modern pt-2">
+                                        <label>TELÉFONO:</label>
+                                        <input type="text" v-model="cliente.telefono" class="form-control-pos">
+                                    </div>
+                                    <div class="col-sm-6 form-group-modern pt-2">
+                                        <label>CORREO:</label>
+                                        <input type="text" v-model="cliente.correo" class="form-control-pos">
+                                    </div>
+                                    <div class="col-sm-12 form-group-modern pt-2">
+                                        <label>DIRECCIÓN:</label>
+                                        <input type="text" v-model="cliente.direccion" class="form-control-pos">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Derecha: Opciones de Venta -->
+                    <div class="col-md-5">
+                        <div class="panel-modern shadow-sm h-100">
+                            <div class="panel-heading"><i class="fa fa-cogs"></i> Opciones de Venta</div>
+                            <div class="panel-body">
+                                <div class="row">
+
+                                    <div class="col-sm-6 form-group-modern">
+                                        <label>PAGO:</label>
+                                        <select v-model="invoice.formaPago" class="form-control-pos">
+                                            <option value="CONTADO">CONTADO</option>
+                                            <option value="CRÉDITO">CRÉDITO</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 form-group-modern pt-2">
+                                        <label>PRECIO:</label>
+                                        <select v-model="invoice.tipoPrecio" class="form-control-pos">
+                                            <option value="MINORISTA">MINORISTA</option>
+                                            <option value="MAYORISTA">MAYORISTA</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 form-group-modern pt-2">
+                                        <label>TIPO:</label>
+                                        <select v-model="invoice.tipoFactura" class="form-control-pos">
+                                            <option value="1">1 - TICKET</option>
+                                            <option value="2">2 - BOLETA</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 form-group-modern pt-3">
+                                        <label>PRECINTO(S):</label>
+                                        <div class="input-group" style="width: 100%;">
+                                            <input type="text" :value="resumenPrecintos" class="form-control-pos" readonly placeholder="Precintos guardados..." style="border-radius: 4px 0 0 4px !important;">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-primary" @click="abrirModalPrecintos" style="height: 32px; border-radius: 0 4px 4px 0 !important; padding: 0 12px;"><i class="fa fa-truck"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 2: ENTRADA DE PRODUCTOS (GRID MODERNO TIPO IMAGEN VERDE) -->
+                <div class="row product-entry animate__animated animate__fadeInUp">
+                    <div class="col-md-12">
+                        <div class="product-entry-box shadow-sm">
+                            <!-- Fila de Etiquetas -->
+                            <div class="entry-labels">
+                                <div class="l-scan text-uppercase">BARRAS / CÓDIGO</div>
+                                <div class="l-code text-uppercase">CÓDIGO</div>
+                                <div class="l-desc text-uppercase">DESCRIPCIÓN DEL ARTÍCULO</div>
+                                <div class="l-qty text-uppercase">CANT.</div>
+                                <div class="l-info text-uppercase"></div>
+                                <div class="l-disc text-uppercase"></div>
+                                <div class="l-btn"></div>
+                            </div>
+                            <!-- Fila de Inputs -->
+                            <div class="entry-inputs">
+                                <div class="i-scan" style="position: relative;">
+                                    <input type="text" v-model="searchProduct.code" @input="mostrarSugerenciasProductos = true" @blur="hideSugerenciasProductos" @keyup.enter="buscarProductoExacto" class="form-control-pos" placeholder="Escanear o buscar...">
+                                    <!-- Autocomplete Dropdown -->
+                                    <ul v-if="mostrarSugerenciasProductos && sugerenciasProductos.length > 0" class="autocomplete-list shadow">
+                                        <li v-for="sug in sugerenciasProductos" :key="sug.id" @mousedown.prevent="seleccionarProducto(sug)">
+                                            <strong>{{ sug.value }}</strong> - {{ sug.producto }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="i-code">
+                                    <input type="text" v-model="searchProduct.manualCode" class="form-control-pos" placeholder="Código">
+                                </div>
+                                <div class="i-desc">
+                                    <input type="text" v-model="searchProduct.name" class="form-control-pos" placeholder="Nombre del producto">
+                                </div>
+                                <div class="i-qty">
+                                    <input type="number" v-model.number="searchProduct.qty" class="form-control-pos text-center">
+                                </div>
+                                <div class="i-info">
+                                    <div class="info-badges">
+                                        <span class="badge-bs">Bs {{ formatCurrency(searchProduct.price * factorCambio) }}</span>
+                                        <span class="badge-usd">$ {{ formatCurrency(searchProduct.price) }}</span>
+                                        <span class="badge-stock">Stock {{ searchProduct.stock }}</span>
+                                    </div>
+                                </div>
+                                <div class="i-disc">
+                                    <div class="input-group-pos">
+                                        <input type="number" v-model.number="searchProduct.discount" class="form-control-pos text-center text-muted" style="border:none !important" title="Descuento en porcentaje">
+                                        <span class="pct">%</span>
+                                    </div>
+                                </div>
+                                <div class="i-btn">
+                                    <button type="button" @click="agregarAlCarrito" class="btn-add-green"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 3: TABLA DE PRODUCTOS Y TOTALES -->
+                <div class="row mt-3">
+                    <!-- Tabla -->
+                    <div class="col-md-9">
+                        <div class="table-container shadow-sm animate__animated animate__fadeInLeft">
+                            <table class="table table-pos">
+                                <thead>
+                                    <tr>
+                                        <th>CÓDIGO</th>
+                                        <th>DESCRIPCIÓN</th>
+                                        <th class="text-center">CANTID.</th>
+                                        <th class="text-right">PVP BS.</th>
+                                        <th class="text-right">PVP $</th>
+                                        <th class="text-right">DESCU.</th>
+                                        <th class="text-right">TOTAL BS.</th>
+                                        <th class="text-right">TOTAL $</th>
+                                        <th width="30"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, index) in cart" :key="index">
+                                        <td>{{ item.codigo }}</td>
+                                        <td>{{ item.nombre }}</td>
+                                        <td class="text-center">{{ item.cantidad }}</td>
+                                        <td class="text-right">{{ formatCurrency(item.precioBs) }}</td>
+                                        <td class="text-right">{{ formatCurrency(item.precioUsd) }}</td>
+                                        <td class="text-right">0.00</td>
+                                        <td class="text-right">{{ formatCurrency(item.cantidad * item.precioBs) }}</td>
+                                        <td class="text-right">{{ formatCurrency(item.cantidad * item.precioUsd) }}</td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)" @click="removerItem(index)" class="text-danger"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr v-for="i in Math.max(0, 8 - cart.length)" :key="'empty-'+i">
+                                        <td colspan="9">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="table-footer-pos">
+                                <div class="stat">Items: <input type="text" :value="cart.length" readonly></div>
+                                <div class="stat">Productos: <input type="text" :value="totalProductos" readonly></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque de Totales (FIDELIDAD A LA IMAGEN) -->
+                    <div class="col-md-3">
+                        <div class="totals-premium-card shadow animate__animated animate__fadeInRight">
+                            <!-- Superior -->
+                            <div class="top-values">
+                                <div class="row-val">
+                                    <span>SUBTOTAL</span>
+                                    <strong>{{ formatCurrency(totals.subtotal) }} $</strong>
+                                </div>
+                                <div class="row-val">
+                                    <span>IVA (16%)</span>
+                                    <strong>{{ formatCurrency(totals.iva) }} $</strong>
+                                </div>
+                                <div class="row-val">
+                                    <span>IGTF (3%)</span>
+                                    <strong>{{ formatCurrency(totals.igtf) }} $</strong>
+                                </div>
+                            </div>
+                            
+                            <hr class="card-divider-light">
+
+                            <!-- Centro: Totales Grandes -->
+                            <div class="total-display-main text-center">
+                                <div class="total-label-usd">TOTAL $</div>
+                                <div class="total-value-usd">{{ formatCurrency(totals.totalUsd) }}</div>
+                                <div class="total-value-bs">{{ formatCurrency(totals.totalBs) }} Bs</div>
+                            </div>
+
+                            <!-- Inferior: Input de Pago -->
+                            <div class="divisas-payment-box mt-3">
+                                <label class="divisas-label">¿PAGA EN DIVISAS? (IGTF 3%)</label>
+                                <div class="divisas-input-group">
+                                    <div class="symbol-box">$</div>
+                                    <input type="text" v-model="invoice.pagoDivisas" class="form-control-divisas" placeholder="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 4: BARRA DE BOTONES (ESTILO MODERNO LINEAL) -->
+                <div class="row mt-2 mb-2">
+                    <div class="col-md-12 text-center">
+                        <div class="action-buttons-flex animate__animated animate__zoomIn shadow-sm">
+                            <button type="button" @click="guardarFactura" class="btn-modern bg-blue">
+                                <i class="fa fa-save"></i> GUARDAR
+                            </button>
+                            <button type="button" @click="abrirModalBusqueda('facturas')" class="btn-modern bg-white">
+                                <i class="fa fa-search"></i> FACTURAS
+                            </button>
+                            <button type="button" @click="abrirModalBusqueda('notas')" class="btn-modern bg-white">
+                                <i class="fa fa-search"></i> NOTAS
+                            </button>
+                            <button type="button" @click="anularDocumento" class="btn-modern bg-red">
+                                <i class="fa fa-ban"></i> ANULAR
+                            </button>
+                            <button type="button" @click="anularDocumento" class="btn-modern bg-red-dark">
+                                <i class="fa fa-ban"></i> ANULAR NOTA
+                            </button>
+                            <button type="button" @click="reimprimirDocumento" class="btn-modern bg-cyan">
+                                <i class="fa fa-print"></i> IMPRIMIR
+                            </button>
+                            <button type="button" @click="nuevaOperacion" class="btn-modern bg-outline">
+                                <i class="fa fa-refresh"></i> NUEVA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- MODAL PRECINTOS -->
+            <div class="modal fade" id="modalPrecintosVue" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:#2196f3; color:white;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white; opacity:1;"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" style="margin:0; font-weight:700;"><i class="fa fa-truck"></i> Precintos de Camión</h4>
+                        </div>
+                        <div class="modal-body" style="padding:20px;">
+                            <div class="form-group">
+                                <label style="font-size:12px; font-weight:700; color:#555;">AGREGAR PRECINTO NUEVO:</label>
+                                <div class="input-group">
+                                    <input type="text" v-model="nuevoPrecintoStr" @keyup.enter="agregarPrecinto" class="form-control" placeholder="Escanear o Tipear..." style="border-radius:4px 0 0 4px !important; height:40px;">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button" @click="agregarPrecinto" style="height:40px; border-radius:0 4px 4px 0 !important;"><i class="fa fa-plus"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="precintos-list mt-3">
+                                <div class="d-flex" style="justify-content:space-between; align-items:center; margin-bottom:5px;">
+                                    <label style="margin:0; font-size:11px; font-weight:700;">REGISTRADOS</label>
+                                    <span class="badge" :class="precintosList.length >= 30 ? 'badge-danger' : 'badge-info'">{{ precintosList.length }} / 30</span>
+                                </div>
+                                <ul class="list-group" style="max-height: 200px; overflow-y: auto; margin-bottom:0;">
+                                    <li class="list-group-item" v-for="(p, index) in precintosList" :key="index" style="padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; background:#f9f9f9;">
+                                        <strong>{{ p }}</strong>
+                                        <button type="button" class="btn btn-xs btn-danger" @click="quitarPrecinto(index)" style="border-radius:3px;"><i class="fa fa-times"></i></button>
+                                    </li>
+                                    <li class="list-group-item text-center text-muted" v-if="precintosList.length === 0" style="padding:15px; font-size:12px;">
+                                        Sin precintos registrados
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="padding:15px; text-align:right;">
+                            <button type="button" class="btn btn-default" @click="precintosList = []">Limpiar Todo</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Confirmar Listado</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<style>
+/* 🖌️ CSS VENPRO FIDELITY - MODERNIZADO & RESPONSIVO */
+html, body { background: white !important; }
+.main-content-pos { 
+    background: white; min-height: 100vh; 
+    padding: 2px 15px 10px 15px; 
+    margin-top: -18px; /* <- Fuerza a subir la pantalla contra el menú superior */
+    font-family: 'Inter', sans-serif; overflow-x: hidden; 
+}
+[v-cloak] { display: none; }
+
+/* AUTOCOMPLETE DROPDOWN */
+.autocomplete-list { position: absolute; z-index: 1000; background: white; border: 1px solid #ccc; width: 100%; max-height: 200px; overflow-y: auto; padding: 0; margin: 0; list-style: none; border-radius: 4px; top: 100%; left: 0; }
+.autocomplete-list li { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #f2f2f2; font-size: 12px; color: #444; }
+.autocomplete-list li:hover { background: #e3f2fd; color: #0d47a1; }
+
+/* TOP EMISSION BAR (ESTILO IMAGEN) */
+.top-emision-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fdfdfd;
+    border-radius: 8px;
+    padding: 8px 15px 8px 0;
+    margin-bottom: 8px;
+    height: 50px;
+    border: 1px solid #eee;
+}
+
+.emision-label {
+    border-left: 4px solid #2196f3;
+    padding: 10px 15px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.emision-label span {
+    font-size: 11px;
+    font-weight: 800;
+    color: #888;
+    letter-spacing: 1px;
+}
+
+.doc-type-switch {
+    background: #f0f4f8;
+    border-radius: 20px;
+    padding: 3px;
+    display: flex;
+    gap: 2px;
+}
+.doc-type-switch .switch-btn {
+    padding: 6px 16px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #666;
+    margin: 0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.doc-type-switch .switch-btn.active {
+    background: white;
+    color: #2196f3;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.doc-type-switch .hide-radio { display: none; }
+
+.transaction-data-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #fffafa; /* Fondo claro rosado sutil */
+    padding: 5px 10px 5px 20px;
+    border-radius: 4px;
+    height: 100%;
+}
+.transaction-data-box .data-item {
+    font-size: 11px;
+    color: #666;
+}
+.transaction-data-box .data-item strong { color: #333; }
+
+.transaccion-badge {
+    background: #b0bec5;
+    color: #c62828;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 900;
+    margin-left: 10px;
+}
+
+.panel-modern { background: white; border-radius: 8px; border: 1px solid #dce9f9; height: 100%; display: flex; flex-direction: column; }
+.panel-modern .panel-heading { background: #eff3f8; padding: 8px 15px; font-weight: 800; color: #444; border-bottom: 2px solid #dce9f9; border-radius: 8px 8px 0 0; font-size: 11px; text-transform: uppercase; }
+.panel-modern .panel-body { padding: 10px 15px; flex: 1; }
+
+.form-group-modern { margin-bottom: 2px; }
+.form-group-modern label { font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase; margin-bottom: 5px; display: block; }
+.text-danger-pos { color: #d32f2f !important; }
+
+.form-control-pos { 
+    width: 100%; height: 32px !important; border-radius: 4px !important; border: 1px solid #ced4da !important;
+    padding: 5px 10px; font-size: 13px; font-weight: 500; color: #444; background: #fdfdfd; transition: 0.2s;
+}
+.form-control-pos:focus { border-color: #2196f3 !important; background: #fff; box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1); outline: none; }
+.highlight-id { font-weight: 900 !important; color: #d32f2f !important; font-size: 16px !important; text-align: right; }
+
+.input-icon-right { width: 100%; position: relative; }
+.input-icon-right i { position: absolute; right: 10px; top: 10px; color: #999; font-size: 12px; }
+
+.btn-precinto { background: #2196f3; color: white; border: none; height: 32px; border-radius: 0 4px 4px 0; padding: 0 15px; font-weight: bold; transition:0.2s; }
+.btn-precinto:hover { background: #1976d2; }
+
+.header-section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 15px; border-top: 3px solid #2196f3; }
+.form-group-modern { margin-bottom: 10px; display: flex; align-items: center; }
+.form-group-modern label { min-width: 100px; font-size: 11px; font-weight: 700; color: #555; text-transform: uppercase; margin: 0; }
+.text-danger-pos { color: #d32f2f !important; }
+
+.form-control-pos { 
+    flex: 1; height: 32px !important; border-radius: 4px !important; border: 1px solid #ced4da !important;
+    padding: 5px 10px; font-size: 13px; font-weight: 500; color: #444; background: #fdfdfd;
+}
+.form-control-pos:focus { border-color: #2196f3 !important; background: #fff; box-shadow: none; outline: none; }
+.highlight-id { font-weight: 900 !important; color: #d32f2f !important; font-size: 16px !important; text-align: right; }
+
+.input-icon-right { flex: 1; position: relative; }
+.input-icon-right i { position: absolute; right: 10px; top: 10px; color: #999; font-size: 12px; }
+
+.border-left-right { border-left: 1px solid #eee; border-right: 1px solid #eee; }
+
+/* PRODUCT ENTRY BAR (ESTILO IMÁGENES VERDE) */
+.product-entry { margin-bottom: 10px; }
+.product-entry-box { 
+    background: white; 
+    border-radius: 8px; 
+    border-left: 5px solid #4CAF50; /* Green left border user requested */
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    padding: 8px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.entry-labels, .entry-inputs { display: flex; align-items: stretch; gap: 10px; }
+.entry-labels div { font-size: 10px; font-weight: 800; color: #5c7283; display:flex; align-items:flex-end; }
+
+.l-scan, .i-scan { flex: 1.5; min-width: 130px; }
+.l-code, .i-code { flex: 1.2; min-width: 100px; }
+.l-desc, .i-desc { flex: 3; min-width: 200px; }
+.l-qty, .i-qty { flex: 0.5; min-width: 50px; }
+.l-info, .i-info { flex: 1; min-width: 100px; }
+.l-disc, .i-disc { flex: 0.6; min-width: 60px; }
+.l-btn, .i-btn { flex: 0.8; min-width: 60px; }
+
+.info-badges { display: flex; flex-direction: column; line-height: 1.2; padding: 0 5px; }
+.info-badges .badge-bs { font-size: 11px; font-weight: 800; color: #1565c0; }
+.info-badges .badge-usd { font-size: 11px; font-weight: 800; color: #4CAF50; }
+.info-badges .badge-stock { font-size: 10px; font-weight: 800; color: #d84315; }
+
+.btn-add-green { background: #4CAF50; color: white; border: none; height: 32px; width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 14px; }
+.btn-add-green:hover { background: #388e3c; }
+
+.input-group-pos { display: flex; align-items: center; border: 1px solid #ced4da; border-radius: 4px; overflow: hidden; height:32px; background:white; }
+.input-group-pos > input { border:none; border-radius:0; height:100%; width:100%; flex:1; outline:none; box-shadow:none !important; }
+.input-group-pos > span.pct { background: #eee; padding: 0 8px; height:100%; display:flex; align-items:center; color:#777; font-size:11px; border-left:1px solid #ced4da; }
+
+/* TABLE */
+.table-container { background: white; border-radius: 8px; overflow-y: auto; height: calc(100vh - 430px); min-height: 200px; border: 1px solid #eee; }
+.table-pos { margin-bottom: 0; }
+.table-pos thead { background: #eff3f8; }
+.table-pos thead th { border-bottom: 2px solid #dce9f9; color: #444; font-size: 11px; font-weight: 800; padding: 10px; }
+.table-pos td { padding: 8px; font-size: 12px; color: #555; border-top: 1px solid #f2f2f2; vertical-align: middle; }
+
+.table-footer-pos { background: #eff3f8; padding: 10px; display: flex; gap: 20px; border-top: 2px solid #dce9f9; }
+.table-footer-pos .stat { font-size: 11px; font-weight: 700; color: #555; }
+.table-footer-pos .stat input { width: 100px; border: 1px solid #ccc; background: white; border-radius: 3px; padding: 2px 5px; text-align: center; }
+
+/* TOTALS PREMIUM CARD (COPIA FIEL DE LA IMAGEN) */
+.totals-premium-card {
+    background: #263238; /* Slate de la imagen */
+    border-radius: 10px;
+    padding: 10px 15px;
+    color: #cfd8dc;
+    font-family: 'Inter', sans-serif;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-values .row-val {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.top-values .row-val span { color: #cfd8dc; }
+.top-values .row-val strong { color: #cfd8dc; }
+
+.card-divider-light { border-color: rgba(255,255,255,0.05); margin: 8px 0; }
+
+.total-display-main { margin-top: auto; margin-bottom: auto; }
+.total-display-main .total-label-usd {
+    font-size: 24px;
+    font-weight: 900;
+    color: #4caf50; /* Verde de la imagen */
+    line-height: 1;
+}
+.total-display-main .total-value-usd {
+    font-size: 32px;
+    font-weight: 950;
+    color: #4caf50;
+}
+.total-display-main .total-value-bs {
+    font-size: 16px;
+    font-weight: 800;
+    color: #4fc3f7; /* Azul de la imagen */
+    margin-top: 2px;
+}
+
+.divisas-payment-box .divisas-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4fc3f7;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.divisas-input-group {
+    display: flex;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 35px;
+}
+
+.divisas-input-group .symbol-box {
+    background: #eeeeee;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #444;
+    font-weight: 900;
+    font-size: 16px;
+    border-right: 1px solid #ddd;
+}
+
+.form-control-divisas {
+    flex: 1;
+    border: none;
+    padding: 0 10px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #444;
+}
+.form-control-divisas:focus { outline: none; }
+
+/* ACTION BUTTONS FLEX (MODERN) */
+.action-buttons-flex {
+    display: inline-flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+    background: white; padding: 10px 15px; border-radius: 8px; border: 1px solid #dce9f9;
+}
+.btn-modern {
+    padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: 800; border: none; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-transform: uppercase; margin: 0; outline: none;
+}
+.btn-modern i { font-size: 14px; }
+.btn-modern:active { transform: scale(0.96); }
+.bg-blue { background: #2196f3; color: white; }
+.bg-blue:hover { background: #1976d2; }
+.bg-white { background: white; color: #444; border: 1px solid #ced4da; }
+.bg-white:hover { background: #f8fbff; border-color: #2196f3; color: #2196f3; }
+.bg-red { background: #ff5252; color: white; }
+.bg-red:hover { background: #d32f2f; }
+.bg-red-dark { background: #e53935; color: white; }
+.bg-red-dark:hover { background: #b71c1c; }
+.bg-cyan { background: #00bcd4; color: white; }
+.bg-cyan:hover { background: #0097a7; }
+.bg-outline { background: transparent; color: #666; border: 1px dashed #bbb; font-weight: 700; }
+.bg-outline:hover { background: #f0f0f0; color: #333; border-color: #999; }
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .header-section .col-md-4 { margin-bottom: 20px; border: none !important; }
+    .entry-fields { flex-direction: column; }
+    .field-item { width: 100% !important; flex: none !important; }
+}
+</style>
