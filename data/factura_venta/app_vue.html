@@ -49,9 +49,12 @@
                                     <div class="col-sm-4 form-group-modern" style="position: relative;">
                                         <label>RIF/CI:</label>
                                         <input type="text" v-model="cliente.ruc" @input="mostrarSugerenciasClientes = true" @blur="hideSugerenciasClientes" @keyup.enter="buscarClienteExacto" class="form-control-pos" placeholder="Buscar por RIF o Nombre..." autocomplete="off">
-                                        <div v-if="mostrarSugerenciasClientes && sugerenciasClientes.length > 0" class="ac-dropdown">
-                                            <div v-for="sug in sugerenciasClientes" :key="sug.id" @mousedown.prevent="seleccionarCliente(sug)" class="ac-item">
-                                                <b>{{ sug.rif }}</b> &nbsp; {{ sug.nombre }}
+                                        <div v-if="mostrarSugerenciasClientes && sugerenciasClientes.length > 0"
+                                             style="position:absolute;z-index:99999;top:100%;left:0;width:100%;max-height:250px;overflow-y:auto;background:#fff;border:2px solid #2196f3;border-radius:0 0 8px 8px;box-shadow:0 8px 20px rgba(33,150,243,.25);">
+                                            <div v-for="sug in sugerenciasClientes" :key="sug.id" @mousedown.prevent="seleccionarCliente(sug)"
+                                                 style="padding:9px 14px;cursor:pointer;border-bottom:1px solid #e3eff8;display:flex;align-items:center;gap:10px;">
+                                                <span :style="{ color: '#1a5fa8', fontWeight: 800, minWidth: '100px', fontSize: '13px' }">{{ sug.rif }}</span>
+                                                <span :style="{ color: '#333333', flex: 1, fontSize: '13px' }">{{ sug.nombre }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -137,10 +140,13 @@
                             <div class="entry-inputs">
                                 <div class="i-scan" style="position: relative;">
                                     <input type="text" v-model="searchProduct.code" @input="mostrarSugerenciasProductos = true" @blur="hideSugerenciasProductos" @keyup.enter="buscarProductoExacto" class="form-control-pos" placeholder="Escanear o buscar nombre/código..." autocomplete="off">
-                                    <div v-if="mostrarSugerenciasProductos && sugerenciasProductos.length > 0" class="ac-dropdown">
-                                        <div v-for="sug in sugerenciasProductos" :key="sug.id" @mousedown.prevent="seleccionarProducto(sug)" class="ac-item">
-                                            <b>{{ sug.codigo }}</b> &nbsp; {{ sug.nombre }}
-                                            <span class="ac-badge" :style="sug.stock > 0 ? 'background:#e8f5e9;color:#2e7d32' : 'background:#ffebee;color:#c62828'">Stock: {{ sug.stock }}</span>
+                                    <div v-if="mostrarSugerenciasProductos && sugerenciasProductos.length > 0"
+                                         style="position:absolute;z-index:99999;top:100%;left:0;width:100%;max-height:250px;overflow-y:auto;background:#fff;border:2px solid #4caf50;border-radius:0 0 8px 8px;box-shadow:0 8px 20px rgba(76,175,80,.25);">
+                                        <div v-for="sug in sugerenciasProductos" :key="sug.id" @mousedown.prevent="seleccionarProducto(sug)"
+                                             style="padding:9px 14px;cursor:pointer;border-bottom:1px solid #e8f5e9;display:flex;align-items:center;gap:10px;">
+                                            <span :style="{ color: '#1a5fa8', fontWeight: 800, minWidth: '90px', fontSize: '12px' }">{{ sug.codigo }}</span>
+                                            <span :style="{ color: '#333333', flex: 1, fontSize: '13px' }">{{ sug.nombre }}</span>
+                                            <span :style="{ fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '10px', background: sug.stock > 0 ? '#e8f5e9' : '#ffebee', color: sug.stock > 0 ? '#2e7d32' : '#c62828' }">{{ sug.stock }}</span>
                                         </div>
                                     </div>
                                 </div>
