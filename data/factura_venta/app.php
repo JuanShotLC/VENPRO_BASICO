@@ -1029,74 +1029,42 @@
 	}
 	//fin
 
-	// buscar clientes
+	// buscar clientes (retorna todos los campos para filtrar por RIF o Nombre desde Vue)
 	if (isset($_POST['buscador_clientes'])) {
-		$resultado = mysqli_query($con,"SELECT C.id, C.identificacion, C.nombres_completos, C.telefono2, C.direccion, C.correo FROM clientes C WHERE C.estado = '1'");
-		while ($row = mysqli_fetch_array($resultado)) {
-		
-				if($_POST['tipo_busqueda'] == 'ruc') {
+		$resultado = mysqli_query($con,"SELECT C.id, C.identificacion, C.nombres_completos, C.telefono2, C.direccion, C.correo FROM clientes C WHERE C.estado = '1' ORDER BY C.nombres_completos ASC");
+		if ($resultado) {
+			while ($row = mysqli_fetch_array($resultado)) {
 				$data[] = array(
-		            'id' => $row[0],
-		            'value' => $row[1],
-		            'cliente' => $row[2],
-		            'telefono' => $row[3],
-		            'direccion' => $row[4],
-		            'correo' => $row[5] 
-		        );			
-			} else {
-				if($_POST['tipo_busqueda'] == 'cliente') {
-					$data[] = array(
-			            'id' => $row[0],
-			            'value' => $row[2],
-			            'ruc' => $row[1],
-			            'telefono' => $row[3],
-			            'direccion' => $row[4],
-			            'correo' => $row[5] 
-			        );	
-				}
+					'id'         => $row[0],
+					'rif'        => $row[1],
+					'nombre'     => $row[2],
+					'telefono'   => $row[3],
+					'direccion'  => $row[4],
+					'correo'     => $row[5]
+				);
 			}
 		}
-		
-		echo $data = json_encode($data);	
+		echo json_encode($data ? $data : []);
 	}
 	// fin
 
-	// buscar productos
+	// buscar productos (retorna todos los campos para filtrar por codigo o nombre desde Vue)
 	if (isset($_POST['buscador_productos'])) {
-	$resultado = mysqli_query($con,"SELECT * FROM products");
-		while ($row = mysqli_fetch_array($resultado)) {
-			if($_POST['tipo_busqueda'] == 'codigo') {
-			
-	        $data[] = array(
-	        	'id' => $row[0],
-	            'value' => $row[1],
-	            'producto' => $row[2],
-	            'precio_dolar' => $row[4],
-	            'precio_boli' => $row[5],
-	            'precio_producto' => $row[6],
-	            'stock' => $row[7]
-	       
-	        );
-	    
-		
-			} 
-			else {
-				if($_POST['tipo_busqueda'] == 'producto') {
-					
-				        $data[] = array(
-				        	'id' => $row[0],
-					            'codigo_producto' => $row[1],
-					            'value' => $row[2],
-					            'precio_dolar' => $row[4],
-					            'precio_boli' => $row[5],
-					            'precio_producto' => $row[6],
-					            'stock' => $row[7]
-				        );
-			
-				}
+		$resultado = mysqli_query($con,"SELECT id_producto, codigo_producto, nombre_producto, descripcion, precio_dolar, precio_bolivar, precio_mayorista, stock FROM products ORDER BY nombre_producto ASC");
+		if ($resultado) {
+			while ($row = mysqli_fetch_array($resultado)) {
+				$data[] = array(
+					'id'               => $row[0],
+					'codigo'           => $row[1],
+					'nombre'           => $row[2],
+					'precio_dolar'     => $row[4],
+					'precio_boli'      => $row[5],
+					'precio_mayorista' => $row[6],
+					'stock'            => $row[7]
+				);
 			}
 		}
-		echo $data = json_encode($data);	
+		echo json_encode($data ? $data : []);
 	}
 	// fin
 ?>

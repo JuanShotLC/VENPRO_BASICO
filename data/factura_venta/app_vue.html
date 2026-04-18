@@ -48,11 +48,11 @@
                                 <div class="row">
                                     <div class="col-sm-4 form-group-modern" style="position: relative;">
                                         <label>RIF/CI:</label>
-                                        <input type="text" v-model="cliente.ruc" @input="mostrarSugerenciasClientes = true" @blur="hideSugerenciasClientes" @keyup.enter="buscarClienteExacto" class="form-control-pos" placeholder="Buscar RIF/CI o Nombre...">
+                                        <input type="text" v-model="cliente.ruc" @input="mostrarSugerenciasClientes = true" @blur="hideSugerenciasClientes" @keyup.enter="buscarClienteExacto" class="form-control-pos" placeholder="Buscar por RIF o Nombre..." autocomplete="off">
                                         <!-- Autocomplete Dropdown -->
                                         <ul v-if="mostrarSugerenciasClientes && sugerenciasClientes.length > 0" class="autocomplete-list shadow">
                                             <li v-for="sug in sugerenciasClientes" :key="sug.id" @mousedown.prevent="seleccionarCliente(sug)">
-                                                <strong>{{ sug.value }}</strong> - {{ sug.cliente }}
+                                                <span class="ac-rif">{{ sug.rif }}</span><span class="ac-nombre">{{ sug.nombre }}</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -137,11 +137,11 @@
                             <!-- Fila de Inputs -->
                             <div class="entry-inputs">
                                 <div class="i-scan" style="position: relative;">
-                                    <input type="text" v-model="searchProduct.code" @input="mostrarSugerenciasProductos = true" @blur="hideSugerenciasProductos" @keyup.enter="buscarProductoExacto" class="form-control-pos" placeholder="Escanear o buscar...">
+                                    <input type="text" v-model="searchProduct.code" @input="mostrarSugerenciasProductos = true" @blur="hideSugerenciasProductos" @keyup.enter="buscarProductoExacto" class="form-control-pos" placeholder="Escanear o buscar nombre/código..." autocomplete="off">
                                     <!-- Autocomplete Dropdown -->
                                     <ul v-if="mostrarSugerenciasProductos && sugerenciasProductos.length > 0" class="autocomplete-list shadow">
                                         <li v-for="sug in sugerenciasProductos" :key="sug.id" @mousedown.prevent="seleccionarProducto(sug)">
-                                            <strong>{{ sug.value }}</strong> - {{ sug.producto }}
+                                            <span class="ac-rif">{{ sug.codigo }}</span><span class="ac-nombre">{{ sug.nombre }}</span><span :class="sug.stock > 0 ? 'ac-stock-ok' : 'ac-stock-low'">{{ sug.stock }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -198,14 +198,21 @@
                                     <tr v-for="(item, index) in cart" :key="index">
                                         <td>{{ item.codigo }}</td>
                                         <td>{{ item.nombre }}</td>
-                                        <td class="text-center">{{ item.cantidad }}</td>
-                                        <td class="text-right">{{ formatCurrency(item.precioBs) }}</td>
-                                        <td class="text-right">{{ formatCurrency(item.precioUsd) }}</td>
-                                        <td class="text-right">0.00</td>
-                                        <td class="text-right">{{ formatCurrency(item.cantidad * item.precioBs) }}</td>
-                                        <td class="text-right">{{ formatCurrency(item.cantidad * item.precioUsd) }}</td>
                                         <td class="text-center">
-                                            <a href="javascript:void(0)" @click="removerItem(index)" class="text-danger"><i class="fa fa-trash"></i></a>
+                                            <input type="number" v-model.number="item.cantidad" class="inline-edit-input text-center">
+                                        </td>
+                                        <td class="text-right">{{ formatCurrency(item.precioBs) }}</td>
+                                        <td class="text-right" style="padding: 2px;">
+                                            <div class="inline-edit-box">
+                                                <span>$</span>
+                                                <input type="number" v-model.number="item.precioUsd" @input="item.precioBs = item.precioUsd * factorCambio" class="inline-edit-input text-right">
+                                            </div>
+                                        </td>
+                                        <td class="text-right">{{ (item.descuento || 0) }} %</td>
+                                        <td class="text-right">{{ formatCurrency(item.cantidad * item.precioBs) }}</td>
+                                        <td class="text-right font-weight-bold" style="color: #4CAF50;">{{ formatCurrency(item.cantidad * item.precioUsd) }}</td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)" @click="removerItem(index)" class="text-danger" title="Eliminar fila"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <tr v-for="i in Math.max(0, 8 - cart.length)" :key="'empty-'+i">
@@ -451,6 +458,15 @@ html, body { background: white !important; }
 .btn-precinto { background: #2196f3; color: white; border: none; height: 32px; border-radius: 0 4px 4px 0; padding: 0 15px; font-weight: bold; transition:0.2s; }
 .btn-precinto:hover { background: #1976d2; }
 
+/* ---- AUTOCOMPLETE DROPDOWN ---- */
+.autocomplete-list { position: absolute; z-index: 9999; background: white; border: 1px solid #c5d8f0; width: 100%; max-height: 220px; overflow-y: auto; padding: 0; margin: 0; list-style: none; border-radius: 0 0 6px 6px; top: 100%; left: 0; box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+.autocomplete-list li { padding: 7px 12px; cursor: pointer; border-bottom: 1px solid #f0f4f9; display: flex; gap: 8px; align-items: center; font-size: 12px; }
+.autocomplete-list li:hover { background: #e8f4fd; }
+.ac-rif { font-weight: 800; color: #1565c0; min-width: 90px; }
+.ac-nombre { flex: 1; color: #333; }
+.ac-stock-ok { background: #e8f5e9; color: #2e7d32; padding: 1px 6px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+.ac-stock-low { background: #ffebee; color: #c62828; padding: 1px 6px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+
 .header-section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 15px; border-top: 3px solid #2196f3; }
 .form-group-modern { margin-bottom: 10px; display: flex; align-items: center; }
 .form-group-modern label { min-width: 100px; font-size: 11px; font-weight: 700; color: #555; text-transform: uppercase; margin: 0; }
@@ -511,7 +527,14 @@ html, body { background: white !important; }
 .table-pos { margin-bottom: 0; }
 .table-pos thead { background: #eff3f8; }
 .table-pos thead th { border-bottom: 2px solid #dce9f9; color: #444; font-size: 11px; font-weight: 800; padding: 10px; }
-.table-pos td { padding: 8px; font-size: 12px; color: #555; border-top: 1px solid #f2f2f2; vertical-align: middle; }
+.table-pos td { padding: 6px; font-size: 12px; color: #555; border-top: 1px solid #f2f2f2; vertical-align: middle; }
+
+/* INLINE EDIT INPUTS */
+.inline-edit-input { width: 100%; min-width: 50px; border: 1px solid #ddd; background: #fff; padding: 4px; border-radius: 4px; font-size: 12px; font-weight: 700; color: #333; transition: border-color 0.2s; }
+.inline-edit-input:focus { border-color: #2196f3; outline: none; background: #f0f8ff; }
+.inline-edit-box { display: flex; align-items: center; border: 1px solid #eee; border-radius: 4px; overflow: hidden; }
+.inline-edit-box span { background: #f5f5f5; padding: 4px 6px; font-size: 11px; color: #777; border-right: 1px solid #ddd; }
+.inline-edit-box input { border: none; flex: 1; border-radius: 0; }
 
 .table-footer-pos { background: #eff3f8; padding: 10px; display: flex; gap: 20px; border-top: 2px solid #dce9f9; }
 .table-footer-pos .stat { font-size: 11px; font-weight: 700; color: #555; }

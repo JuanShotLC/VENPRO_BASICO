@@ -62,23 +62,23 @@ window.initVueFacturacion = function() {
 
             // --- COMPUTED ---
             const sugerenciasClientes = computed(() => {
-                if (!cliente.ruc || cliente.ruc.length < 1) return [];
-                const q = cliente.ruc.toLowerCase();
+                if (!cliente.ruc || cliente.ruc.trim().length < 1) return [];
+                const q = cliente.ruc.trim().toLowerCase();
                 return listaClientes.value.filter(c => {
-                    const val = c.value || c.ruc || "";
-                    const name = c.cliente || c.nombre || "";
-                    return val.toLowerCase().includes(q) || name.toLowerCase().includes(q);
-                }).slice(0, 8);
+                    const rif   = (c.rif   || '').toLowerCase();
+                    const nom   = (c.nombre || '').toLowerCase();
+                    return rif.includes(q) || nom.includes(q);
+                }).slice(0, 10);
             });
 
             const sugerenciasProductos = computed(() => {
-                if (!searchProduct.code || searchProduct.code.length < 1) return [];
-                const q = searchProduct.code.toLowerCase();
+                if (!searchProduct.code || searchProduct.code.trim().length < 1) return [];
+                const q = searchProduct.code.trim().toLowerCase();
                 return listaProductos.value.filter(p => {
-                    const val = p.value || p.codigo_producto || "";
-                    const name = p.producto || p.nombre_producto || "";
-                    return val.toLowerCase().includes(q) || name.toLowerCase().includes(q);
-                }).slice(0, 10);
+                    const cod  = (p.codigo || '').toLowerCase();
+                    const nom  = (p.nombre || '').toLowerCase();
+                    return cod.includes(q) || nom.includes(q);
+                }).slice(0, 12);
             });
 
             const resumenPrecintos = computed(() => {
@@ -123,17 +123,19 @@ window.initVueFacturacion = function() {
                     const resFactor = await axios.post('data/factura_venta/app.php', pFactor);
                     if (resFactor.data) factorCambio.value = parseFloat(resFactor.data.factor) || 1;
 
-                    // Prefetch clients
-                    const pC = new URLSearchParams(); pC.append('buscador_clientes', 'buscador_clientes'); pC.append('tipo_busqueda', 'ruc');
+                    // Prefetch clients — sin tipo_busqueda, PHP devuelve todos los campos
+                    const pC = new URLSearchParams(); pC.append('buscador_clientes', 'buscador_clientes');
                     const resC = await axios.post('data/factura_venta/app.php', pC);
                     let clList = typeof resC.data === 'string' ? parseJSON(resC.data) : resC.data;
                     listaClientes.value = Array.isArray(clList) ? clList : [];
+                    console.log('[CLIENTES cargados]', listaClientes.value.length, listaClientes.value[0]);
 
-                    // Prefetch products
-                    const pP = new URLSearchParams(); pP.append('buscador_productos', 'buscador_productos'); pP.append('tipo_busqueda', 'codigo');
+                    // Prefetch products — sin tipo_busqueda, PHP devuelve todos los campos
+                    const pP = new URLSearchParams(); pP.append('buscador_productos', 'buscador_productos');
                     const resP = await axios.post('data/factura_venta/app.php', pP);
                     let prList = typeof resP.data === 'string' ? parseJSON(resP.data) : resP.data;
                     listaProductos.value = Array.isArray(prList) ? prList : [];
+                    console.log('[PRODUCTOS cargados]', listaProductos.value.length, listaProductos.value[0]);
 
                     actualizarSerie();
                 } catch (e) { console.error('Error init:', e); }
@@ -149,7 +151,13 @@ window.initVueFacturacion = function() {
             };
 
             const seleccionarCliente = (item) => {
-                Object.assign(cliente, { id: item.id, ruc: item.value, nombre: item.cliente, direccion: item.direccion, telefono: item.telefono, correo: item.correo });
+                // item tiene: { id, rif, nombre, telefono, direccion, correo }
+                cliente.id        = item.id;
+                cliente.ruc       = item.rif;
+                cliente.nombre    = item.nombre;
+                cliente.direccion = item.direccion;
+                cliente.telefono  = item.telefono;
+                cliente.correo    = item.correo;
                 mostrarSugerenciasClientes.value = false;
             };
 
@@ -161,12 +169,14 @@ window.initVueFacturacion = function() {
             };
 
             const seleccionarProducto = (item) => {
-                searchProduct.selected = item;
-                searchProduct.manualCode = item.value || item.codigo_producto;
-                searchProduct.code = item.value || item.codigo_producto;
-                searchProduct.name = item.producto;
-                searchProduct.price = item.precio_dolar;
-                searchProduct.stock = item.stock;
+                // item tiene: { id, codigo, nombre, precio_dolar, precio_boli, precio_mayorista, stock }
+                searchProduct.selected   = item;
+                searchProduct.manualCode = item.codigo;
+                searchProduct.code       = item.codigo;
+                searchProduct.name       = item.nombre;
+                searchProduct.price      = item.precio_dolar;
+                searchProduct.priceBs    = item.precio_boli;
+                searchProduct.stock      = item.stock;
                 mostrarSugerenciasProductos.value = false;
                 agregarAlCarrito();
             };
