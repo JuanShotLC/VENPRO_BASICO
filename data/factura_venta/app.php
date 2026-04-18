@@ -1048,11 +1048,11 @@
 	}
 	// fin
 
-	// buscar productos (retorna todos los campos para filtrar por codigo o nombre desde Vue)
+	// buscar productos (SELECT * con indices como en el codigo original)
 	if (isset($_POST['buscador_productos'])) {
-		$resultado = mysqli_query($con,"SELECT id_producto, codigo_producto, nombre_producto, descripcion, precio_dolar, precio_bolivar, precio_mayorista, stock FROM products ORDER BY nombre_producto ASC");
-		if ($resultado) {
-			while ($row = mysqli_fetch_array($resultado)) {
+		$resultado = mysqli_query($con, "SELECT * FROM products ORDER BY nombre_producto ASC");
+		if ($resultado && mysqli_num_rows($resultado) > 0) {
+			while ($row = mysqli_fetch_array($resultado, MYSQLI_NUM)) {
 				$data[] = array(
 					'id'               => $row[0],
 					'codigo'           => $row[1],
@@ -1063,8 +1063,11 @@
 					'stock'            => $row[7]
 				);
 			}
+			echo json_encode($data);
+		} else {
+			// Si falla la consulta o no hay datos, devolver error legible
+			echo json_encode(['error' => mysqli_error($con), 'num' => 0]);
 		}
-		echo json_encode($data ? $data : []);
 	}
 	// fin
 ?>
