@@ -49,10 +49,9 @@
                                     <div class="col-sm-4 form-group-modern" style="position: relative;">
                                         <label>RIF/CI:</label>
                                         <input type="text" v-model="cliente.ruc" @input="mostrarSugerenciasClientes = true" @blur="hideSugerenciasClientes" @keyup.enter="buscarClienteExacto" class="form-control-pos" placeholder="Buscar por RIF o Nombre..." autocomplete="off">
-                                        <!-- Autocomplete Dropdown -->
-                                        <ul v-if="mostrarSugerenciasClientes && sugerenciasClientes.length > 0" class="autocomplete-list shadow">
-                                            <li v-for="sug in sugerenciasClientes" :key="sug.id" @mousedown.prevent="seleccionarCliente(sug)">
-                                                <span class="ac-rif">{{ sug.rif }}</span><span class="ac-nombre">{{ sug.nombre }}</span>
+                                        <ul v-if="mostrarSugerenciasClientes && sugerenciasClientes.length > 0" class="ac-dropdown">
+                                            <li v-for="sug in sugerenciasClientes" :key="sug.id" @mousedown.prevent="seleccionarCliente(sug)" class="ac-item">
+                                                <b style="color:#1565c0;margin-right:10px;">{{ sug.rif }}</b>{{ sug.nombre }}
                                             </li>
                                         </ul>
                                     </div>
@@ -138,10 +137,10 @@
                             <div class="entry-inputs">
                                 <div class="i-scan" style="position: relative;">
                                     <input type="text" v-model="searchProduct.code" @input="mostrarSugerenciasProductos = true" @blur="hideSugerenciasProductos" @keyup.enter="buscarProductoExacto" class="form-control-pos" placeholder="Escanear o buscar nombre/código..." autocomplete="off">
-                                    <!-- Autocomplete Dropdown -->
-                                    <ul v-if="mostrarSugerenciasProductos && sugerenciasProductos.length > 0" class="autocomplete-list shadow">
-                                        <li v-for="sug in sugerenciasProductos" :key="sug.id" @mousedown.prevent="seleccionarProducto(sug)">
-                                            <span class="ac-rif">{{ sug.codigo }}</span><span class="ac-nombre">{{ sug.nombre }}</span><span :class="sug.stock > 0 ? 'ac-stock-ok' : 'ac-stock-low'">{{ sug.stock }}</span>
+                                    <ul v-if="mostrarSugerenciasProductos && sugerenciasProductos.length > 0" class="ac-dropdown">
+                                        <li v-for="sug in sugerenciasProductos" :key="sug.id" @mousedown.prevent="seleccionarProducto(sug)" class="ac-item">
+                                            <b style="color:#1565c0;margin-right:10px;">{{ sug.codigo }}</b>{{ sug.nombre }}
+                                            <span style="float:right;font-size:11px;padding:1px 7px;border-radius:9px;" :style="sug.stock > 0 ? 'background:#e8f5e9;color:#2e7d32' : 'background:#ffebee;color:#c62828'">{{ sug.stock }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -459,27 +458,26 @@ html, body { background: white !important; }
 .btn-precinto:hover { background: #1976d2; }
 
 /* ---- AUTOCOMPLETE DROPDOWN (override jQuery UI) ---- */
-.autocomplete-list { 
+.ac-dropdown { 
     position: absolute !important; z-index: 99999 !important; 
-    background: #ffffff !important; 
+    background: #ffffff !important; color: #333333 !important;
     border: 2px solid #2196f3 !important; 
-    width: 100% !important; max-height: 240px; overflow-y: auto; 
+    width: 100% !important; max-height: 250px !important; overflow-y: auto !important; 
     padding: 0 !important; margin: 0 !important; list-style: none !important; 
     border-radius: 0 0 8px 8px !important; top: 100% !important; left: 0 !important; 
-    box-shadow: 0 8px 20px rgba(33,150,243,0.2) !important;
+    box-shadow: 0 8px 20px rgba(33,150,243,0.25) !important;
 }
-.autocomplete-list li { 
-    padding: 8px 14px !important; cursor: pointer !important; 
+.ac-item { 
+    padding: 9px 14px !important; cursor: pointer !important; 
     border-bottom: 1px solid #e3eff8 !important; 
-    display: flex !important; gap: 10px !important; align-items: center !important; 
-    font-size: 12px !important; background: #ffffff !important;
+    font-size: 13px !important; 
+    background: #ffffff !important;
     color: #333333 !important;
+    display: block !important;
+    line-height: 1.4 !important;
 }
-.autocomplete-list li:hover, .autocomplete-list li:focus { background: #e3f2fd !important; color: #0d47a1 !important; }
-.ac-rif { font-weight: 800 !important; color: #1565c0 !important; min-width: 100px !important; display: inline-block !important; }
-.ac-nombre { flex: 1 !important; color: #333333 !important; font-weight: 500 !important; }
-.ac-stock-ok { background: #e8f5e9 !important; color: #2e7d32 !important; padding: 2px 8px !important; border-radius: 10px !important; font-size: 11px !important; font-weight: 700 !important; }
-.ac-stock-low { background: #ffebee !important; color: #c62828 !important; padding: 2px 8px !important; border-radius: 10px !important; font-size: 11px !important; font-weight: 700 !important; }
+.ac-item:hover { background: #e3f2fd !important; color: #0d47a1 !important; }
+.ac-item b { color: #1565c0 !important; }
 
 .header-section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 15px; border-top: 3px solid #2196f3; }
 .form-group-modern { margin-bottom: 10px; display: flex; align-items: center; }
